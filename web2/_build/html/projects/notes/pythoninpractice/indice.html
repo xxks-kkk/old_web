@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Understanding Indices and Slicing &mdash; Zeyuan Hu&#39;s World</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Zeyuan Hu&#39;s World" href="../../../index.html" />
+    <link rel="up" title="Python in Practice" href="python_in_practice.html" />
+    <link rel="next" title="Mutable Objects in Function Calls" href="mutable.html" />
+    <link rel="prev" title="Python in Practice" href="python_in_practice.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="mutable.html" title="Mutable Objects in Function Calls"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="python_in_practice.html" title="Python in Practice"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="python_in_practice.html" accesskey="U">Python in Practice</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Understanding Indices and Slicing</a><ul>
+<li><a class="reference internal" href="#formats-in-slicing">0. Formats in slicing</a></li>
+<li><a class="reference internal" href="#indexing-with-positive-and-negative-numbers">1. Indexing with positive and negative numbers</a><ul>
+<li><a class="reference internal" href="#with-positive-numbers">1.0. with positive numbers</a></li>
+<li><a class="reference internal" href="#with-negative-numbers">1.1. with negative numbers</a></li>
+<li><a class="reference internal" href="#connection">1.2.connection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#moving">2. Moving</a><ul>
+<li><a class="reference internal" href="#moving-forwards">2.0. Moving forwards</a></li>
+<li><a class="reference internal" href="#moving-backwards">2.1 Moving backwards</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    <h3>About this site</h3>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h3>search this site</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="understanding-indices-and-slicing">
+<span id="indice"></span><h1>Understanding Indices and Slicing<a class="headerlink" href="#understanding-indices-and-slicing" title="Permalink to this headline">¶</a></h1>
+<p>List or string indices are powerful techniques to help you
+quickly manipulate lists or strings.</p>
+<p><strong>Applied Fields</strong></p>
+<ul class="simple">
+<li>String Slicing</li>
+<li>List indexing</li>
+<li>Setting ranges</li>
+</ul>
+<div class="section" id="formats-in-slicing">
+<span id="formats-slicing"></span><h2>0. Formats in slicing<a class="headerlink" href="#formats-in-slicing" title="Permalink to this headline">¶</a></h2>
+<p>Example 0 Setting</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span> <span class="c"># where the char at k-th position is k</span>
+</pre></div>
+</div>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="c"># slicing format</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">:</span><span class="n">step</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>There are only three things to remember:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">start</span></tt> is the first item that <em>you want</em></p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">stop</span></tt> is the first item that you do <em>not</em> want</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">step</span></tt>, being positive or negative, defines moving direction:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">positive:</p>
+<blockquote>
+<div><p>moving forwards (from the first position of the string towards its end)</p>
+</div></blockquote>
+</li>
+<li><p class="first">negative:</p>
+<blockquote>
+<div><p>moving backwards (from the last position of the str towards its start)</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="indexing-with-positive-and-negative-numbers">
+<span id="indexing-pos-neg"></span><h2>1. Indexing with positive and negative numbers<a class="headerlink" href="#indexing-with-positive-and-negative-numbers" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="with-positive-numbers">
+<h3>1.0. with positive numbers<a class="headerlink" href="#with-positive-numbers" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># counting from the beginning of the string starting at 0</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="s">&quot;my mistress&#39; eyes are nothing like the sun&quot;</span>
+     <span class="o">^</span>         <span class="o">^</span>                              <span class="o">^</span>
+     <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>     <span class="n">b</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>                           <span class="n">b</span><span class="p">[</span><span class="mi">41</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="with-negative-numbers">
+<h3>1.1. with negative numbers<a class="headerlink" href="#with-negative-numbers" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes it is useful to refer to chars of the string as seen from the end of the string.
+In this case, we use negative numbers and count backwards, from -1 (<em>not from 0</em>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># counting from the end of the string starting at -1</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="s">&quot;my mistress&#39; eyes are nothing like the sun&quot;</span>
+     <span class="o">^</span>         <span class="o">^</span>                              <span class="o">^</span>
+     <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">42</span><span class="p">]</span>    <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">32</span><span class="p">]</span>                         <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="connection">
+<h3>1.2.connection<a class="headerlink" href="#connection" title="Permalink to this headline">¶</a></h3>
+<p>In general, indexing with positive numbers and indexing with negative numbers have the following relation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">b</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">+</span><span class="n">k</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Example 1 connection with two indexing systems</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>        <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">42</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;m&#39;</span>
+<span class="n">b</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>      <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">41</span><span class="p">]</span>  <span class="o">=</span> <span class="s">&#39;n&#39;</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>       <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="o">-</span><span class="mi">32</span><span class="p">]</span>              <span class="o">=</span> <span class="s">&#39;s&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="moving">
+<span id="id1"></span><h2>2. Moving<a class="headerlink" href="#moving" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="moving-forwards">
+<h3>2.0. Moving forwards<a class="headerlink" href="#moving-forwards" title="Permalink to this headline">¶</a></h3>
+<p><strong>If step is positive we are moving forwards (if the value of &#8216;step&#8217; is omitted, it defaults to +1)</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># the first char that we want is that in the 2nd position,</span>
+<span class="c"># the first char that we do not want is that in the 6th position</span>
+
+<span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;2345&#39;</span>
+</pre></div>
+</div>
+<p>Alternatively, seeing it from the end of the string:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># the first char that we want is that in the 8-th position from the end (i.e., the 2),</span>
+<span class="c"># the first char that we do not want is that in the 4-th position from the end (i.e., the 6)</span>
+
+<span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;2345&#39;</span>
+</pre></div>
+</div>
+<p>Hence, for any positive step we have the following defaults:</p>
+<div class="highlight-python"><div class="highlight"><pre>     <span class="o">|-&gt;</span> <span class="o">-&gt;</span> <span class="o">-&gt;|</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span>
+     <span class="o">^</span>        <span class="o">^</span>
+ <span class="n">start</span><span class="p">:</span><span class="mi">0</span>    <span class="n">stop</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="n">one</span> <span class="n">position</span> <span class="n">beyond</span> <span class="n">the</span> <span class="n">end</span> <span class="n">of</span> <span class="n">the</span> <span class="n">string</span>
+</pre></div>
+</div>
+<p>Thus:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span><span class="p">[:]</span>   <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">):</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span> <span class="c"># a +1 step is the default</span>
+<span class="n">a</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">):</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;02468&#39;</span>      <span class="c"># all the even positions</span>
+<span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;13579&#39;</span>                     <span class="c"># all the odd positions</span>
+<span class="n">a</span><span class="p">[::</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0369&#39;</span>                       <span class="c"># all the multiples of 3</span>
+</pre></div>
+</div>
+<p>So, as long as you are starting or ending your slice with the start or the end of the string, you can
+leave those out and Python will use the defaults.</p>
+</div>
+<div class="section" id="moving-backwards">
+<h3>2.1 Moving backwards<a class="headerlink" href="#moving-backwards" title="Permalink to this headline">¶</a></h3>
+<p><strong>If step is negative then we are moving backwards</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># the first char that we want is that in the 6-th position,</span>
+<span class="c"># the first char that we do not want is that in the 2nd position</span>
+
+<span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;6543&#39;</span>
+</pre></div>
+</div>
+<p>Alternatively,</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># the first char that we want is that in the 4-th position from the back (i.e., the 6)</span>
+<span class="c"># the first chat that we do not want is that in the 8-th position from the back (i.e., the 2)</span>
+<span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;6543&#39;</span>
+</pre></div>
+</div>
+<p>Notice that we can use positive or negative indices going either forwards or backwards on the string.. we
+can even mix them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;6543&#39;</span>
+<span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;6543&#39;</span>
+</pre></div>
+</div>
+<p>Sometimes this mixing might come very handy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;&lt;a href=&quot;http://udacity.com&quot;&gt;&#39;</span><span class="p">[</span><span class="mi">9</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    <span class="o">=</span> <span class="s">&#39;http://udacity.com&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using negative Indices does not mean that we are moving backwards,
+only that we are indexing from the end.
+Moving forwards or backwards is determined solely by the
+sign of the step variable.</p>
+</div>
+<p>Hence, for any negative steps, we have the following in mind:</p>
+<div class="highlight-python"><div class="highlight"><pre>     <span class="o">|&lt;-</span> <span class="o">&lt;-</span> <span class="o">&lt;-|</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s">&#39;0123456789&#39;</span>
+     <span class="o">^</span>        <span class="o">^</span>
+     <span class="o">^</span>      <span class="n">start</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span>
+     <span class="n">stop</span><span class="p">:</span> <span class="n">one</span> <span class="n">position</span> <span class="n">before</span> <span class="n">the</span> <span class="n">start</span> <span class="n">of</span> <span class="n">the</span> <span class="n">string</span>
+</pre></div>
+</div>
+<p>hence:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;9876543210&#39;</span> <span class="c"># this is how we reverse a string in python</span>
+<span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;97531&#39;</span>
+<span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;9630&#39;</span>
+</pre></div>
+</div>
+<p>So now, we have mastered Python indices and should be able to understand:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;864&#39;</span>
+<span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;864&#39;</span>
+<span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;864&#39;</span>
+<span class="s">&#39;0123456789&#39;</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;864&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="mutable.html" title="Mutable Objects in Function Calls"
+             >next</a></li>
+        <li class="right" >
+          <a href="python_in_practice.html" title="Python in Practice"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="python_in_practice.html" >Python in Practice</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Feb 25, 2013.
+    </div>
+  </body>
+</html>

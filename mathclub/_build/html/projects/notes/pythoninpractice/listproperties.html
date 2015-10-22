@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Investigating Adding and Appending to Lists &mdash; Math Club&#39;s Home</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Math Club&#39;s Home" href="../../../index.html" />
+    <link rel="up" title="Python in Practice" href="python_in_practice.html" />
+    <link rel="next" title="Project Euler Solutions" href="../../project_euler/euler_index.html" />
+    <link rel="prev" title="Mutable Objects in Function Calls" href="mutable.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../project_euler/euler_index.html" title="Project Euler Solutions"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="mutable.html" title="Mutable Objects in Function Calls"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="python_in_practice.html" accesskey="U">Python in Practice</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Investigating Adding and Appending to Lists</a><ul>
+<li><a class="reference internal" href="#and-append">0. <tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">append</span></tt></a><ul>
+<li><a class="reference internal" href="#same-behavior">0.1. same behavior?</a></li>
+<li><a class="reference internal" href="#then-what-s-the-difference">0.2. Then, what&#8217;s the difference?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id1">1. <tt class="docutils literal"><span class="pre">+=</span></tt></a></li>
+<li><a class="reference internal" href="#summary">2. Summary</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mutable.html"
+                        title="previous chapter">Mutable Objects in Function Calls</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../project_euler/euler_index.html"
+                        title="next chapter">Project Euler Solutions</a></p>
+    <h4>About this site</h4>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h4>search this site</h4>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="investigating-adding-and-appending-to-lists">
+<span id="list-properties"></span><h1>Investigating Adding and Appending to Lists<a class="headerlink" href="#investigating-adding-and-appending-to-lists" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="and-append">
+<span id="adding-appending"></span><h2>0. <tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">append</span></tt><a class="headerlink" href="#and-append" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="same-behavior">
+<h3>0.1. same behavior?<a class="headerlink" href="#same-behavior" title="Permalink to this headline">¶</a></h3>
+<p>Example 0. <tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">append</span></tt> do the same thing</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="hll"><span class="gp">In [2]: </span><span class="n">list1</span> <span class="o">=</span> <span class="n">list1</span> <span class="o">+</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+</span>
+<span class="gp">In [3]: </span><span class="k">print</span> <span class="n">list1</span>
+<span class="go">[1, 2, 3, 4, 5]</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [4]: </span><span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="hll"><span class="gp">In [5]: </span><span class="n">list2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span>
+<span class="gp">In [6]: </span><span class="k">print</span> <span class="n">list2</span>
+<span class="go">[1, 2, 3, 4, 5]</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[2] &amp; [4]:</dt>
+<dd>From these two lines of codes, they do the same thing: add one more element to the list</dd>
+</dl>
+</div>
+<div class="section" id="then-what-s-the-difference">
+<h3>0.2. Then, what&#8217;s the difference?<a class="headerlink" href="#then-what-s-the-difference" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Difference 1:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">append</span></tt> mutates the lists.</li>
+<li><tt class="docutils literal"><span class="pre">list1</span> <span class="pre">=</span> <span class="pre">list1</span> <span class="pre">+</span> <span class="pre">[element]</span></tt> creates a new list</li>
+</ul>
+</dd>
+</dl>
+<p>Example 1. Difference 1</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">proc</span><span class="p">(</span><span class="n">mylist</span><span class="p">):</span>
+<span class="hll">    <span class="n">mylist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</span>
+<span class="k">def</span> <span class="nf">proc2</span><span class="p">(</span><span class="n">mylist</span><span class="p">):</span>
+<span class="hll">    <span class="n">mylist</span>  <span class="o">=</span> <span class="n">mylist</span> <span class="o">+</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+</span></pre></div>
+</td></tr></table></div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [9]: </span><span class="k">print</span> <span class="n">list1</span>
+<span class="go">[1, 2, 3, 4, 5]</span>
+
+<span class="gp">In [10]: </span><span class="n">proc</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+
+<span class="hll"><span class="gp">In [11]: </span><span class="k">print</span> <span class="n">list1</span>
+</span><span class="go">[1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [12]: </span><span class="k">print</span> <span class="n">list2</span>
+<span class="go">[1, 2, 3, 4, 5]</span>
+
+<span class="gp">In [13]: </span><span class="n">proc2</span><span class="p">(</span><span class="n">list2</span><span class="p">)</span>
+
+<span class="hll"><span class="gp">In [14]: </span><span class="k">print</span> <span class="n">list2</span>
+</span><span class="go">[1, 2, 3, 4, 5]</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[2] &amp; [11]:</dt>
+<dd><tt class="docutils literal"><span class="pre">append</span></tt> mutates the lists. So, even though there is no <tt class="docutils literal"><span class="pre">return</span></tt> statement in <tt class="docutils literal"><span class="pre">proc</span></tt> function,
+we could still see the mutation on <tt class="docutils literal"><span class="pre">list1</span></tt>.</dd>
+<dt>[5] &amp; [14]:</dt>
+<dd><tt class="docutils literal"><span class="pre">list1</span> <span class="pre">=</span> <span class="pre">list1</span> <span class="pre">+</span> <span class="pre">[6]</span></tt> creates a new list. So, if there is no <tt class="docutils literal"><span class="pre">return</span></tt> statement,
+the list <tt class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6]</span></tt> only exists inside the function as a newly created list.
+That&#8217;s why calling the variable outside of the function, it still prints <tt class="docutils literal"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5]</span></tt>.</dd>
+<dt>Difference 2:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">append</span></tt> can <em>only</em> add one object to the list. It cannot concatenate two lists.</li>
+<li><tt class="docutils literal"><span class="pre">+</span></tt> can concatenate two lists.</li>
+</ul>
+</dd>
+</dl>
+<p>Example 2. Difference 2: append</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [15]: </span><span class="n">list2</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+</span>
+<span class="gp">In [16]: </span><span class="n">list2</span>
+<span class="hll"><span class="gr">Out[16]: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+</span></pre></div>
+</div>
+<dl class="docutils">
+<dt>[15] &amp; [16]:</dt>
+<dd>So here, <tt class="docutils literal"><span class="pre">append</span></tt> add a list (<tt class="docutils literal"><span class="pre">[7,8,9]</span></tt>) as one element to the list.
+It does not produce <tt class="docutils literal"><span class="pre">[1,2,3,4,5,6,7,8,9]</span></tt>, which is the concatenation of two strings.</dd>
+</dl>
+<p>Example 3. Difference 2: +</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [17]: </span><span class="n">list1</span> <span class="o">=</span> <span class="n">list1</span> <span class="o">+</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+</span>
+<span class="gp">In [18]: </span><span class="n">list1</span>
+<span class="hll"><span class="gr">Out[18]: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</span></pre></div>
+</div>
+<dl class="docutils">
+<dt>[17] &amp; [18]:</dt>
+<dd><tt class="docutils literal"><span class="pre">+</span></tt> actually two lists: <tt class="docutils literal"><span class="pre">[1,2,3,4,5,6]</span></tt> and <tt class="docutils literal"><span class="pre">[7,8,9]</span></tt> to form a new list <tt class="docutils literal"><span class="pre">[1,2,3,4,5,6,7,8,9]</span></tt></dd>
+</dl>
+</div>
+</div>
+<div class="section" id="id1">
+<span id="id2"></span><h2>1. <tt class="docutils literal"><span class="pre">+=</span></tt><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Example 4. <tt class="docutils literal"><span class="pre">+=</span></tt> works the same as <tt class="docutils literal"><span class="pre">append</span></tt> I</p>
+<div class="highlight-ipython"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="gp">In [19]: </span><span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+
+<span class="hll"><span class="gp">In [20]: </span><span class="n">list3</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+</span>
+<span class="gp">In [21]: </span><span class="n">list3</span>
+<span class="hll"><span class="gr">Out[21]: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span></pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[19] &amp; [21]:</dt>
+<dd>Here, <tt class="docutils literal"><span class="pre">+=</span></tt> works the same as <tt class="docutils literal"><span class="pre">append</span></tt>: add <tt class="docutils literal"><span class="pre">5</span></tt> to the end of the list</dd>
+</dl>
+<p>Example 5. <tt class="docutils literal"><span class="pre">+=</span></tt> works the same as <tt class="docutils literal"><span class="pre">append</span></tt> II</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">proc3</span><span class="p">(</span><span class="n">mylis</span><span class="p">):</span>
+    <span class="n">mylist</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [23]: </span><span class="k">print</span> <span class="n">list3</span>
+<span class="go">[1, 2, 3, 4, 5]</span>
+
+<span class="gp">In [24]: </span><span class="n">proc3</span><span class="p">(</span><span class="n">list3</span><span class="p">)</span>
+
+<span class="hll"><span class="gp">In [25]: </span><span class="k">print</span> <span class="n">list3</span>
+</span><span class="go">[1, 2, 3, 4, 5, 6]</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[25]:</dt>
+<dd>so <tt class="docutils literal"><span class="pre">+=</span></tt> works the same as <tt class="docutils literal"><span class="pre">append</span></tt>: it mutates the original list.</dd>
+</dl>
+<p>Example 6. <tt class="docutils literal"><span class="pre">+=</span></tt> concatenates the lists</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [26]: </span><span class="n">list3</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+
+<span class="gp">In [27]: </span><span class="n">list3</span>
+<span class="gr">Out[27]: </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>2. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>In terms of mutation of the list:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">append</span></tt> and <tt class="docutils literal"><span class="pre">+=</span></tt> mutates the list.</li>
+<li><tt class="docutils literal"><span class="pre">+</span></tt> does not mutate the original list. Instead, it creates a new list.</li>
+</ul>
+</dd>
+<dt>In terms of modifying the list:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">append</span></tt> only add element to the list. It cannot concatenate the list.</li>
+<li><tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">+=</span></tt> can concatenate the list.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../project_euler/euler_index.html" title="Project Euler Solutions"
+             >next</a></li>
+        <li class="right" >
+          <a href="mutable.html" title="Mutable Objects in Function Calls"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="python_in_practice.html" >Python in Practice</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Jan 19, 2013.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Solutions (1-10) &mdash; Zeyuan Hu&#39;s World</title>
+    
+    <link rel="stylesheet" href="../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+    <link rel="top" title="Zeyuan Hu&#39;s World" href="../../index.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../index.html"><img src="../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Solutions (1-10)</a><ul>
+<li><a class="reference internal" href="#multiples-of-3-and-5">1. Multiples of 3 and 5</a></li>
+<li><a class="reference internal" href="#even-fibonacci-numbers">2. Even Fibonacci numbers</a></li>
+<li><a class="reference internal" href="#largest-prime-factor">3. Largest prime factor</a></li>
+<li><a class="reference internal" href="#largest-palindrome-product">4. Largest palindrome product</a></li>
+<li><a class="reference internal" href="#smallest-multiple">5. Smallest multiple</a></li>
+<li><a class="reference internal" href="#sum-square-difference">6. Sum square difference</a></li>
+<li><a class="reference internal" href="#st-prime">7. 10001st prime</a></li>
+<li><a class="reference internal" href="#largest-product-in-a-series">8. Largest product in a series</a></li>
+<li><a class="reference internal" href="#special-pythagorean-triplet">9. Special Pythagorean triplet</a></li>
+<li><a class="reference internal" href="#summation-of-primes">10. Summation of primes</a></li>
+</ul>
+</li>
+</ul>
+
+    <h3>About this site</h3>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h3>search this site</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="solutions-1-10">
+<span id="euler-1-10"></span><h1>Solutions (1-10)<a class="headerlink" href="#solutions-1-10" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="multiples-of-3-and-5">
+<span id="euler-1"></span><h2>1. Multiples of 3 and 5<a class="headerlink" href="#multiples-of-3-and-5" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.</p>
+<p class="last">Find the sum of all the multiples of 3 or 5 below 1000.</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler1.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">num</span><span class="o">&lt;</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">sum</span> <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="nb">sum</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">sum</span> <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="nb">sum</span>
+        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">print</span> <span class="nb">sum</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="even-fibonacci-numbers">
+<span id="euler-2"></span><h2>2. Even Fibonacci numbers<a class="headerlink" href="#even-fibonacci-numbers" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>Each new term in the Fibonacci sequence is generated by adding the previous two terms.
+By starting with 1 and 2, the first 10 terms will be:</p>
+<blockquote>
+<div>1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...</div></blockquote>
+<p class="last">By considering the terms in the Fibonacci sequence whose values do not exceed four million,
+find the sum of the even-valued terms.</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler2.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># n is the nth term inside the Fibonacci sequence</span>
+<span class="c"># return the vaule of the nth term</span>
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c"># choose the subFib from the Fibonacci sequence based upon the given range</span>
+<span class="c"># return the sum of the even values between the startNum and endNum</span>
+<span class="k">def</span> <span class="nf">subFib</span><span class="p">(</span><span class="n">startNum</span><span class="p">,</span><span class="n">endNum</span><span class="p">):</span>
+        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">cur</span><span class="o">&lt;=</span> <span class="n">endNum</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">startNum</span> <span class="o">&lt;=</span> <span class="n">cur</span><span class="p">:</span>
+                     <span class="k">if</span> <span class="p">(</span><span class="n">cur</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                         <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="n">cur</span>
+                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">cur</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sum</span>
+
+<span class="k">print</span> <span class="n">subFib</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4000000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="largest-prime-factor">
+<span id="euler-3"></span><h2>3. Largest prime factor<a class="headerlink" href="#largest-prime-factor" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>The prime factors of 13195 are 5, 7, 13 and 29.</p>
+<p class="last">What is the largest prime factor of the number 600851475143 ?</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler3.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c">#KEY: there cannot be a number greater than the square root of that number being prime</span>
+<span class="k">def</span> <span class="nf">isPrime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span><span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mf">2.0</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">n</span><span class="o">%</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="bp">False</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+
+<span class="k">def</span> <span class="nf">factor</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">i</span><span class="o">&lt;</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">isPrime</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">n</span><span class="o">%</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                        <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">print</span> <span class="n">factor</span><span class="p">(</span><span class="mi">600851475143</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="largest-palindrome-product">
+<span id="euler-4"></span><h2>4. Largest palindrome product<a class="headerlink" href="#largest-palindrome-product" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.</p>
+<p class="last">Find the largest palindrome made from the product of two 3-digit numbers.</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler4.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c"># pure practice for the recursion data structure, nothing to do with the main program</span>
+<span class="k">def</span> <span class="nf">isPalindrome</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="n">first</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">last</span> <span class="o">=</span> <span class="n">num</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">first</span> <span class="o">==</span> <span class="n">last</span><span class="p">)</span> <span class="ow">and</span> <span class="n">isPalindrome</span><span class="p">(</span><span class="n">num</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c">#print &quot;is num %d a Palindrome? %s&quot; % (9909,isPalindrome(&quot;9909&quot;))</span>
+
+<span class="k">def</span> <span class="nf">find</span><span class="p">():</span>
+        <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">999</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">999</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
+                <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">100</span><span class="p">:</span>
+                        <span class="n">r</span> <span class="o">=</span> <span class="n">i</span><span class="o">*</span><span class="n">j</span>
+                        <span class="c">#KEY: shortcut to reverse string</span>
+                        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                                <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+                        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="nb">list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span>
+
+<span class="k">print</span> <span class="s">&quot;largest Palindrome from product of the three-digit number is </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">find</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="smallest-multiple">
+<span id="euler-5"></span><h2>5. Smallest multiple<a class="headerlink" href="#smallest-multiple" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.</p>
+<p class="last">What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler5.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">isPrime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span><span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mf">2.0</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">n</span><span class="o">%</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="bp">False</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">def</span> <span class="nf">minDivisible</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="c"># N: the value the function is going to return</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c"># index number</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c"># upper bound of the estimation process for a[i]</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="c"># plist is the prime list</span>
+        <span class="n">plist</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">isPrime</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+                        <span class="n">plist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">plist</span><span class="p">):</span>
+                <span class="c">#print &quot;index of the list before increment:%d&quot;%i</span>
+                <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">check</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">plist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">limit</span><span class="p">:</span>
+                                <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="n">log10</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">/</span> <span class="n">log10</span><span class="p">(</span><span class="n">plist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                                <span class="n">check</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="c">#print &quot;N: %d&quot;%N</span>
+                <span class="n">N</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="n">plist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="c">#print &quot;index of the list after increment:%d&quot;%i</span>
+
+        <span class="c">#print a</span>
+        <span class="k">return</span> <span class="n">N</span>
+
+<span class="k">print</span><span class="s">&quot;the smallest number divisible by each of the numbers 1 to 20 is: </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">minDivisible</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sum-square-difference">
+<span id="euler-6"></span><h2>6. Sum square difference<a class="headerlink" href="#sum-square-difference" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>The sum of the squares of the first ten natural numbers is,</p>
+<blockquote>
+<div><span class="math">\(1^2 + 2^2 + ... + 10^2 = 385\)</span></div></blockquote>
+<p>The square of the sum of the first ten natural numbers is,</p>
+<blockquote>
+<div><span class="math">\((1 + 2 + ... + 10)^2 = 55^2 = 3025\)</span></div></blockquote>
+<p>Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is <span class="math">\(3025 − 385 = 2640\)</span>.</p>
+<p class="last">Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler6.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">diffSum</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">sum_square_n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">6.0</span>
+        <span class="n">sum_n_square</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">n</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sum_n_square</span> <span class="o">-</span> <span class="n">sum_square_n</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">diffSum</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<span class="target" id="euler-7"></span></div>
+<div class="section" id="st-prime">
+<h2>7. 10001st prime<a class="headerlink" href="#st-prime" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.</p>
+<p class="last">What is the 10 001st prime number?</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler7.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">def</span> <span class="nf">isPrime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span><span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mf">2.0</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">n</span><span class="o">%</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="bp">False</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="nb">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">isPrime</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                        <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&quot;the 10 001st prime number is: </span><span class="si">%d</span><span class="s">&quot;</span><span class="o">%</span><span class="n">find</span><span class="p">(</span><span class="mi">10001</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="largest-product-in-a-series">
+<span id="euler-8"></span><h2>8. Largest product in a series<a class="headerlink" href="#largest-product-in-a-series" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>Find the greatest product of five consecutive digits in the 1000-digit number.</p>
+<blockquote class="last">
+<div>73167176531330624919225119674426574742355349194934
+96983520312774506326239578318016984801869478851843
+85861560789112949495459501737958331952853208805511
+12540698747158523863050715693290963295227443043557
+66896648950445244523161731856403098711121722383113
+62229893423380308135336276614282806444486645238749
+30358907296290491560440772390713810515859307960866
+70172427121883998797908792274921901699720888093776
+65727333001053367881220235421809751254540594752243
+52584907711670556013604839586446706324415722155397
+53697817977846174064955149290862569321978468622482
+83972241375657056057490261407972968652414535100474
+82166370484403199890008895243450658541227588666881
+16427171479924442928230863465674813919123162824586
+17866458359124566529476545682848912883142607690042
+24219022671055626321111109370544217506941658960408
+07198403850962455444362981230987879927244284909188
+84580156166097919133875499200524063689912560717606
+05886116467109405077541002256983155200055935729725
+71636269561882670428252483600823257530420752963450</div></blockquote>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler8.py">here</a>) (download <a class="reference external" href="../../_static/projects/euler/euler8_input.txt">input file</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># open the file to read</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;euler8_input.txt&#39;</span><span class="p">))</span>
+<span class="c"># store the 1000 digits</span>
+<span class="n">data</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="c"># store the parse result from one line</span>
+<span class="n">parse</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="c"># product of five consecutive digits (final result)</span>
+<span class="n">product</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c"># index</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c"># product of five consecutive digits (cal result)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c"># parse the input file to form 1000 digits into one string</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c"># note line.strip(&#39;\n&#39;) will not affect &#39;line&#39;</span>
+    <span class="n">parse</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="n">parse</span>
+
+<span class="k">while</span> <span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">4</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">&gt;</span> <span class="n">product</span><span class="p">:</span>
+        <span class="n">product</span> <span class="o">=</span> <span class="n">result</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">print</span> <span class="n">product</span>
+</pre></div>
+</div>
+<div class="admonition-note admonition">
+<p class="first admonition-title">note</p>
+<p class="last">string.strip() will not affect the original string.</p>
+</div>
+</div>
+<div class="section" id="special-pythagorean-triplet">
+<span id="euler-9"></span><h2>9. Special Pythagorean triplet<a class="headerlink" href="#special-pythagorean-triplet" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>A Pythagorean triplet is a set of three natural numbers, a &lt; b &lt; c, for which,</p>
+<blockquote>
+<div><span class="math">\(a^2 + b^2 = c^2\)</span></div></blockquote>
+<p>For example, <span class="math">\(3^2 + 4^2 = 9 + 16 = 25 = 52\)</span>.</p>
+<p class="last">There exists exactly one Pythagorean triplet for which <span class="math">\(a + b + c = 1000\)</span>.
+Find the product <span class="math">\(abc\)</span>.</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler9.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># transform relations into ab = 1000(a+b)-500*1000</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1001</span><span class="p">):</span>
+   <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1001</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">b</span> <span class="o">==</span> <span class="mi">1000</span><span class="o">*</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="mi">500</span><span class="o">*</span><span class="mi">1000</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="p">(</span><span class="mi">1000</span><span class="o">-</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>
+            <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="summation-of-primes">
+<span id="euler-10"></span><h2>10. Summation of primes<a class="headerlink" href="#summation-of-primes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">Problem</p>
+<p>The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.</p>
+<p class="last">Find the sum of all the primes below two million.</p>
+</div>
+<p><strong>Solution:</strong> (download <a class="reference external" href="../../_static/projects/euler/euler10.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">isPrime</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">n</span><span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mf">2.0</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">n</span><span class="o">%</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="bp">False</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="bp">True</span>
+
+<span class="c"># since we know that 2 and 3 are primes</span>
+<span class="n">summation</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2000000</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">isPrime</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="n">summation</span> <span class="o">+=</span> <span class="n">i</span>
+
+<span class="k">print</span> <span class="n">summation</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../search.html">search</a>|&nbsp;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Feb 25, 2013.
+    </div>
+  </body>
+</html>

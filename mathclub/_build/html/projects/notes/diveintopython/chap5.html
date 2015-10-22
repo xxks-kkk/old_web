@@ -1,0 +1,1042 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Objects and Object-Orientation &mdash; Math Club&#39;s Home</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Math Club&#39;s Home" href="../../../index.html" />
+    <link rel="up" title="Dive into Python Study Notes" href="diveintopython.html" />
+    <link rel="next" title="Exceptions and File Handling" href="chap6.html" />
+    <link rel="prev" title="The power of Introspection" href="chap4.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap6.html" title="Exceptions and File Handling"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="chap4.html" title="The power of Introspection"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" accesskey="U">Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Objects and Object-Orientation</a><ul>
+<li><a class="reference internal" href="#diving-in">5.1. Diving In</a></li>
+<li><a class="reference internal" href="#importing-modules-using-from-module-import">5.2. Importing Modules Using <em>from module import</em></a></li>
+<li><a class="reference internal" href="#defining-classes">5.3. Defining Classes</a><ul>
+<li><a class="reference internal" href="#initializing-and-coding-classes">5.3.1 Initializing and Coding Classes</a></li>
+<li><a class="reference internal" href="#knowing-when-to-use-self-and-init">5.3.2 Knowing When to Use <em>self</em> and <em>__init__</em></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#instantiating-classes">5.4. Instantiating Classes</a></li>
+<li><a class="reference internal" href="#exploring-userdict-a-wrapper-class">5.5. Exploring UserDict: A Wrapper Class</a></li>
+<li><a class="reference internal" href="#special-class-methods">5.6. Special Class Methods</a><ul>
+<li><a class="reference internal" href="#getting-and-setting-items">5.6.1 Getting and Setting Items</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-special-class-methods">5.7. Advanced Special Class Methods</a></li>
+<li><a class="reference internal" href="#introducing-class-attributes">5.8. Introducing Class Attributes</a></li>
+<li><a class="reference internal" href="#private-functions">5.9. Private Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chap4.html"
+                        title="previous chapter">The power of Introspection</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="chap6.html"
+                        title="next chapter">Exceptions and File Handling</a></p>
+    <h4>About this site</h4>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h4>search this site</h4>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="objects-and-object-orientation">
+<span id="chap5-rst"></span><h1>Objects and Object-Orientation<a class="headerlink" href="#objects-and-object-orientation" title="Permalink to this headline">¶</a></h1>
+<p>Object-oriented Python programming:</p>
+<ul class="simple">
+<li>you can define your own classes</li>
+<li>inherit from your own or built-in classes</li>
+<li>instantiate the classes you&#8217;ve defined</li>
+</ul>
+<div class="section" id="diving-in">
+<span id="divingin"></span><h2>5.1. Diving In<a class="headerlink" href="#diving-in" title="Permalink to this headline">¶</a></h2>
+<p>Example 5.1 fileinfo.py (download <a class="reference external" href="../../../_static/projects/notes/diveintopython/py/fileinfo.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Framework for getting filetype-specific metadata.</span>
+
+<span class="sd">Instantiate appropriate class with filename.  Returned object acts like a</span>
+<span class="sd">dictionary, with key-value pairs for each piece of metadata.</span>
+<span class="sd">    import fileinfo</span>
+<span class="sd">    info = fileinfo.MP3FileInfo(&quot;/music/ap/mahadeva.mp3&quot;)</span>
+<span class="sd">    print &quot;\\n&quot;.join([&quot;%s=%s&quot; % (k, v) for k, v in info.items()])</span>
+
+<span class="sd">Or use listDirectory function to get info on all files in a directory.</span>
+<span class="sd">    for info in fileinfo.listDirectory(&quot;/music/ap/&quot;, [&quot;.mp3&quot;]):</span>
+<span class="sd">        ...</span>
+
+<span class="sd">Framework can be extended by adding classes for particular file types, e.g.</span>
+<span class="sd">HTMLFileInfo, MPGFileInfo, DOCFileInfo.  Each class is completely responsible for</span>
+<span class="sd">parsing its files appropriately; see MP3FileInfo for example.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">UserDict</span> <span class="kn">import</span> <span class="n">UserDict</span>
+
+<span class="k">def</span> <span class="nf">stripnulls</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="s">&quot;strip whitespace and nulls&quot;</span>
+    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\00</span><span class="s">&quot;</span><span class="p">,</span> <span class="s">&quot; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">FileInfo</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+    <span class="s">&quot;store file metadata&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">UserDict</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filename</span>
+
+<span class="k">class</span> <span class="nc">MP3FileInfo</span><span class="p">(</span><span class="n">FileInfo</span><span class="p">):</span>
+    <span class="s">&quot;store ID3v1.0 MP3 tags&quot;</span>
+    <span class="n">tagDataMap</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;title&quot;</span>   <span class="p">:</span> <span class="p">(</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">33</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;artist&quot;</span>  <span class="p">:</span> <span class="p">(</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;album&quot;</span>   <span class="p">:</span> <span class="p">(</span> <span class="mi">63</span><span class="p">,</span>  <span class="mi">93</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;year&quot;</span>    <span class="p">:</span> <span class="p">(</span> <span class="mi">93</span><span class="p">,</span>  <span class="mi">97</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;comment&quot;</span> <span class="p">:</span> <span class="p">(</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;genre&quot;</span>   <span class="p">:</span> <span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">__parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="s">&quot;parse ID3v1.0 tags from MP3 file&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fsock</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">fsock</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">tagdata</span> <span class="o">=</span> <span class="n">fsock</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">fsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">tagdata</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;TAG&#39;</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">parseFunc</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagDataMap</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">parseFunc</span><span class="p">(</span><span class="n">tagdata</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;name&quot;</span> <span class="ow">and</span> <span class="n">item</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__parse</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">FileInfo</span><span class="o">.</span><span class="n">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">listDirectory</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fileExtList</span><span class="p">):</span>
+    <span class="s">&quot;get list of file info objects for files of particular extensions&quot;</span>
+    <span class="n">fileList</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)]</span>
+    <span class="n">fileList</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileList</span> \
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">fileExtList</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">getFileInfoClass</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">FileInfo</span><span class="o">.</span><span class="n">__module__</span><span class="p">]):</span>
+        <span class="s">&quot;get file info class from filename extension&quot;</span>
+        <span class="n">subclass</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">FileInfo&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">subclass</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">subclass</span><span class="p">)</span> <span class="ow">or</span> <span class="n">FileInfo</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">getFileInfoClass</span><span class="p">(</span><span class="n">f</span><span class="p">)(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileList</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+
+    <span class="c"># This program&#39;s output depends on the files on your hard drive</span>
+    <span class="c"># To get meaningful output, you&#39;ll need to change the directory path to</span>
+    <span class="c"># point to a directory of MP3 files on your own machine.</span>
+    <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">listDirectory</span><span class="p">(</span><span class="s">&quot;/music/_singles/&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;.mp3&quot;</span><span class="p">]):</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+        <span class="k">print</span>
+</pre></div>
+</div>
+<p>Sample Output:</p>
+<div class="highlight-python"><pre>name=/music/_singles/009 Sound System - With A Spirit.mp3
+
+album=Lean On Me: The Best of Bill W
+comment=
+name==/music/_singles/01 Bill Withers - Ain't No Sunshine.mp3
+title=Ain't No Sunshine
+artist=Bill Withers
+year=1980
+genre=255
+
+album=Sampler 001
+comment=
+name=/music/_singles/02 I'm Yours.mp3
+title=I'm Yours
+artist=Jason Mraz
+year=2005
+genre=17
+
+album=State of Grace - Single
+comment=
+name=/music/_singles/Taylor Swift - State of Grace.mp3
+title=State of Grace
+artist=Taylor Swift
+year=2012
+genre=2</pre>
+</div>
+</div>
+<div class="section" id="importing-modules-using-from-module-import">
+<span id="import-modules"></span><h2>5.2. Importing Modules Using <em>from module import</em><a class="headerlink" href="#importing-modules-using-from-module-import" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-basic-from-module-import-syntax admonition">
+<p class="first admonition-title">basic <em>from module import</em> syntax</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="c"># import UserDict from UserDict module</span>
+<span class="kn">from</span> <span class="nn">UserDict</span> <span class="kn">import</span> <span class="n">UserDict</span>
+
+<span class="c"># from UserDict module import everything</span>
+<span class="kn">from</span> <span class="nn">UserDict</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li>difference with <em>import module</em> syntax:
+the attributes and methods of the imported module types are imported directly into
+the local namespace, so they are available directly, without qualification by
+module name.</li>
+</ul>
+<p>Example 5.2 import module <em>vs</em> from module import</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [14]: </span><span class="kn">import</span> <span class="nn">types</span>
+
+<span class="gp">In [16]: </span><span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span>
+<span class="gr">Out[16]: </span><span class="n">function</span>
+
+<span class="gp">In [17]: </span><span class="n">FunctionType</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">NameError                                 Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-17-66c15b651254&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 FunctionType</span>
+
+<span class="go">NameError: name &#39;FunctionType&#39; is not defined</span>
+
+<span class="gp">In [18]: </span><span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">FunctionType</span>
+
+<span class="gp">In [20]: </span><span class="n">FunctionType</span>
+<span class="gr">Out[20]: </span><span class="n">function</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[16]:</dt>
+<dd>Note that the attribute, <tt class="docutils literal"><span class="pre">FunctionType</span></tt>, must be qualified by the module name, <tt class="docutils literal"><span class="pre">types</span></tt>.</dd>
+<dt>[17]:</dt>
+<dd><tt class="docutils literal"><span class="pre">FunctionType</span></tt> by itself has not been defined in this namespace;
+it exists only in the context of <tt class="docutils literal"><span class="pre">types</span></tt>.</dd>
+<dt>[18]:</dt>
+<dd>This syntax imports the attribute <tt class="docutils literal"><span class="pre">FunctionType</span></tt> from the <tt class="docutils literal"><span class="pre">types</span></tt> module
+directly into the local namespace.</dd>
+<dt>[20]:</dt>
+<dd>Now FunctionType can be accessed directly, without reference to <tt class="docutils literal"><span class="pre">types</span></tt>.</dd>
+</dl>
+<div class="admonition-when-to-use-from-module-import admonition">
+<p class="first admonition-title">when to use <em>from module import</em>?</p>
+<ul class="last simple">
+<li>If you will be accessing attributes and methods often and don&#8217;t want to type the module name over and      over, use <em>from module import</em></li>
+<li>If you want to selectively import some attributes and methods but not others, use <em>from module import</em></li>
+<li>If the module contains attributes or functions with the same name as ones in your module, you must
+use <em>import module</em> to avoid name conflicts.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="defining-classes">
+<span id="define-class"></span><h2>5.3. Defining Classes<a class="headerlink" href="#defining-classes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-define-class admonition">
+<p class="first admonition-title">define class</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="c"># if there is no inheritance, then the base class (include parentheses) should be omitted.</span>
+<span class="k">class</span> <span class="nc">Classname</span> <span class="p">(</span><span class="n">base</span> <span class="n">class</span><span class="p">):</span>
+    <span class="n">code</span>
+</pre></div>
+</div>
+</div>
+<p>Example 5.3 The Simplest Python Class (<strong>without inheritance</strong>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># the class, Loaf, doesn&#39;t inherit from any other class</span>
+<span class="c"># class names are capitalized</span>
+<span class="k">class</span> <span class="nc">Loaf</span><span class="p">:</span>
+    <span class="c"># placeholder: doesn&#39;t do anything</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Example 5.4 Defining the Fileinfo Class (<strong>with inheritance</strong>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># UserDict is a class that acts like a dictionary,</span>
+<span class="c"># allowing you to essentially subclass the dictionary datatype and add your own behavior</span>
+<span class="c"># There are similar classes UserList and UserString</span>
+<span class="kn">from</span> <span class="nn">UserDict</span> <span class="kn">import</span> <span class="n">UserDict</span>
+
+<span class="c"># FileInfo class is inherited from the UserDict class( which was imported from the UserDict module)</span>
+<span class="k">class</span> <span class="nc">FileInfo</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>In Python, the ancestor of a class is simply listed in parentheses immediately after the class name.
+There is no special keyword like <tt class="docutils literal"><span class="pre">extends</span></tt> in Java.</li>
+<li>Python supports multiple inheritance. In the parentheses following the class name, you can list as many
+ancestor classes as you like, separated by commas.</li>
+</ul>
+<div class="section" id="initializing-and-coding-classes">
+<h3>5.3.1 Initializing and Coding Classes<a class="headerlink" href="#initializing-and-coding-classes" title="Permalink to this headline">¶</a></h3>
+<p>Example 5.5 Initializing the FileInfo Class</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">FileInfo</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+    <span class="s">&quot;store file metadata&quot;</span>
+
+    <span class="c"># __init__ is called immediately after an instance of the class is created</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+</pre></div>
+</div>
+<div class="admonition-is-init-the-constructor-of-the-class admonition">
+<p class="first admonition-title">is __init__ the constructor of the class?</p>
+<p>It would be tempting but incorrect to call this the constructor of the class:</p>
+<ul>
+<li><p class="first">tempting:</p>
+<blockquote>
+<div><ul class="simple">
+<li>looks like a constructor (by convention, <tt class="docutils literal"><span class="pre">__init__</span></tt> is the first method dfined for the class)</li>
+<li>acts like one (it&#8217;s the first piece of code executed in a newly created instance of the class)</li>
+<li>sounds like one (&#8220;init&#8221; certainly suggest a constructor-ish nature)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">incorrect:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the object has already been constructed by the time <tt class="docutils literal"><span class="pre">__init__</span></tt> is called,
+and you already have a valid reference to the new instance of the class.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p class="last">But <tt class="docutils literal"><span class="pre">__init__</span></tt> is the closes thing you&#8217;re going to get to a constructor in Python,
+and it fills much the same role.</p>
+</div>
+<div class="admonition-self-in-argument-list admonition">
+<p class="first admonition-title">self in argument list</p>
+<p>The first argument of every class method, including <tt class="docutils literal"><span class="pre">__init__</span></tt>, is always a reference to the current
+instance of the class.</p>
+<p>By convention, this argument is always named <tt class="docutils literal"><span class="pre">self</span></tt>.</p>
+<p>In the <tt class="docutils literal"><span class="pre">__init__</span></tt> method, <tt class="docutils literal"><span class="pre">self</span></tt> referes to the newly created object;
+in other class methods, it refers to the instance whose method was called.</p>
+<p class="last">You need to specify <tt class="docutils literal"><span class="pre">self</span></tt> explicitly when defining the method,
+you do not specify it when calling the method; Python will add it for you automatically.</p>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">self</span></tt> in Python fills the role of the reserved word <tt class="docutils literal"><span class="pre">this</span></tt> in Java.</li>
+</ul>
+<p>Example 5.6 Coding the FileInfo class</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">FileInfo</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+    <span class="s">&quot;store file metadata&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c"># _init_ methods are optional, but when you define one,</span>
+        <span class="c"># you must remember to explicitly call the ancestor&#39;s __init__ method (if it defines one)</span>
+        <span class="n">UserDict</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filename</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>In general, whenever a descendant wants to extend the behavior of the ancestor, the descendant method
+must explicitly call the ancestor method at the proper time, with the proper arguments.</li>
+</ul>
+</div>
+<div class="section" id="knowing-when-to-use-self-and-init">
+<h3>5.3.2 Knowing When to Use <em>self</em> and <em>__init__</em><a class="headerlink" href="#knowing-when-to-use-self-and-init" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>When defining your class methods, you <em>must</em> explicitly list self as the first argument for each method,
+including <tt class="docutils literal"><span class="pre">__init__</span></tt>.</li>
+<li>When you call a method of an ancestor class from within your class, you <em>must</em> include <tt class="docutils literal"><span class="pre">self</span></tt> argument.</li>
+<li>When you call your class method from outside, you do not specify anything for the <tt class="docutils literal"><span class="pre">self</span></tt> argument;
+skip it entirely, and Python automatically adds the instance reference for you.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="instantiating-classes">
+<span id="instantiate-class"></span><h2>5.4. Instantiating Classes<a class="headerlink" href="#instantiating-classes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-instantiate-class admonition">
+<p class="first admonition-title">instantiate class</p>
+<p class="last">To instantiate a class, simply call the class as if it were a function,
+passing the arguments that the <tt class="docutils literal"><span class="pre">__init__</span></tt> method defines.
+The return value will be the newly created object.</p>
+</div>
+<p>Example 5.7 Creating a FileInfo Instance</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [15]: </span><span class="kn">import</span> <span class="nn">fileinfo</span>
+
+<span class="gp">In [17]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">(</span><span class="s">&quot;/home/zeyuan_hu/Music/taylor.mp3&quot;</span><span class="p">)</span>
+
+<span class="gp">In [18]: </span><span class="n">f</span><span class="o">.</span><span class="n">__class__</span>
+<span class="gr">Out[18]: </span><span class="n">fileinfo</span><span class="o">.</span><span class="n">FileInfo</span>
+
+<span class="gp">In [19]: </span><span class="n">f</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="gr">Out[19]: </span><span class="s">&#39;store file metadata&#39;</span>
+
+<span class="gp">In [20]: </span><span class="n">f</span>
+<span class="gr">Out[20]: </span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;/home/zeyuan_hu/Music/taylor.mp3&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[17]:</dt>
+<dd>You are creating an instance of the <tt class="docutils literal"><span class="pre">FileInfo</span></tt> class (defined in the <tt class="docutils literal"><span class="pre">fileinfo</span></tt> module) and
+assigning the newly created instance to the variable <tt class="docutils literal"><span class="pre">f</span></tt>.</dd>
+<dt>[17]:</dt>
+<dd>You are passing one argument, <tt class="docutils literal"><span class="pre">/home/zeyuan_hu/Music/taylor.mp3</span></tt>, which will end up as the
+<tt class="docutils literal"><span class="pre">filename</span></tt> argument in <tt class="docutils literal"><span class="pre">Fileinfo</span></tt>&#8216;s <tt class="docutils literal"><span class="pre">__init__</span></tt> method.</dd>
+<dt>[18]:</dt>
+<dd>Every class instance has a built-in attribute, <tt class="docutils literal"><span class="pre">__class__</span></tt>, which is the object&#8217;s class</dd>
+</dl>
+</div>
+<div class="section" id="exploring-userdict-a-wrapper-class">
+<span id="explore-userdict"></span><h2>5.5. Exploring UserDict: A Wrapper Class<a class="headerlink" href="#exploring-userdict-a-wrapper-class" title="Permalink to this headline">¶</a></h2>
+<p>As you&#8217;ve seen, <tt class="docutils literal"><span class="pre">FileInfo</span></tt> is a class that acts like a dictionary. To explore this further, let&#8217;s look at
+the <tt class="docutils literal"><span class="pre">UserDict</span></tt> class in the <tt class="docutils literal"><span class="pre">UserDict</span></tt> module, which is the ancestor of the <tt class="docutils literal"><span class="pre">FileInfo</span></tt> class.</p>
+<p>Example 5.9 Defining the UserDict Class</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># UserDict is a base class, not inherited from any other class</span>
+<span class="k">class</span> <span class="nc">UserDict</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[3]:</dt>
+<dd>This is the <tt class="docutils literal"><span class="pre">__init__</span></tt> method that you overrode in the <tt class="docutils literal"><span class="pre">FileInfo</span></tt> class.
+Note that the argument list in this ancestor class is different than the descendant.
+That&#8217;s OK; each subclass can have its own set of arguments, as long as it calls the ancestor with
+the correct arguments. Here the ancestor class has a way to define initial values (by passing a
+dictionary in the <tt class="docutils literal"><span class="pre">dict</span></tt> argument) which the <tt class="docutils literal"><span class="pre">FileInfo</span></tt> does not use.</dd>
+<dt>[4]:</dt>
+<dd><div class="admonition-data-attributes-instance-variables first admonition">
+<p class="first admonition-title">data attributes (instance variables)</p>
+<ul class="last">
+<li><p class="first">Python supports data attributes (called &#8220;instance variables&#8221; in Java).</p>
+</li>
+<li><p class="first">Data attributes are pieces of data held by a specific instance of a class.</p>
+</li>
+<li><p class="first">In this case, each instance of <tt class="docutils literal"><span class="pre">UserDict</span></tt> will have a data attribute <tt class="docutils literal"><span class="pre">data</span></tt>.</p>
+</li>
+<li><p class="first">To reference a data attribute:</p>
+<blockquote>
+<div><ul class="simple">
+<li>from code outside the class, you qualify it with the instance name, <tt class="docutils literal"><span class="pre">instance.data</span></tt>, in
+the same way that you qualify a function with its module name.</li>
+<li>from within the class, you use <tt class="docutils literal"><span class="pre">self</span></tt> as the qualifier.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">By convention, all data attributes are initialized to reasonable values in the <tt class="docutils literal"><span class="pre">__init__</span></tt>
+method.</p>
+</li>
+</ul>
+</div>
+<div class="last admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Always assign an initial value to all of an instance&#8217;s data attributes in the <tt class="docutils literal"><span class="pre">__init__</span></tt> method.
+It will save you hours of debugging later, tracking down <tt class="docutils literal"><span class="pre">AttributeError</span></tt> exceptions because
+you&#8217;re referencing uninitialized (and therefore non-existent) attributes.</p>
+</div>
+</dd>
+<dt>[5]:</dt>
+<dd><p class="first">The <tt class="docutils literal"><span class="pre">update</span></tt> method is a dictionary duplicator:</p>
+<ul class="simple">
+<li>it copies all the keys and values from one dictionary to another.</li>
+<li>this does <em>not</em> clear the target dictionary first; if the target dictionary already has some keys,
+the ones from the source dictionary will be overwritten, but others will be left untouched.</li>
+</ul>
+<p class="last">Think of <tt class="docutils literal"><span class="pre">update</span></tt> as a merge function, not a copy function.</p>
+</dd>
+<dt>[5]:</dt>
+<dd>a shortcut syntax you can use when you have only one statement in a block.</dd>
+</dl>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Unlike Java, Python does <em>not</em> support <strong>function overloading by argument list</strong>
+(<em>i.e.</em> one class have multiple methods with the same name but a different number of arguments,
+or arguments of different types.): it has no form of function overloadng whatsoever.
+Method are defined solely by their name, and there can be only one method per class with a given name.</p>
+<p class="last">So, if a descendant class has an <tt class="docutils literal"><span class="pre">__init__</span></tt> method, it <em>always</em> overrides the ancestor <tt class="docutils literal"><span class="pre">__init__</span></tt>
+method, even if the descendant defines it with a different argument list. And the same rule applies to
+any other method.</p>
+</div>
+<p>Example 5.10 <tt class="docutils literal"><span class="pre">UserDict</span></tt> Normal Methods (wrapper class methods)</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span> <span class="ow">is</span> <span class="n">UserDict</span><span class="p">:</span>
+         <span class="k">return</span> <span class="n">UserDict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">copy</span>
+    <span class="k">return</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd><tt class="docutils literal"><span class="pre">clear</span></tt> is a normal class method; it is publicly available to be called by anyone at any time.
+Notice that <tt class="docutils literal"><span class="pre">clear</span></tt>, like all class methods, has <tt class="docutils literal"><span class="pre">self</span></tt> as its first argument.</dd>
+<dt>[1]:</dt>
+<dd><p class="first">tha basic technique of this wrapper class:</p>
+<blockquote class="last">
+<div>store a real dictionary (<tt class="docutils literal"><span class="pre">data</span></tt>) as a data attribute, define all the methods that a real
+dictionary has, and have each class method redirect to the corresponding method on the real
+dictionary.</div></blockquote>
+</dd>
+<dt>[3]:</dt>
+<dd>the <tt class="docutils literal"><span class="pre">copy</span></tt> method of a real dictionary returns a new dictionary that is an exact duplicate of the
+original (all the same key-value pairs). But <tt class="docutils literal"><span class="pre">UserDict</span></tt> can&#8217;t simply redirect to <tt class="docutils literal"><span class="pre">self.data.copy</span></tt>,
+because that method returns a real dictionary, and what you want is to return a new instance that is
+the same class as <tt class="docutils literal"><span class="pre">self</span></tt></dd>
+<dt>[3]:</dt>
+<dd><p class="first">You use the <tt class="docutils literal"><span class="pre">__class__</span></tt> attribute to see if <tt class="docutils literal"><span class="pre">self</span></tt> is a <tt class="docutils literal"><span class="pre">UserDict</span></tt>:</p>
+<blockquote class="last">
+<div><ul>
+<li><p class="first">if so, you&#8217;re golden, because you know how to copy a <tt class="docutils literal"><span class="pre">UserDict</span></tt>:</p>
+<blockquote>
+<div><p>just create a new <tt class="docutils literal"><span class="pre">UserDict</span></tt> and give it the real dictionary that you&#8217;ve squirreled away
+in <tt class="docutils literal"><span class="pre">self.data</span></tt>. Then you immediately return the new <tt class="docutils literal"><span class="pre">UserDict</span></tt>.</p>
+</div></blockquote>
+</li>
+<li><p class="first">if <tt class="docutils literal"><span class="pre">self.__class__</span></tt> is not <tt class="docutils literal"><span class="pre">UserDict</span></tt>, then <tt class="docutils literal"><span class="pre">self</span></tt> must be some subclass of <tt class="docutils literal"><span class="pre">UserDict</span></tt>
+(like maybe <tt class="docutils literal"><span class="pre">FileInfo</span></tt>). <tt class="docutils literal"><span class="pre">UserDict</span></tt> doesn&#8217;t know how to make an exact copy of one of its
+descendants; there could, for instance, be other data attributes defined in the subclass, so
+you would need to iterate through them and make sure to copy all of them:</p>
+<blockquote>
+<div><p>Luckily, Python comes with a module to do exactly this, and it&#8217;s called <tt class="docutils literal"><span class="pre">copy</span></tt>. <tt class="docutils literal"><span class="pre">copy</span></tt> can
+copy arbitrary Python objects, and that&#8217;s how you&#8217;re using it here.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+<div class="admonition-about-userdict admonition">
+<p class="first admonition-title">about UserDict</p>
+<p>In versions of Python prior to 2.2, you could not directly subclass built-in datatypes like strings,
+lists, and dictionaries. To compensate for this, Python comes with wrapper classes that mimic the
+behavior of these built-in datatypes: <tt class="docutils literal"><span class="pre">UserString</span></tt>, <tt class="docutils literal"><span class="pre">UserList</span></tt>, <tt class="docutils literal"><span class="pre">UserDict</span></tt>.</p>
+<p>In Python 2.2 and later, you can inherit classes directly from built-in datatypes like <tt class="docutils literal"><span class="pre">dict</span></tt>.</p>
+<p class="last">This can be seen in <tt class="docutils literal"><span class="pre">fileinfo_fromdict.py</span></tt>
+(download <a class="reference external" href="../../../_static/projects/notes/diveintopython/py/fileinfo_fromdict.py">here</a>)</p>
+</div>
+<p>Example 5.11 Inheriting Directly from Built-In Datatype dict</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="hll"><span class="k">class</span> <span class="nc">FileInfo</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+</span>    <span class="s">&quot;store file metadata&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filename</span>
+</pre></div>
+</td></tr></table></div>
+<p>Example 5.6 Inheriting from UserDict class</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="hll"><span class="k">class</span> <span class="nc">FileInfo</span><span class="p">(</span><span class="n">UserDict</span><span class="p">):</span>
+</span>    <span class="s">&quot;store file metadata&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="hll">        <span class="n">UserDict</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span>        <span class="bp">self</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filename</span>
+</pre></div>
+</td></tr></table></div>
+<p>difference with <tt class="docutils literal"><span class="pre">UserDict</span></tt> version:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">You don&#8217;t need to import the <tt class="docutils literal"><span class="pre">UserDict</span></tt> module, since <tt class="docutils literal"><span class="pre">dict</span></tt> is a built-in datatype and
+is always available.</p>
+</li>
+<li><p class="first">You are inheriting from <tt class="docutils literal"><span class="pre">dict</span></tt> directly, instead of from <tt class="docutils literal"><span class="pre">UserDict.UserDict</span></tt>.</p>
+</li>
+<li><p class="first">Because of the way <tt class="docutils literal"><span class="pre">UserDict</span></tt> works internally, it requires you to manually call its <tt class="docutils literal"><span class="pre">__init__</span></tt>
+method to properly initialize its internal data structures.</p>
+<p><tt class="docutils literal"><span class="pre">dict</span></tt> does not work like this; it is not a wrapper, and it requires no explicitly initialization.</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="special-class-methods">
+<span id="special-class-method"></span><h2>5.6. Special Class Methods<a class="headerlink" href="#special-class-methods" title="Permalink to this headline">¶</a></h2>
+<p>In addition to normal class methods, there are a number of special methods that Python classes can define.</p>
+<p>Instead of being called directly by your code (like normal methods), special methods are called for you by
+Python in particular cirmustances or when specific syntax is used.</p>
+<dl class="docutils">
+<dt><em>key idea</em> of special class methods:</dt>
+<dd>provide a way to map non-method-calling syntax into method calls</dd>
+</dl>
+<div class="section" id="getting-and-setting-items">
+<h3>5.6.1 Getting and Setting Items<a class="headerlink" href="#getting-and-setting-items" title="Permalink to this headline">¶</a></h3>
+<p>Example 5.12 The <tt class="docutils literal"><span class="pre">__grtitem__</span></tt> Special Method</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [38]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">(</span><span class="s">&quot;./Taylor Swift - State of Grace.mp3&quot;</span><span class="p">)</span>
+
+<span class="gp">In [39]: </span><span class="n">f</span>
+<span class="gr">Out[39]: </span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;./Taylor Swift - State of Grace.mp3&#39;</span><span class="p">}</span>
+
+<span class="gp">In [40]: </span><span class="n">f</span><span class="o">.</span><span class="n">__getitem__</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">)</span>
+<span class="gr">Out[40]: </span><span class="s">&#39;./Taylor Swift - State of Grace.mp3&#39;</span>
+
+<span class="gp">In [41]: </span><span class="n">f</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span>
+<span class="gr">Out[41]: </span><span class="s">&#39;./Taylor Swift - State of Grace.mp3&#39;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[40]:</dt>
+<dd>Well, you can call __getitem__ directly, but in practice you wouldn&#8217;t actually do that; I&#8217;m just doing
+it here to show you how it works. The right way to use <tt class="docutils literal"><span class="pre">__getitem__</span></tt> is to get Python to call it for
+you.</dd>
+<dt>[41]:</dt>
+<dd>This looks just like syntax you would use to get a dictionary value, and in fact it returns the value
+you would expect. But here&#8217;s the missing link: under the covers, Python has converted this syntax to
+the method call <tt class="docutils literal"><span class="pre">f.__getitem__(&quot;name&quot;)</span></tt>. That&#8217;s why <tt class="docutils literal"><span class="pre">__getitem__</span></tt> is a special class method; not
+only can you call it yourself, you can get Python to call it for you by using the right syntax.</dd>
+</dl>
+<p>Example 5.13 The <tt class="docutils literal"><span class="pre">__setitem__</span></tt> Special Method</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [42]: </span><span class="n">f</span> <span class="o">=</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">FileInfo</span><span class="p">(</span><span class="s">&quot;./Taylor Swift - State of Grace.mp3&quot;</span><span class="p">)</span>
+
+<span class="gp">In [43]: </span><span class="n">f</span><span class="o">.</span><span class="n">__setitem__</span><span class="p">(</span><span class="s">&quot;genre&quot;</span><span class="p">,</span><span class="mi">31</span><span class="p">)</span>
+
+<span class="gp">In [44]: </span><span class="n">f</span>
+<span class="gr">Out[44]: </span><span class="p">{</span><span class="s">&#39;genre&#39;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;./Taylor Swift - State of Grace.mp3&#39;</span><span class="p">}</span>
+
+<span class="gp">In [45]: </span><span class="n">f</span><span class="p">[</span><span class="s">&quot;genre&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">32</span>
+
+<span class="gp">In [46]: </span><span class="n">f</span>
+<span class="gr">Out[46]: </span><span class="p">{</span><span class="s">&#39;genre&#39;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;./Taylor Swift - State of Grace.mp3&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">__setitem__</span></tt> is a special class method because it gets called for you, but it&#8217;s still a class method.
+Just as easily as the <tt class="docutils literal"><span class="pre">__setitem__</span></tt> method was defined in <tt class="docutils literal"><span class="pre">UserDict</span></tt>, you can redefine it in the
+descendant class to override the ancestor method. This allows you to define classes that act like
+dictionaries in some ways but define their own behavior above and beyong the built-in dictionary.</p>
+<p>Example 5.14 Overriding <tt class="docutils literal"><span class="pre">__setitem__</span></tt> in <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt></p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s">&quot;name&quot;</span> <span class="ow">and</span> <span class="n">item</span><span class="p">:</span>
+         <span class="bp">self</span><span class="o">.</span><span class="n">__parse</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="n">FileInfo</span><span class="o">.</span><span class="n">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd>Notice that this <tt class="docutils literal"><span class="pre">__setitem__</span></tt> method is defined exactly the same way as the ancestor method.
+(override)</dd>
+<dt>[3]:</dt>
+<dd>This is another class method defined in <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>, and when you call it, you qualify it with
+<tt class="docutils literal"><span class="pre">self</span></tt>. Just calling <tt class="docutils literal"><span class="pre">__parse</span></tt> would look for a normal function defined outside the class, which
+is not what you want. Calling <tt class="docutils literal"><span class="pre">self.__parse</span></tt> will look for a class method defined within the class.</dd>
+<dt>[4]:</dt>
+<dd>After doing this extra processing, you want to call the ancestor method. Remember that this is never
+done for you in Python; you must do it manually. Note that you&#8217;re calling the immediate ancestor,
+<tt class="docutils literal"><span class="pre">FileInfo</span></tt>, wven though it doesn&#8217;t have a <tt class="docutils literal"><span class="pre">__setitem__</span></tt> methd. That&#8217;s okay, because Python will
+walk up the ancestor tree until it finds a class with the method you&#8217;re calling, so this line of code
+will eventually find and call the <tt class="docutils literal"><span class="pre">__setitem__</span></tt> defined in <tt class="docutils literal"><span class="pre">UserDict</span></tt>.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When accessing data attribute within a class, you need to qualify the attribute name:
+<tt class="docutils literal"><span class="pre">self.attribute</span></tt>. When calling other methods within a class, you need to qualify the method name:
+<tt class="docutils literal"><span class="pre">self.method</span></tt>.</p>
+</div>
+<p>Example 5.15 Setting an <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>&#8216;s name</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [48]: </span><span class="kn">import</span> <span class="nn">fileinfo</span>
+
+<span class="gp">In [49]: </span><span class="n">mp3file</span> <span class="o">=</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">MP3FileInfo</span><span class="p">()</span>
+
+<span class="gp">In [50]: </span><span class="n">mp3file</span>
+<span class="gr">Out[50]: </span><span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="bp">None</span><span class="p">}</span>
+
+<span class="gp">In [51]: </span><span class="n">mp3file</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;./Taylor Swift - State of Grace.mp3&quot;</span>
+
+<span class="gp">In [52]: </span><span class="n">mp3file</span>
+<span class="gr">Out[52]: </span><span class="p">{</span><span class="s">&#39;album&#39;</span><span class="p">:</span> <span class="s">&#39;State of Grace - Single&#39;</span><span class="p">,</span> <span class="s">&#39;comment&#39;</span><span class="p">:</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+<span class="go">          &#39;name&#39;: &#39;./Taylor Swift - State of Grace.mp3&#39;, &#39;title&#39;: &#39;State of Grace&#39;,</span>
+<span class="go">          &#39;artist&#39;: &#39;Taylor Swift&#39;, &#39;year&#39;: &#39;2012&#39;, &#39;genre&#39;: 2}</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[49]:</dt>
+<dd>First you create an instance of <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>, without passing it a filename. Since <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>
+has no <tt class="docutils literal"><span class="pre">__init__</span></tt> method of its own, Python walks up the ancestor tree and finds the <tt class="docutils literal"><span class="pre">__init__</span></tt>
+method of <tt class="docutils literal"><span class="pre">FileInfo</span></tt>. This <tt class="docutils literal"><span class="pre">__init__</span></tt> method manually calls the <tt class="docutils literal"><span class="pre">__init__</span></tt> method of
+<tt class="docutils literal"><span class="pre">UserDict</span></tt> and then sets the <tt class="docutils literal"><span class="pre">name</span></tt> key to <tt class="docutils literal"><span class="pre">filename</span></tt>, which is <tt class="docutils literal"><span class="pre">None</span></tt>, since you didn&#8217;t pass
+a filename. Thus, <tt class="docutils literal"><span class="pre">mp3file</span></tt> initially looks like a dictionary with one key, <tt class="docutils literal"><span class="pre">name</span></tt>, whose value is
+<tt class="docutils literal"><span class="pre">None</span></tt>.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="advanced-special-class-methods">
+<span id="id2"></span><h2>5.7. Advanced Special Class Methods<a class="headerlink" href="#advanced-special-class-methods" title="Permalink to this headline">¶</a></h2>
+<p>Python has more special methods than just <tt class="docutils literal"><span class="pre">__getitem__</span></tt> and <tt class="docutils literal"><span class="pre">__setitem__</span></tt>.</p>
+<p>This example shows some of the other special methods in <tt class="docutils literal"><span class="pre">UserDict</span></tt>.</p>
+<p>Example 5.16 More Special Methods in <tt class="docutils literal"><span class="pre">UserDict</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># __repr__ is called when you call repr(instance)</span>
+<span class="c"># repr function is a built-in function that returns a string representation of an object</span>
+<span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c"># __cmp__ is called when you compare class instances by using &quot;==&quot;</span>
+<span class="k">def</span> <span class="nf">__cmp__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">UserDict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">cmp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
+
+<span class="c"># __len__ is called when you call len(instance)</span>
+<span class="c"># len function is a built-in function that returns the length of an object</span>
+<span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c"># __delitem__ is called when you call del instance[key]</span>
+<span class="k">def</span> <span class="nf">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span> <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>the difference between Java and Python in terms of string comparison</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="40%" />
+<col width="35%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">&nbsp;</th>
+<th class="head">Java</th>
+<th class="head">Python</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>object identity *</td>
+<td>str1 == str2</td>
+<td>str1 is str2</td>
+</tr>
+<tr class="row-odd"><td>cmp string values</td>
+<td>str1.equals(str2)</td>
+<td>str1 == str2</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p class="last">*: determine whether two string variables reference the same physcial memory location</p>
+</div>
+</div>
+<div class="section" id="introducing-class-attributes">
+<span id="class-attribute"></span><h2>5.8. Introducing Class Attributes<a class="headerlink" href="#introducing-class-attributes" title="Permalink to this headline">¶</a></h2>
+<p>data attributes: variables owned by a specific instance of a class.</p>
+<p>class attributes: variables owned by the class itself.</p>
+<p>Example 5.17 Introducing Class Attributes</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MP3FileInfo</span><span class="p">(</span><span class="n">FileInfo</span><span class="p">):</span>
+    <span class="s">&quot;store ID3v1.0 MP3 tags&quot;</span>
+    <span class="n">tagDataMap</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;title&quot;</span>   <span class="p">:</span> <span class="p">(</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">33</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;artist&quot;</span>  <span class="p">:</span> <span class="p">(</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;album&quot;</span>   <span class="p">:</span> <span class="p">(</span> <span class="mi">63</span><span class="p">,</span>  <span class="mi">93</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;year&quot;</span>    <span class="p">:</span> <span class="p">(</span> <span class="mi">93</span><span class="p">,</span>  <span class="mi">97</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;comment&quot;</span> <span class="p">:</span> <span class="p">(</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+                  <span class="s">&quot;genre&quot;</span>   <span class="p">:</span> <span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)}</span>
+</pre></div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [53]: </span><span class="kn">import</span> <span class="nn">fileinfo</span>
+
+<span class="gp">In [54]: </span><span class="n">fileinfo</span><span class="o">.</span><span class="n">MP3FileInfo</span>
+<span class="gr">Out[54]: </span><span class="n">fileinfo</span><span class="o">.</span><span class="n">MP3FileInfo</span>
+
+<span class="gp">In [55]: </span><span class="n">fileinfo</span><span class="o">.</span><span class="n">MP3FileInfo</span><span class="o">.</span><span class="n">tagDataMap</span>
+<span class="gr">Out[55]: </span><span class="p">{</span><span class="s">&#39;album&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">stripnulls</span><span class="o">&gt;</span><span class="p">),</span>
+<span class="go">          &#39;artist&#39;: (33, 63, &lt;function fileinfo.stripnulls&gt;),</span>
+<span class="go">          &#39;comment&#39;: (97, 126, &lt;function fileinfo.stripnulls&gt;),</span>
+<span class="go">          &#39;genre&#39;: (127, 128, &lt;function ord&gt;),</span>
+<span class="go">          &#39;title&#39;: (3, 33, &lt;function fileinfo.stripnulls&gt;),</span>
+<span class="go">          &#39;year&#39;: (93, 97, &lt;function fileinfo.stripnulls&gt;)}</span>
+
+<span class="gp">In [56]: </span><span class="n">m</span> <span class="o">=</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">MP3FileInfo</span><span class="p">()</span>
+
+<span class="gp">In [57]: </span><span class="n">m</span><span class="o">.</span><span class="n">tagDataMap</span>
+<span class="gr">Out[57]: </span><span class="p">{</span><span class="s">&#39;album&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">stripnulls</span><span class="o">&gt;</span><span class="p">),</span>
+<span class="go">          &#39;artist&#39;: (33, 63, &lt;function fileinfo.stripnulls&gt;),</span>
+<span class="go">          &#39;comment&#39;: (97, 126, &lt;function fileinfo.stripnulls&gt;),</span>
+<span class="go">          &#39;genre&#39;: (127, 128, &lt;function ord&gt;),</span>
+<span class="go">          &#39;title&#39;: (3, 33, &lt;function fileinfo.stripnulls&gt;),</span>
+<span class="go">          &#39;year&#39;: (93, 97, &lt;function fileinfo.stripnulls&gt;)}</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[54]:</dt>
+<dd><tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt> is the class itself, not any particular instance of the class.</dd>
+<dt>[55]:</dt>
+<dd><tt class="docutils literal"><span class="pre">tagDataMap</span></tt> is a class attribute: literally, an attribute of the class. It is available before
+creating any instance of the class.</dd>
+<dt>[56]:</dt>
+<dd>Class attributes are available both through direct reference to the class and through any instance of
+the class.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last">
+<li><p class="first">comparison with Java:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Java:</p>
+<blockquote>
+<div><p>both static variables (called class attributes in Python) and instance variables (called
+data attributes in Python) are defined immediately after the class definition (one with
+the <tt class="docutils literal"><span class="pre">static</span></tt> keyword, one without).</p>
+</div></blockquote>
+</li>
+<li><p class="first">Python:</p>
+<blockquote>
+<div><p>only class attributes can be defined here; data attributes are defined in the <tt class="docutils literal"><span class="pre">__init__</span></tt>
+method.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Class attributes can be used as class-level constants, but they are not really constants. You can also
+change them.</p>
+</li>
+</ul>
+</div>
+<p>Example 5.18 Modifying Class Attributes</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [58]: </span><span class="k">class</span> <span class="nc">counter</span><span class="p">:</span>
+<span class="go">    ...:     count = 0</span>
+<span class="go">    ...:     def __init__(self):</span>
+<span class="hll"><span class="go">    ...:         self.__class__.count += 1</span>
+</span><span class="go">    ...:</span>
+
+<span class="gp">In [59]: </span><span class="n">counter</span>
+<span class="gr">Out[59]: </span><span class="n">__main__</span><span class="o">.</span><span class="n">counter</span>
+
+<span class="gp">In [60]: </span><span class="n">counter</span><span class="o">.</span><span class="n">count</span>
+<span class="gr">Out[60]: </span><span class="mi">0</span>
+
+<span class="gp">In [61]: </span><span class="n">c</span> <span class="o">=</span> <span class="n">counter</span><span class="p">()</span>
+
+<span class="gp">In [62]: </span><span class="n">c</span><span class="o">.</span><span class="n">count</span>
+<span class="gr">Out[62]: </span><span class="mi">1</span>
+
+<span class="gp">In [63]: </span><span class="n">counter</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[63]: </span><span class="mi">1</span>
+</span>
+<span class="gp">In [64]: </span><span class="n">d</span> <span class="o">=</span> <span class="n">counter</span><span class="p">()</span>
+
+<span class="gp">In [65]: </span><span class="n">d</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[65]: </span><span class="mi">2</span>
+</span>
+<span class="gp">In [66]: </span><span class="n">c</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[66]: </span><span class="mi">2</span>
+</span>
+<span class="gp">In [67]: </span><span class="n">counter</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[67]: </span><span class="mi">2</span>
+</span></pre></div>
+</div>
+<dl class="docutils">
+<dt>[58]:</dt>
+<dd><ul class="first last">
+<li><p class="first"><tt class="docutils literal"><span class="pre">count</span></tt> is a class attribute of the <tt class="docutils literal"><span class="pre">counter</span></tt> class</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">__class__</span></tt> is a built-in attribute of every class instance (of every class). It is a reference
+to the class that <tt class="docutils literal"><span class="pre">self</span></tt> is an instance of (in this case, the <tt class="docutils literal"><span class="pre">counter</span></tt> class).</p>
+<p>if <tt class="docutils literal"><span class="pre">self.__class__.count</span> <span class="pre">+=</span> <span class="pre">1</span></tt> changes to <tt class="docutils literal"><span class="pre">self.count</span> <span class="pre">+=</span> <span class="pre">1</span></tt>, then the class attribute (<tt class="docutils literal"><span class="pre">count</span></tt>)
+would not be affected by the change made by the class instance</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [68]: </span><span class="k">class</span> <span class="nc">counter</span><span class="p">:</span>
+<span class="go">    ...:     count = 0</span>
+<span class="go">    ...:     def __init__(self):</span>
+<span class="hll"><span class="go">    ...:         self.count += 1</span>
+</span><span class="go">    ...:</span>
+
+<span class="gp">In [69]: </span><span class="n">counter</span>
+<span class="gr">Out[69]: </span><span class="n">__main__</span><span class="o">.</span><span class="n">counter</span>
+
+<span class="gp">In [70]: </span><span class="n">counter</span><span class="o">.</span><span class="n">count</span>
+<span class="gr">Out[70]: </span><span class="mi">0</span>
+
+<span class="gp">In [71]: </span><span class="n">c</span> <span class="o">=</span> <span class="n">counter</span><span class="p">()</span>
+
+<span class="gp">In [72]: </span><span class="n">c</span><span class="o">.</span><span class="n">count</span>
+<span class="gr">Out[72]: </span><span class="mi">1</span>
+
+<span class="gp">In [73]: </span><span class="n">counter</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[73]: </span><span class="mi">0</span>
+</span>
+<span class="gp">In [74]: </span><span class="n">d</span> <span class="o">=</span> <span class="n">counter</span><span class="p">()</span>
+
+<span class="gp">In [75]: </span><span class="n">d</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[75]: </span><span class="mi">1</span>
+</span>
+<span class="gp">In [76]: </span><span class="n">c</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[76]: </span><span class="mi">1</span>
+</span>
+<span class="gp">In [77]: </span><span class="n">counter</span><span class="o">.</span><span class="n">count</span>
+<span class="hll"><span class="gr">Out[77]: </span><span class="mi">0</span>
+</span></pre></div>
+</div>
+</li>
+</ul>
+</dd>
+<dt>[60]:</dt>
+<dd>Because <tt class="docutils literal"><span class="pre">count</span></tt> is a class attribute, it is available through direct reference to the class, before you have created any
+instance of the class.</dd>
+<dt>[62]:</dt>
+<dd><p class="first">Creating an instance of the class calls the <tt class="docutils literal"><span class="pre">__init__</span></tt> method, which increments the class attribute <tt class="docutils literal"><span class="pre">count</span></tt> by 1.
+This affects the class itself, not just the newly created instance.</p>
+<p class="last">( This only because <tt class="docutils literal"><span class="pre">self.__class__.count</span> <span class="pre">+=</span> <span class="pre">1</span></tt>, if <tt class="docutils literal"><span class="pre">self.count</span> <span class="pre">+=</span> <span class="pre">1</span></tt>, then the class itself would <em>not</em> be affected.)</p>
+</dd>
+<dt>[64]:</dt>
+<dd>Creating a second instance will increment the class attribute <tt class="docutils literal"><span class="pre">count</span></tt> again. Notice how the class attribute is shared by
+the class and all instances of the class.</dd>
+</dl>
+</div>
+<div class="section" id="private-functions">
+<span id="private-func"></span><h2>5.9. Private Functions<a class="headerlink" href="#private-functions" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-how-to admonition">
+<p class="first admonition-title">how to</p>
+<p>If the name of a Python function, class method, or attribute starts with (<em>but doesn&#8217;t end with</em>) two underscores, it&#8217;s private;
+everything else is public.</p>
+<p class="last">i.e., In <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>, there are two methods: <tt class="docutils literal"><span class="pre">__parse</span></tt> and <tt class="docutils literal"><span class="pre">__setitem__</span></tt>. <tt class="docutils literal"><span class="pre">__parse</span></tt> is private, and <tt class="docutils literal"><span class="pre">__setitem__</span></tt> is
+public.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>In Python, all special methods (like <tt class="docutils literal"><span class="pre">__setitem__</span></tt>) and built-in attributes (like <tt class="docutils literal"><span class="pre">__doc__</span></tt>) follows a standard naming
+convention: they both starts with and end with two underscores.</p>
+<p class="last">Don&#8217;t name your own methods and attributes this way, because it will only confuse you later.</p>
+</div>
+<p>Example 5.19 Trying to Call a Private Method</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [78]: </span><span class="kn">import</span> <span class="nn">fileinfo</span>
+
+<span class="gp">In [79]: </span><span class="n">m</span> <span class="o">=</span> <span class="n">fileinfo</span><span class="o">.</span><span class="n">MP3FileInfo</span><span class="p">()</span>
+
+<span class="gp">In [80]: </span><span class="n">m</span><span class="o">.</span><span class="n">__parse</span><span class="p">(</span><span class="s">&quot;./Taylor Swift - State of Grace.mp3&quot;</span><span class="p">)</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">AttributeError                            Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-80-0195c2d23a2c&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 m.__parse(&quot;./Taylor Swift - State of Grace.mp3&quot;)</span>
+
+<span class="go">AttributeError: MP3FileInfo instance has no attribute &#39;__parse&#39;</span>
+
+<span class="gp">In [81]: </span><span class="n">m</span><span class="o">.</span><span class="n">_MP3FileInfo__parse</span><span class="p">(</span><span class="s">&quot;./Taylor Swift - State of Grace.mp3&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[80]:</dt>
+<dd>If you try to call a private method, Python will raise a slightly misleading exception, saying that the method does not exist.</dd>
+<dt>[81]:</dt>
+<dd>Strictly speaking, private methods are accessible outside their class, just not <em>easily</em> accessible.
+Nothing in Python is truly privatel internally, the names of private methods and attributes are mangled and unmangled on the fly
+to make them seem inaccessible by their given name.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap6.html" title="Exceptions and File Handling"
+             >next</a></li>
+        <li class="right" >
+          <a href="chap4.html" title="The power of Introspection"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" >Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Jan 19, 2013.
+    </div>
+  </body>
+</html>

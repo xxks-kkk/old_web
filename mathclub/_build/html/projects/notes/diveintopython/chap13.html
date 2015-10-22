@@ -1,0 +1,938 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Unit Testing &mdash; Math Club&#39;s Home</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Math Club&#39;s Home" href="../../../index.html" />
+    <link rel="up" title="Dive into Python Study Notes" href="diveintopython.html" />
+    <link rel="next" title="HTML Processing" href="chap8.html" />
+    <link rel="prev" title="Regular Expression" href="chap7.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap8.html" title="HTML Processing"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="chap7.html" title="Regular Expression"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" accesskey="U">Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Unit Testing</a><ul>
+<li><a class="reference internal" href="#introduction-to-roman-numerals">13.1 Introduction to Roman numerals</a><ul>
+<li><a class="reference internal" href="#basic-rules-in-roman-numerals">13.1.0 Basic Rules in Roman numerals</a></li>
+<li><a class="reference internal" href="#observations">13.1.1 Observations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#introduction-to-unit-testing">13.2 Introduction to Unit Testing</a></li>
+<li><a class="reference internal" href="#introducing-romantest-py">13.3 Introducing <tt class="docutils literal"><span class="pre">romantest.py</span></tt></a></li>
+<li><a class="reference internal" href="#testing-for-success">13.4 Testing for success</a></li>
+<li><a class="reference internal" href="#testing-for-failure">13.5 Testing for failure</a></li>
+<li><a class="reference internal" href="#testing-for-sanity">13.6 Testing for Sanity</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chap7.html"
+                        title="previous chapter">Regular Expression</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="chap8.html"
+                        title="next chapter">HTML Processing</a></p>
+    <h4>About this site</h4>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h4>search this site</h4>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="unit-testing">
+<span id="chap13"></span><h1>Unit Testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h1>
+<p>In the next few chapters, you&#8217;re going to write, debug, and optimize a set of utility functions
+to convert to and from Roman numerals.</p>
+<div class="section" id="introduction-to-roman-numerals">
+<span id="intro-to-roman-numerals"></span><h2>13.1 Introduction to Roman numerals<a class="headerlink" href="#introduction-to-roman-numerals" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="basic-rules-in-roman-numerals">
+<h3>13.1.0 Basic Rules in Roman numerals<a class="headerlink" href="#basic-rules-in-roman-numerals" title="Permalink to this headline">¶</a></h3>
+<p>see <a class="reference internal" href="chap7.html#case-study-roman"><em>Case Study: Roman numerals</em></a> in Section 7.3</p>
+</div>
+<div class="section" id="observations">
+<h3>13.1.1 Observations<a class="headerlink" href="#observations" title="Permalink to this headline">¶</a></h3>
+<p>The rules for Roman numerals lead to a number of interesting observations:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>There is only one correct way to represent a particular number as Roman numerals.</li>
+<li>The converse is also true: if a string of characters is a valid Roman numeral, it represents only one number
+(<em>i.e.</em> it can only be read one way).</li>
+<li>There is a limited range of numbers that can be expressed as Roman numerals, specifically <tt class="docutils literal"><span class="pre">1</span></tt> through <tt class="docutils literal"><span class="pre">3999</span></tt>. <a class="footnote-reference" href="#id8" id="id1">[1]</a> <a class="footnote-reference" href="#id9" id="id2">[2]</a></li>
+<li>There is no way to represent 0 in Roman numerals.</li>
+<li>There is no way to represent negative numbers in Roman numerals.</li>
+<li>There is no way to represent fractions or non-integer numbers in Roman numerals. <a class="footnote-reference" href="#id10" id="id3">[3]</a></li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="introduction-to-unit-testing">
+<span id="intro-to-unit-testing"></span><h2>13.2 Introduction to Unit Testing<a class="headerlink" href="#introduction-to-unit-testing" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Unit Testing:</dt>
+<dd><ol class="first last arabic">
+<li><p class="first">basic idea:</p>
+<blockquote>
+<div><p>you&#8217;re going to write a test suite that puts these functions through their paces and makes
+sure that they behave the way you want them to.
+(In other words, you&#8217;re going to write code that tests code that you haven&#8217;t written yet.)</p>
+</div></blockquote>
+</li>
+<li><p class="first">what&#8217;s &#8220;Unit&#8221;?</p>
+<blockquote>
+<div><p>Since the set of two conversion functions can be written and tested as a unit,
+separate from any larger program they may become part of later.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Why it&#8217;s important?</p>
+<blockquote>
+<div><p>If you write unit tests, it is important to write them early (perferably before writing the
+code that they test), and to keep them updated as code and requirements change.</p>
+<p>Unit testing is not a replacement for higher-level functional or system testing, but it
+is important in all phases of development:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Before writing code, it forces you to detail your requirements in a useful fashion.</li>
+<li>While writing code, it keeps you from over-coding. When all the test cases pass, the function is complete.</li>
+<li>When refactoring code, it assures you that the new version behaves the same way as the old version.</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">How to do it in Python?</p>
+<blockquote>
+<div><p>Python has a framework for unit testing, the appropriately-named <a class="reference external" href="http://docs.python.org/2.7/library/unittest.html">unittest</a> module. There is another detailed <a class="reference external" href="http://pyunit.sourceforge.net/pyunit.html">introduction</a>
+about this framework.</p>
+</div></blockquote>
+</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="introducing-romantest-py">
+<span id="romantest-py"></span><h2>13.3 Introducing <tt class="docutils literal"><span class="pre">romantest.py</span></tt><a class="headerlink" href="#introducing-romantest-py" title="Permalink to this headline">¶</a></h2>
+<p>Given the rules and observations in Roman numerals, what would you expect out of a set of functions to convert to and
+from Roman numerals?</p>
+<dl class="docutils">
+<dt><tt class="docutils literal"><span class="pre">roman.py</span></tt> requirements</dt>
+<dd><ol class="first last arabic simple">
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should return the Roman numeral representation for all integers <tt class="docutils literal"><span class="pre">1</span></tt> to <tt class="docutils literal"><span class="pre">3999</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should fail when given an integer outside the range <tt class="docutils literal"><span class="pre">1</span></tt> to <tt class="docutils literal"><span class="pre">3999</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should fail when given a non-integer number.</li>
+<li><tt class="docutils literal"><span class="pre">fromRoman</span></tt> should take a valid Roman numeral and return the number that it represents.</li>
+<li><tt class="docutils literal"><span class="pre">fromRoman</span></tt> should fail when given an invalid Roman numeral.</li>
+<li>If you take a number, convert it to Roman numerals, then convert that back to a number, you
+should end up with the number you started with. So <tt class="docutils literal"><span class="pre">fromRoman(toRoman(n))</span> <span class="pre">==</span> <span class="pre">n</span></tt> for all
+<tt class="docutils literal"><span class="pre">n</span></tt> in <tt class="docutils literal"><span class="pre">1</span> <span class="pre">...</span> <span class="pre">3999</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should always return a Roman numeral using uppercase letters.</li>
+<li><tt class="docutils literal"><span class="pre">fromRoman</span></tt> should only accept uppercase Roman numerals (<em>i.e.</em> it should fail when given lowercase input).</li>
+</ol>
+</dd>
+</dl>
+<p>Then, the <tt class="docutils literal"><span class="pre">romantest.py</span></tt> should be a complete test suite to see whether the Roman numeral conversion functions meet
+those requirements.</p>
+<p>Example 13.1 romantest.py (download <a class="reference external" href="../../../_static/projects/notes/diveintopython/py/romantest.py">here</a>)</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</pre></div></td><td class="code"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">roman</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="k">class</span> <span class="nc">KnownValues</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="n">knownValues</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;II&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;III&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;IV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&#39;VI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s">&#39;VII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s">&#39;VIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#39;IX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;X&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="s">&#39;XXXI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">148</span><span class="p">,</span> <span class="s">&#39;CXLVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">294</span><span class="p">,</span> <span class="s">&#39;CCXCIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">312</span><span class="p">,</span> <span class="s">&#39;CCCXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">421</span><span class="p">,</span> <span class="s">&#39;CDXXI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">528</span><span class="p">,</span> <span class="s">&#39;DXXVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">621</span><span class="p">,</span> <span class="s">&#39;DCXXI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">782</span><span class="p">,</span> <span class="s">&#39;DCCLXXXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">870</span><span class="p">,</span> <span class="s">&#39;DCCCLXX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">941</span><span class="p">,</span> <span class="s">&#39;CMXLI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1043</span><span class="p">,</span> <span class="s">&#39;MXLIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1110</span><span class="p">,</span> <span class="s">&#39;MCX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1226</span><span class="p">,</span> <span class="s">&#39;MCCXXVI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1301</span><span class="p">,</span> <span class="s">&#39;MCCCI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1485</span><span class="p">,</span> <span class="s">&#39;MCDLXXXV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1509</span><span class="p">,</span> <span class="s">&#39;MDIX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1607</span><span class="p">,</span> <span class="s">&#39;MDCVII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1754</span><span class="p">,</span> <span class="s">&#39;MDCCLIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1832</span><span class="p">,</span> <span class="s">&#39;MDCCCXXXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1993</span><span class="p">,</span> <span class="s">&#39;MCMXCIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2074</span><span class="p">,</span> <span class="s">&#39;MMLXXIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2152</span><span class="p">,</span> <span class="s">&#39;MMCLII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2212</span><span class="p">,</span> <span class="s">&#39;MMCCXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2343</span><span class="p">,</span> <span class="s">&#39;MMCCCXLIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2499</span><span class="p">,</span> <span class="s">&#39;MMCDXCIX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2574</span><span class="p">,</span> <span class="s">&#39;MMDLXXIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2646</span><span class="p">,</span> <span class="s">&#39;MMDCXLVI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2723</span><span class="p">,</span> <span class="s">&#39;MMDCCXXIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2892</span><span class="p">,</span> <span class="s">&#39;MMDCCCXCII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2975</span><span class="p">,</span> <span class="s">&#39;MMCMLXXV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3051</span><span class="p">,</span> <span class="s">&#39;MMMLI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3185</span><span class="p">,</span> <span class="s">&#39;MMMCLXXXV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3250</span><span class="p">,</span> <span class="s">&#39;MMMCCL&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3313</span><span class="p">,</span> <span class="s">&#39;MMMCCCXIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3408</span><span class="p">,</span> <span class="s">&#39;MMMCDVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3501</span><span class="p">,</span> <span class="s">&#39;MMMDI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3610</span><span class="p">,</span> <span class="s">&#39;MMMDCX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3743</span><span class="p">,</span> <span class="s">&#39;MMMDCCXLIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3844</span><span class="p">,</span> <span class="s">&#39;MMMDCCCXLIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3888</span><span class="p">,</span> <span class="s">&#39;MMMDCCCLXXXVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3940</span><span class="p">,</span> <span class="s">&#39;MMMCMXL&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3999</span><span class="p">,</span> <span class="s">&#39;MMMCMXCIX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="s">&#39;MMMM&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4500</span><span class="p">,</span> <span class="s">&#39;MMMMD&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4888</span><span class="p">,</span> <span class="s">&#39;MMMMDCCCLXXXVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4999</span><span class="p">,</span> <span class="s">&#39;MMMMCMXCIX&#39;</span><span class="p">))</span>
+
+        <span class="k">def</span> <span class="nf">testToRomanKnownValues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should give known result with known input&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">knownValues</span><span class="p">:</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">numeral</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testFromRomanKnownValues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should give known result with known input&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">knownValues</span><span class="p">:</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">(</span><span class="n">numeral</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">integer</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">ToRomanBadInput</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">testTooLarge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with large input&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">OutOfRangeError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testZero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with 0 input&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">OutOfRangeError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testNegative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with negative input&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">OutOfRangeError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testDecimal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with non-integer input&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">NotIntegerError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">FromRomanBadInput</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">testTooManyRepeatedNumerals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should fail with too many repeated numerals&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;MMMMM&#39;</span><span class="p">,</span> <span class="s">&#39;DD&#39;</span><span class="p">,</span> <span class="s">&#39;CCCC&#39;</span><span class="p">,</span> <span class="s">&#39;LL&#39;</span><span class="p">,</span> <span class="s">&#39;XXXX&#39;</span><span class="p">,</span> <span class="s">&#39;VV&#39;</span><span class="p">,</span> <span class="s">&#39;IIII&#39;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testRepeatedPairs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should fail with repeated pairs of numerals&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;CMCM&#39;</span><span class="p">,</span> <span class="s">&#39;CDCD&#39;</span><span class="p">,</span> <span class="s">&#39;XCXC&#39;</span><span class="p">,</span> <span class="s">&#39;XLXL&#39;</span><span class="p">,</span> <span class="s">&#39;IXIX&#39;</span><span class="p">,</span> <span class="s">&#39;IVIV&#39;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testMalformedAntecedent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should fail with malformed antecedents&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;IIMXCC&#39;</span><span class="p">,</span> <span class="s">&#39;VX&#39;</span><span class="p">,</span> <span class="s">&#39;DCM&#39;</span><span class="p">,</span> <span class="s">&#39;CMM&#39;</span><span class="p">,</span> <span class="s">&#39;IXIV&#39;</span><span class="p">,</span>
+                                <span class="s">&#39;MCMC&#39;</span><span class="p">,</span> <span class="s">&#39;XCX&#39;</span><span class="p">,</span> <span class="s">&#39;IVI&#39;</span><span class="p">,</span> <span class="s">&#39;LM&#39;</span><span class="p">,</span> <span class="s">&#39;LD&#39;</span><span class="p">,</span> <span class="s">&#39;LC&#39;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testBlank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should fail with blank string&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SanityCheck</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">testSanity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman(toRoman(n))==n for all n&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">):</span>
+                        <span class="n">numeral</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">(</span><span class="n">numeral</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">integer</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">CaseCheck</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">testToRomanCase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should always return uppercase&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">):</span>
+                        <span class="n">numeral</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">numeral</span><span class="p">,</span> <span class="n">numeral</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+
+        <span class="k">def</span> <span class="nf">testFromRomanCase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should only accept uppercase input&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">):</span>
+                        <span class="n">numeral</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+                        <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">(</span><span class="n">numeral</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span><span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">numeral</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+        <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="testing-for-success">
+<span id="id5"></span><h2>13.4 Testing for success<a class="headerlink" href="#testing-for-success" title="Permalink to this headline">¶</a></h2>
+<p>The most fundamental part of unit testing is constructing <strong>individual test cases</strong>.
+A test case answers a <em>single</em> question about the code it is testing.</p>
+<dl class="docutils">
+<dt>A test case should be able to:</dt>
+<dd><ul class="first last simple">
+<li>run completely by itself, without any human input. Unit testing is about automation.</li>
+<li>determine by itself whether the function it is testing has passed or failed,
+without a human interpreting the results.</li>
+<li>run in isolation, separate from any other test cases (even if they test the same functions).
+Each test case is an island.</li>
+</ul>
+</dd>
+</dl>
+<p>Example 13.2 testToRomanKnownValues</p>
+<dl class="docutils">
+<dt>Test:</dt>
+<dd><ol class="first last arabic simple">
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should return the Roman numeral representation for all integers <tt class="docutils literal"><span class="pre">1</span></tt> to <tt class="docutils literal"><span class="pre">3999</span></tt>.</li>
+</ol>
+</dd>
+</dl>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre></div></td><td class="code"><div class="highlight"><pre><span class="hll">   <span class="k">class</span> <span class="nc">KnownValues</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+</span>        <span class="n">knownValues</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&#39;I&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;II&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#39;III&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s">&#39;IV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;V&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&#39;VI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s">&#39;VII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s">&#39;VIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#39;IX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&#39;X&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="s">&#39;L&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&#39;C&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="s">&#39;D&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="s">&#39;XXXI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">148</span><span class="p">,</span> <span class="s">&#39;CXLVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">294</span><span class="p">,</span> <span class="s">&#39;CCXCIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">312</span><span class="p">,</span> <span class="s">&#39;CCCXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">421</span><span class="p">,</span> <span class="s">&#39;CDXXI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">528</span><span class="p">,</span> <span class="s">&#39;DXXVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">621</span><span class="p">,</span> <span class="s">&#39;DCXXI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">782</span><span class="p">,</span> <span class="s">&#39;DCCLXXXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">870</span><span class="p">,</span> <span class="s">&#39;DCCCLXX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">941</span><span class="p">,</span> <span class="s">&#39;CMXLI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1043</span><span class="p">,</span> <span class="s">&#39;MXLIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1110</span><span class="p">,</span> <span class="s">&#39;MCX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1226</span><span class="p">,</span> <span class="s">&#39;MCCXXVI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1301</span><span class="p">,</span> <span class="s">&#39;MCCCI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1485</span><span class="p">,</span> <span class="s">&#39;MCDLXXXV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1509</span><span class="p">,</span> <span class="s">&#39;MDIX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1607</span><span class="p">,</span> <span class="s">&#39;MDCVII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1754</span><span class="p">,</span> <span class="s">&#39;MDCCLIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1832</span><span class="p">,</span> <span class="s">&#39;MDCCCXXXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">1993</span><span class="p">,</span> <span class="s">&#39;MCMXCIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2074</span><span class="p">,</span> <span class="s">&#39;MMLXXIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2152</span><span class="p">,</span> <span class="s">&#39;MMCLII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2212</span><span class="p">,</span> <span class="s">&#39;MMCCXII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2343</span><span class="p">,</span> <span class="s">&#39;MMCCCXLIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2499</span><span class="p">,</span> <span class="s">&#39;MMCDXCIX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2574</span><span class="p">,</span> <span class="s">&#39;MMDLXXIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2646</span><span class="p">,</span> <span class="s">&#39;MMDCXLVI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2723</span><span class="p">,</span> <span class="s">&#39;MMDCCXXIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2892</span><span class="p">,</span> <span class="s">&#39;MMDCCCXCII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">2975</span><span class="p">,</span> <span class="s">&#39;MMCMLXXV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3051</span><span class="p">,</span> <span class="s">&#39;MMMLI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3185</span><span class="p">,</span> <span class="s">&#39;MMMCLXXXV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3250</span><span class="p">,</span> <span class="s">&#39;MMMCCL&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3313</span><span class="p">,</span> <span class="s">&#39;MMMCCCXIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3408</span><span class="p">,</span> <span class="s">&#39;MMMCDVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3501</span><span class="p">,</span> <span class="s">&#39;MMMDI&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3610</span><span class="p">,</span> <span class="s">&#39;MMMDCX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3743</span><span class="p">,</span> <span class="s">&#39;MMMDCCXLIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3844</span><span class="p">,</span> <span class="s">&#39;MMMDCCCXLIV&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3888</span><span class="p">,</span> <span class="s">&#39;MMMDCCCLXXXVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3940</span><span class="p">,</span> <span class="s">&#39;MMMCMXL&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">3999</span><span class="p">,</span> <span class="s">&#39;MMMCMXCIX&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="s">&#39;MMMM&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4500</span><span class="p">,</span> <span class="s">&#39;MMMMD&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4888</span><span class="p">,</span> <span class="s">&#39;MMMMDCCCLXXXVIII&#39;</span><span class="p">),</span>
+                        <span class="p">(</span><span class="mi">4999</span><span class="p">,</span> <span class="s">&#39;MMMMCMXCIX&#39;</span><span class="p">))</span>
+
+<span class="hll">        <span class="k">def</span> <span class="nf">testToRomanKnownValues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span>                <span class="sd">&quot;&quot;&quot;toRoman should give known result with known input&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">knownValues</span><span class="p">:</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+<span class="hll">                        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">numeral</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</span></pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd>To write a test case, first subclass the <tt class="docutils literal"><span class="pre">Testcase</span></tt> class of the <tt class="docutils literal"><span class="pre">unittest</span></tt> module.
+This class provides many useful methods which you can use in your test case to test specific conditions.</dd>
+<dt>[2]:</dt>
+<dd>This is a list of integer/numeral pairs that I verified manually. It includes the lowest ten numbers, the
+highest number, every number that translates to a single-character Roman numeral, and a random sampling
+of other valid numbers. The point of a unit test is not to test every possible input, but to test a
+representative sample.</dd>
+<dt>[63]:</dt>
+<dd>Every individual test is its own method, which must take no parameters and return no value.
+If the method exits normally without raising an exception, the test is considered passed;
+if the method raises an exception, the test is considered failed.</dd>
+<dt>[66]:</dt>
+<dd><ul class="first last simple">
+<li>Here you call the actual <tt class="docutils literal"><span class="pre">toRoman</span></tt> function.
+Notice that you have now defined the API for the <tt class="docutils literal"><span class="pre">toRoman</span></tt> function:
+it must take an integer (the number to convert) and return a string (the Roman numeral representation).
+If the API is different than that, this test is considered failed.</li>
+<li>Also notice that you are not trapping any exceptions when you call <tt class="docutils literal"><span class="pre">toRoman</span></tt>. This is intentional.
+<tt class="docutils literal"><span class="pre">toRoman</span></tt> shouldn&#8217;t raise an exception when you call it with valid input, and these input values are
+all valid. If <tt class="docutils literal"><span class="pre">toRoman</span></tt> raises an exception, this test is considered failed.</li>
+</ul>
+</dd>
+<dt>[67]:</dt>
+<dd>To check whether <tt class="docutils literal"><span class="pre">toRoman</span></tt> returned the <em>right</em> value.
+The <tt class="docutils literal"><span class="pre">TestCase</span></tt> class provides a method, <tt class="docutils literal"><span class="pre">assertEqual</span></tt>, to check whether two values are equal.
+If the result returned from <tt class="docutils literal"><span class="pre">toRoman</span></tt> (<em>result</em>) does not match the known value you were expecting (<em>numeral</em>),
+<tt class="docutils literal"><span class="pre">assertEqual</span></tt> will raise an exception and the test will fail. If the two values are equal, <tt class="docutils literal"><span class="pre">assertEqual</span></tt> will
+do nothing. If every value returned from <tt class="docutils literal"><span class="pre">toRoman</span></tt> matches the known value you expect, <tt class="docutils literal"><span class="pre">assertEqual</span></tt> never
+raises an exception, so <tt class="docutils literal"><span class="pre">testToRomanKnownValues</span></tt> eventually exits normally, which means <tt class="docutils literal"><span class="pre">toRoman</span></tt> has passed this
+test.</dd>
+</dl>
+</div>
+<div class="section" id="testing-for-failure">
+<span id="id6"></span><h2>13.5 Testing for failure<a class="headerlink" href="#testing-for-failure" title="Permalink to this headline">¶</a></h2>
+<p>Example 13.3 Testing bad input to toRoman</p>
+<dl class="docutils">
+<dt>Test:</dt>
+<dd><ol class="first last arabic simple" start="2">
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should fail when given an integer outside the range <tt class="docutils literal"><span class="pre">1</span></tt> to <tt class="docutils literal"><span class="pre">3999</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should fail when given a non-integer number.</li>
+</ol>
+</dd>
+</dl>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ToRomanBadInput</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">testTooLarge</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with large input&quot;&quot;&quot;</span>
+<span class="hll">                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">OutOfRangeError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+</span>
+        <span class="k">def</span> <span class="nf">testZero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with 0 input&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">OutOfRangeError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testNegative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with negative input&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">OutOfRangeError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testDecimal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should fail with non-integer input&quot;&quot;&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">NotIntegerError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[4]:</dt>
+<dd><ul class="first last">
+<li><p class="first">The <tt class="docutils literal"><span class="pre">TestCase</span></tt> class of the <tt class="docutils literal"><span class="pre">unittest</span></tt> provides the <tt class="docutils literal"><span class="pre">assertRaises</span></tt> method,
+which takes the following arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the exception you&#8217;re expecting</li>
+<li>the function you&#8217;re testing</li>
+<li>the arguments you&#8217;re passing that function (if the function you&#8217;re testing
+takes more than one argument, pass them all to <tt class="docutils literal"><span class="pre">assertRaises</span></tt>, in order,
+and it will pass them right along to the function you&#8217;re testing.)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Here, instead of calling <tt class="docutils literal"><span class="pre">toRoman</span></tt> directly and manually checking that it raises
+a particular exception (by wrapping it in a <tt class="docutils literal"><span class="pre">try</span> <span class="pre">...</span> <span class="pre">except</span></tt> block),
+<tt class="docutils literal"><span class="pre">assertRaises</span></tt> has encapsulated all of that for us.
+All you do is give it the exception (<tt class="docutils literal"><span class="pre">roman.OutOfRangeError</span></tt>), the function (<tt class="docutils literal"><span class="pre">toRoman</span></tt>),
+and <tt class="docutils literal"><span class="pre">toRoman</span></tt>&#8216;s arguments (<tt class="docutils literal"><span class="pre">4000</span></tt>), and <tt class="docutils literal"><span class="pre">assertRaises</span></tt> takes care of calling <tt class="docutils literal"><span class="pre">toRoman</span></tt>
+and checking to make sure that it raises <tt class="docutils literal"><span class="pre">roman.OutOfRangeError</span></tt>.</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Example 13.4 Testing bad input to fromRoman</p>
+<dl class="docutils">
+<dt>Test:</dt>
+<dd><ol class="first last arabic simple" start="4">
+<li><tt class="docutils literal"><span class="pre">fromRoman</span></tt> should take a valid Roman numeral and return the number that it represents.</li>
+<li><tt class="docutils literal"><span class="pre">fromRoman</span></tt> should fail when given an invalid Roman numeral.</li>
+</ol>
+</dd>
+</dl>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">FromRomanBadInput</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">testTooManyRepeatedNumerals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should fail with too many repeated numerals&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;MMMMM&#39;</span><span class="p">,</span> <span class="s">&#39;DD&#39;</span><span class="p">,</span> <span class="s">&#39;CCCC&#39;</span><span class="p">,</span> <span class="s">&#39;LL&#39;</span><span class="p">,</span> <span class="s">&#39;XXXX&#39;</span><span class="p">,</span> <span class="s">&#39;VV&#39;</span><span class="p">,</span> <span class="s">&#39;IIII&#39;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testRepeatedPairs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should fail with repeated pairs of numerals&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;CMCM&#39;</span><span class="p">,</span> <span class="s">&#39;CDCD&#39;</span><span class="p">,</span> <span class="s">&#39;XCXC&#39;</span><span class="p">,</span> <span class="s">&#39;XLXL&#39;</span><span class="p">,</span> <span class="s">&#39;IXIX&#39;</span><span class="p">,</span> <span class="s">&#39;IVIV&#39;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">testMalformedAntecedent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should fail with malformed antecedents&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&#39;IIMXCC&#39;</span><span class="p">,</span> <span class="s">&#39;VX&#39;</span><span class="p">,</span> <span class="s">&#39;DCM&#39;</span><span class="p">,</span> <span class="s">&#39;CMM&#39;</span><span class="p">,</span> <span class="s">&#39;IXIV&#39;</span><span class="p">,</span>
+                                <span class="s">&#39;MCMC&#39;</span><span class="p">,</span> <span class="s">&#39;XCX&#39;</span><span class="p">,</span> <span class="s">&#39;IVI&#39;</span><span class="p">,</span> <span class="s">&#39;LM&#39;</span><span class="p">,</span> <span class="s">&#39;LD&#39;</span><span class="p">,</span> <span class="s">&#39;LC&#39;</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="testing-for-sanity">
+<span id="id7"></span><h2>13.6 Testing for Sanity<a class="headerlink" href="#testing-for-sanity" title="Permalink to this headline">¶</a></h2>
+<p>Often, you will find that a unit of code contains a set of reciprocal functions, usually
+in the form of conversion functions where one converts A to B and the other converts
+B to A. In these cases, it is useful to create a &#8220;sanity check&#8221; to make sure that you
+can convert A to B and back to A without losing precision, incurring rounding errors,
+or triggering any other sort of bug.</p>
+<p>Example 13.5 Testing toRoman against fromRoman</p>
+<dl class="docutils">
+<dt>Test:</dt>
+<dd><ol class="first last arabic simple" start="6">
+<li>If you take a number, convert it to Roman numerals, then convert that back to a number, you
+should end up with the number you started with. So <tt class="docutils literal"><span class="pre">fromRoman(toRoman(n))</span> <span class="pre">==</span> <span class="pre">n</span></tt> for all
+<tt class="docutils literal"><span class="pre">n</span></tt> in <tt class="docutils literal"><span class="pre">1</span> <span class="pre">...</span> <span class="pre">3999</span></tt>.</li>
+</ol>
+</dd>
+</dl>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SanityCheck</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">testSanity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman(toRoman(n))==n for all n&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">):</span>
+                        <span class="n">numeral</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">(</span><span class="n">numeral</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">integer</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Example 13.6 Testing for Case</p>
+<dl class="docutils">
+<dt>Test:</dt>
+<dd><ol class="first last arabic simple" start="7">
+<li><tt class="docutils literal"><span class="pre">toRoman</span></tt> should always return a Roman numeral using uppercase letters.</li>
+<li><tt class="docutils literal"><span class="pre">fromRoman</span></tt> should only accept uppercase Roman numerals (<em>i.e.</em> it should fail when given lowercase input).</li>
+</ol>
+</dd>
+</dl>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CaseCheck</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">testToRomanCase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;toRoman should always return uppercase&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">):</span>
+                        <span class="n">numeral</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+<span class="hll">                        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">numeral</span><span class="p">,</span> <span class="n">numeral</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</span>
+        <span class="k">def</span> <span class="nf">testFromRomanCase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;fromRoman should only accept uppercase input&quot;&quot;&quot;</span>
+                <span class="k">for</span> <span class="n">integer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5000</span><span class="p">):</span>
+                        <span class="n">numeral</span> <span class="o">=</span> <span class="n">roman</span><span class="o">.</span><span class="n">toRoman</span><span class="p">(</span><span class="n">integer</span><span class="p">)</span>
+<span class="hll">                        <span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">(</span><span class="n">numeral</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</span>                        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="n">roman</span><span class="o">.</span><span class="n">InvalidRomanNumeralError</span><span class="p">,</span><span class="n">roman</span><span class="o">.</span><span class="n">fromRoman</span><span class="p">,</span> <span class="n">numeral</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[6]:</dt>
+<dd><p class="first">The most interesting thing about this test case is all the things it doesn&#8217;t test. It doesn&#8217;t
+test that the value returned from <tt class="docutils literal"><span class="pre">toRoman</span></tt> is right or even consisten; those questions
+are answered by separate test cases. You have a whole test case just to test for uppercase-ness.
+You might be tempted to combine this with the sanity check, since both run through the entire
+range of values and call <tt class="docutils literal"><span class="pre">toRoman</span></tt>. But that would violate one of the fundamental rules:</p>
+<dl class="last docutils">
+<dt>each test case should answer only a single question:</dt>
+<dd>Imagine that you combined this case check with the sanity check, and then that test case failed.
+You would need to do further analysis to figure out which part of the test case failed to determine
+what the problem was. If you need to analyze the results of your unit testing just to figure out
+what they mean, it&#8217;s a sure sign that you&#8217;ve mis-designed your test cases.</dd>
+</dl>
+</dd>
+<dt>[12]:</dt>
+<dd><p class="first">There&#8217;s a similar lesson to be learned here: even though &#8220;you know&#8221; that <tt class="docutils literal"><span class="pre">toRoman</span></tt> always returns uppercase.
+you are explicitly converting its return value to uppercase here to test that <tt class="docutils literal"><span class="pre">fromRoman</span></tt> accepts uppercase input.</p>
+<p>reason:</p>
+<blockquote class="last">
+<div><tt class="docutils literal"><span class="pre">toRoman</span></tt> always returns uppercase is an independent requirement. If you changed that requirement so that, for
+instance, it always returned lowercase, the <tt class="docutils literal"><span class="pre">testToRomanCase</span></tt> test case would need to change, but this test Case
+would still work. This was another of the fundamental rules: <strong>each test case must be able to work in isolation from
+any of the others. Every test case is an island.</strong></div></blockquote>
+</dd>
+</dl>
+<p><strong>Footnotes</strong></p>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>The Romans did have several ways of expressing larger numbers, for instance by having a bar over a numeral to represent that its normal value
+should be multiplied by 1000, but you&#8217;re not going to deal with that. For the purposes of this chapter, let&#8217;s stipulate that Roman numerals go
+from 1 to 3999.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Whether to 3999 or to 4999 is argurable. This simply because whether it is correct to represent 4000 with &#8220;MMMM&#8221;. If this is not true, then
+the limit should be 3999. Otherwise, it should be 4999.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Actually, there is. See <a class="reference external" href="http://en.wikipedia.org/wiki/Roman_numerals#Fractions">here</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap8.html" title="HTML Processing"
+             >next</a></li>
+        <li class="right" >
+          <a href="chap7.html" title="Regular Expression"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" >Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Jan 19, 2013.
+    </div>
+  </body>
+</html>

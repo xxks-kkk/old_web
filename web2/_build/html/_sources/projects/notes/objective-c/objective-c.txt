@@ -1,0 +1,221 @@
+.. _objective-c:
+
+=========================
+Objective-C Study Notes
+=========================
+
+This is a study note that I made when I took `CS 407 - Mobile Systems & Applications <http://pages.cs.wisc.edu/~suman/courses/wiki/doku.php?id=407-spring2013>`_
+with `Prof. Banerjee <http://pages.cs.wisc.edu/~suman/>`_ . Most part of the note are *not* coming from daily lectures.
+
+0. Diving In
+============
+
+Card.h
+
+.. sourcecode:: objc
+   :linenos:
+
+   #import <Foundation/Foundation.h>
+
+   @interface Card: NSObject
+
+   @property (strong,nonatomic) NSString *contents;
+
+**
+Card.m
+
+.. sourcecode:: objc
+   :linenos:
+
+   #import "Card.h"
+
+   @interface Card()
+
+   @end
+
+   @implementation Card
+
+
+
+   @end
+
+
+1.Properties
+============
+
+Usually we do not access instance variables directly in Objective-C. Instead, we use **properties**.
+
+.. admonition:: Definition
+
+   A **property** is just the combination of a getter method and a setter method in a class:
+
+    - The getter (usually) has the name of the property (e.g. ``myValue``).
+    - The setter's name is "set" plus capitalized property name (e.g. ``setMyValue:``)
+
+   We just call the setter to store the value we want and the getter to get it. Simple.
+
+.. note::
+
+   Usually, we use a lowercase letter as the first letter of a property name.
+
+.. sourcecode:: objc
+   :linenos:
+
+   @property (strong, nonatomic) NSString *contents;
+
+**
+[1]:
+    - creating a property called ``contents``, which represent a setter and a getter (it's public).
+
+        * getter: getting a pointer to ``NSString`` object. ``NSString *`` is just a pointer points to ``NSString``.
+                  
+          .. note::
+          
+             All objects in Objective-C live in heap and you have pointers point to them. 
+             There is no way to have an Object on the stack.
+    
+    - ``strong``:
+    
+        Since there is no garbage collection in Object-C, a variable in the heap is cleaned when there is no pointer points to it.
+        In Objective-C, this is done by a system called **Automatic Reference Counting** (ARC). Its basically counters that count
+        how many pointer points to each object in the heap. When a specific object's count goes to zero, this object will be removed
+        from the heap.
+
+        So, for ARC works, the complier needs a little bit help. That's what ``strong`` is doing. ``strong`` means I want this Object
+        stays in the heap as long as I point to it. As soon as I stop pointing to it, it will be deleted. A ``strong`` reference 
+        (which you will use in most cases) means that you want to "own" the object you are referencing with this property/variable. 
+        The compiler will take care that any object that you assign to this property will not be destroyed as long as you 
+        (or any other object) points to it with a strong reference. Only once you set the property to ``nil`` will the object get destroyed 
+        (unless one or more other objects also hold a strong reference to it).
+
+        Another word we could use here called ``weak``. A ``weak`` reference you signify that you don't want to have control over 
+        the object's lifetime. The object you are referencing weakly only lives on because at least one other object holds a strong reference 
+        to it. Once that is no longer the case, the object gets destroyed and your weak property will automatically get set to ``nil``.
+
+    - ``nonatomic``:
+    
+        This property is not thread-safe. We do not do multi-threading and locking. This is not default, and we need to put it in every property.
+
+1.1 Setter & Getter
+-------------------
+
+This is the code that complier generates about setter behind the scene. This will not appear in your code.
+
+.. sourcecode:: objc
+   :linenos:
+
+   @synthesize contents = _contents;
+
+   - (NSString *)contents
+     {
+        return _contents;
+     }
+  
+   - (void)setContents:(NSString *)contents
+     {
+        _contents = contents;
+     }
+**
+
+[1]:
+    This means that our property name ``contents`` uses instance variable called  ``_contents`` 
+    (this ``_nameOfProperty`` is generated automatically).
+
+[3]:
+    This is the ``getter``.  ``NSString *`` is the return type of the method: return a pointer to ``NSString``. 
+    Name is the property's name.
+
+[5]:
+    return is an instance variable called ``_contents``, consistent with the instance name in the ``@synthesize`` statement.
+
+[8]:
+    - always put ``void`` inside the ``()`` to indicate this method doesn't return anything.
+
+    - ``setContents`` is the method name and arguments come after ``:``.
+
+
+2.Creating Classes
+==================
+
+2.1. File Structure
+-------------------
+
+In Objective-C, implementation of a class is divided into two files:
+
+    - a header file (e.g. ``card.h``), which is public information.
+    - an implementation file (e.g. ``card.m``), which is private implementation.
+
+.. admonition:: Difference between header file and implementation file
+
+   Is all about public and private. If in the header file, the class is public, and 
+   if in the .m file, it is not public.
+
+
+2.2. @interface
+---------------
+
+Example 2.2.1 create class in card.h
+
+.. sourcecode:: objc
+   :linenos:
+   :emphasize-lines: 1
+
+   @interface Card: NSObject
+
+[1]:
+    - ``NSObject``:
+        short for ``NeXTStep Object``, which is the basic class of all the class. (similar to ``object`` in Java)
+    - Inheritance is specified as ``Class: Parent`` (e.g. ``Card: NSObject``)
+
+Example 2.2.2 import class
+
+If we are going to use a class inside our any file, we are going to import it: import its header file into our file.
+
+.. sourcecode:: objc
+   :linenos:
+
+   #import <Foundation/Foundation.h> 
+   
+[1]:
+    - similar to ``include`` in C.
+
+    - ``Foundation.h`` works like standard library in Objective-C, which contains various data types and data structures.
+
+Notice that we do the similar thing in our implementation file.
+
+.. sourcecode:: objc
+   :linenos:
+
+   #import "Card.h"
+
+[1]:
+    In ourr implementation file, we import our class.
+
+Example 2.2.3 private interface
+
+If we want a private interface, we do the following:
+
+.. sourcecode:: objc
+   :linenos:
+
+   @interface Card()
+
+    
+2.3. @implementation
+--------------------
+
+Example 2.3.1 Card.m
+
+.. sourcecode:: objc
+   :linenos:
+
+   @implementation Card 
+
+   @end
+
+[1]:
+    - This is matching the class name in the ``card.h``. Notice that, in the implementation file, we *do not* specify the superclass.
+      This because we already specify the superclass as public. We cannot specify a *private* superclass.
+
+    - ``@implementation ClassName`` starts the implementation ``@end`` ends it. 
+

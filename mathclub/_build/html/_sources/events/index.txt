@@ -1,0 +1,11 @@
+.. _events:
+
+=======
+Events
+=======
+
+.. toctree::
+   :maxdepth:2
+   
+   lectureseries.rst
+   advising.rst

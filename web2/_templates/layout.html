@@ -1,0 +1,28 @@
+{% extends "!layout.html" %}
+
+
+{% block rootrellink %}
+        <li><a href="{{ pathto('index') }}">home</a>|&nbsp;</li>
+        <li><a href="{{ pathto('projects/index')}}">projects</a>|&nbsp;</li>
+        <li><a href="{{ pathto('resume')}}">cv/resume</a>|&nbsp;</li>
+        <li><a href="{{ pathto('exlinks')}}">external links</a>|&nbsp;</li>
+        <li><a href="{{ pathto('personal')}}">personal</a>|&nbsp;</li>
+        <li><a href="{{ pathto('search') }}">search</a>|&nbsp;</li>
+{% endblock %}
+
+
+{% block relbar1 %}
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="{{ pathto('index') }}"><img src="{{
+pathto("_static/logo2.png", 1) }}" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+{{ super() }}
+{% endblock %}
+
+{# put the sidebar before the body #}
+{% block sidebar1 %}{{ sidebar() }}{% endblock %}
+{% block sidebar2 %}{% endblock %}
+
+
+

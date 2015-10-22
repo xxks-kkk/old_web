@@ -1,0 +1,1071 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Regular Expression &mdash; Zeyuan Hu&#39;s World</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Zeyuan Hu&#39;s World" href="../../../index.html" />
+    <link rel="up" title="Dive into Python Study Notes" href="diveintopython.html" />
+    <link rel="next" title="Unit Testing" href="chap13.html" />
+    <link rel="prev" title="Exceptions and File Handling" href="chap6.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap13.html" title="Unit Testing"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="chap6.html" title="Exceptions and File Handling"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" accesskey="U">Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Regular Expression</a><ul>
+<li><a class="reference internal" href="#diving-in">7.1. Diving In</a><ul>
+<li><a class="reference internal" href="#limitation-of-string-methods">7.1.1 Limitation of String Methods</a></li>
+<li><a class="reference internal" href="#when-to-use-regular-expressions">7.1.2 When to Use Regular Expressions</a></li>
+<li><a class="reference internal" href="#python-and-regular-expressions">7.1.3 Python and Regular Expressions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#case-study-street-addresses">7.2. Case Study: Street Addresses</a><ul>
+<li><a class="reference internal" href="#and">7.1.1 <tt class="docutils literal"><span class="pre">^</span></tt> and <tt class="docutils literal"><span class="pre">$</span></tt></a></li>
+<li><a class="reference internal" href="#b-and-r">7.1.2 <tt class="docutils literal"><span class="pre">\b</span></tt> and <tt class="docutils literal"><span class="pre">r</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#case-study-roman-numerals">7.3. Case Study: Roman Numerals</a><ul>
+<li><a class="reference internal" href="#introduction-to-roman-numerals">7.3.0 Introduction to Roman Numerals</a><ul>
+<li><a class="reference internal" href="#rules-in-roman-numerals">7.3.0.0 Rules in Roman Numerals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validating-roman-numeral">7.3.1 Validating Roman Numeral</a><ul>
+<li><a class="reference internal" href="#checing-for-thousands">7.3.1.0 Checing for Thousands <tt class="docutils literal"><span class="pre">?</span></tt></a></li>
+<li><a class="reference internal" href="#checking-for-hundreds-a-b-c">7.3.1.1 Checking for Hundreds <tt class="docutils literal"><span class="pre">(a|b|c)</span></tt></a></li>
+<li><a class="reference internal" href="#using-the-n-m-syntax">7.3.1.2 Using the <tt class="docutils literal"><span class="pre">{n.m}</span></tt> Syntax</a></li>
+<li><a class="reference internal" href="#checking-for-tens-and-ones">7.3.1.3 Checking for Tens and Ones</a></li>
+<li><a class="reference internal" href="#final-pattern-for-roman-numeral">7.3.1.4 Final Pattern for Roman Numeral</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#verbose-regular-expressions">7.4. Verbose Regular Expressions</a></li>
+<li><a class="reference internal" href="#case-study-parsing-phone-numbers">7.5. Case Study: Parsing Phone Numbers</a></li>
+<li><a class="reference internal" href="#further-reading">7.6. Further Reading</a></li>
+</ul>
+</li>
+</ul>
+
+    <h3>About this site</h3>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h3>search this site</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="regular-expression">
+<span id="chap7-rst"></span><h1>Regular Expression<a class="headerlink" href="#regular-expression" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-usage admonition">
+<p class="first admonition-title">usage</p>
+<p class="last">Regular expressions are a powerful and standardized way of searching, replacing, and
+parsing text with complex patterns of characters.</p>
+</div>
+<p>&#8220;Some people, when confronted with a problem, think &#8220;I know, I&#8217;ll use regular expressions.&#8221;
+Now they have two problems.&#8221;</p>
+<p>&#8211; <strong>Jamie Zawinski</strong>, in <a class="reference external" href="http://groups.google.com/groups?selm=33F0C496.370D7C45%40netscape.com">comp.emacs.xemacs</a></p>
+<p><strong>Goal</strong>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">^</span></tt> matches the beginning of a string.</li>
+<li><tt class="docutils literal"><span class="pre">$</span></tt> matches the end of a string.</li>
+<li><tt class="docutils literal"><span class="pre">\b</span></tt> matches a word boundary.</li>
+<li><tt class="docutils literal"><span class="pre">\d</span></tt> matches any numeric digit.</li>
+<li><tt class="docutils literal"><span class="pre">\D</span></tt> matches any non-numeric character.</li>
+<li><tt class="docutils literal"><span class="pre">x?</span></tt> matches an <em>optional</em> <tt class="docutils literal"><span class="pre">x</span></tt> character (in other words, it matches an <tt class="docutils literal"><span class="pre">x</span></tt> zero or <em>one</em> times).</li>
+<li><tt class="docutils literal"><span class="pre">x*</span></tt> matches <tt class="docutils literal"><span class="pre">x</span></tt> zero or <em>more</em> times.</li>
+<li><tt class="docutils literal"><span class="pre">x+</span></tt> matches <tt class="docutils literal"><span class="pre">x</span></tt> one or more times.</li>
+<li><tt class="docutils literal"><span class="pre">x{n,m}</span></tt> matches an <tt class="docutils literal"><span class="pre">x</span></tt> character at least <tt class="docutils literal"><span class="pre">n</span></tt> times, but not more than <tt class="docutils literal"><span class="pre">m</span></tt> times.</li>
+<li><tt class="docutils literal"><span class="pre">(a|b|c)</span></tt> matches either <tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt> or <tt class="docutils literal"><span class="pre">c</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">(x)</span></tt> in general is a <em>remembered group</em>. You can get the value of what matched by using the <tt class="docutils literal"><span class="pre">groups()</span></tt>
+method of the object returned by <tt class="docutils literal"><span class="pre">re.search</span></tt>.</li>
+</ul>
+<div class="section" id="diving-in">
+<span id="diving-in7"></span><h2>7.1. Diving In<a class="headerlink" href="#diving-in" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="limitation-of-string-methods">
+<h3>7.1.1 Limitation of String Methods<a class="headerlink" href="#limitation-of-string-methods" title="Permalink to this headline">¶</a></h3>
+<p>String have methods of searching (<tt class="docutils literal"><span class="pre">index</span></tt>, <tt class="docutils literal"><span class="pre">find</span></tt>, and <tt class="docutils literal"><span class="pre">count</span></tt>), replacing (<tt class="docutils literal"><span class="pre">replace</span></tt>), and
+parsing (<tt class="docutils literal"><span class="pre">split</span></tt>), but they are limited to the simplest of cases:</p>
+<blockquote>
+<div>The search methods look for <em>a single, hard-coded substring</em>, and they are always <em>case-sensitive</em>.
+Those limitations are also true for replacing method and parsing method.</div></blockquote>
+</div>
+<div class="section" id="when-to-use-regular-expressions">
+<h3>7.1.2 When to Use Regular Expressions<a class="headerlink" href="#when-to-use-regular-expressions" title="Permalink to this headline">¶</a></h3>
+<p>If what you&#8217;re trying to do can be accomplished with string functions, you should use them.
+They&#8217;re fast and simple and easy to read.</p>
+<p>But if you find yourself using a lot of different string functions with <tt class="docutils literal"><span class="pre">if</span></tt> statements to handle
+special cases, or if you&#8217;re combining them with <tt class="docutils literal"><span class="pre">split</span></tt> and <tt class="docutils literal"><span class="pre">join</span></tt> and list comprehensions in
+weird unreadable ways, you may need to move up to regular expressions.</p>
+</div>
+<div class="section" id="python-and-regular-expressions">
+<h3>7.1.3 Python and Regular Expressions<a class="headerlink" href="#python-and-regular-expressions" title="Permalink to this headline">¶</a></h3>
+<p>Regular expressions are supported by <tt class="docutils literal"><span class="pre">re</span></tt> module. You can get an overview of the available functions
+and their arguments by just reading the summary of the <a class="reference external" href="http://www.python.org/doc/current/lib/module-re.html">re</a> module.</p>
+</div>
+</div>
+<div class="section" id="case-study-street-addresses">
+<span id="case-study-street"></span><h2>7.2. Case Study: Street Addresses<a class="headerlink" href="#case-study-street-addresses" title="Permalink to this headline">¶</a></h2>
+<p>This series of examples was inspired by a real-life problem I had in my day job several years ago,
+when I needed to scrub and standardize street addresses exported from a legacy system before importing
+them into a newer system.</p>
+<div class="section" id="and">
+<h3>7.1.1 <tt class="docutils literal"><span class="pre">^</span></tt> and <tt class="docutils literal"><span class="pre">$</span></tt><a class="headerlink" href="#and" title="Permalink to this headline">¶</a></h3>
+<p>Example 7.1 Matching at the End of a String</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">^</span></tt> matches the beginning of a string.</li>
+<li><tt class="docutils literal"><span class="pre">$</span></tt> matches the end of a string.</li>
+</ul>
+</div>
+<div class="admonition-key-func admonition">
+<p class="first admonition-title">Key Func</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">repl</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;100 NORTH MAIN ROAD&#39;</span>
+
+<span class="gp">In [2]: </span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;ROAD&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">)</span>
+<span class="gr">Out[2]: </span><span class="s">&#39;100 NORTH MAIN RD.&#39;</span>
+
+<span class="gp">In [3]: </span><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;100 NORTH BROAD ROAD&#39;</span>
+
+<span class="gp">In [4]: </span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;ROAD&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">)</span>
+<span class="gr">Out[4]: </span><span class="s">&#39;100 NORTH BRD. RD.&#39;</span>
+
+<span class="gp">In [5]: </span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;ROAD&#39;</span><span class="p">,</span><span class="s">&#39;RD.&#39;</span><span class="p">)</span>
+<span class="gr">Out[5]: </span><span class="s">&#39;100 NORTH BROAD RD.&#39;</span>
+
+<span class="hll"><span class="gp">In [6]: </span><span class="kn">import</span> <span class="nn">re</span>
+</span>
+<span class="hll"><span class="gp">In [7]: </span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;ROAD$&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</span><span class="gr">Out[7]: </span><span class="s">&#39;100 NORTH BROAD RD.&#39;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[2]:</dt>
+<dd>My goal is to standardize a street address so that <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> is always abbreviated as <tt class="docutils literal"><span class="pre">'RD.'</span></tt>.
+At first glance, I thought this was simple enough that I could just use the string method <tt class="docutils literal"><span class="pre">replace</span></tt>.</dd>
+<dt>[4]:</dt>
+<dd>Life, unfortunately, is full of counterexamples, and this is the one. The problem here is that <tt class="docutils literal"><span class="pre">'ROAD'</span></tt>
+appears twice in the address, once as part of the street name <tt class="docutils literal"><span class="pre">'BROAD'</span></tt> and once as its own word.
+The <tt class="docutils literal"><span class="pre">replace</span></tt> method sees these two occurrences and blindly replaces both of them; addresses getting destroyed.</dd>
+<dt>[5]:</dt>
+<dd><p class="first">To solve the problem of addresses with more than one <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> substring, you could resort to something like this:</p>
+<blockquote class="last">
+<div><blockquote>
+<div>only search and replace <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> in the last four characters of the address (<tt class="docutils literal"><span class="pre">s[-4:]</span></tt>), and leave the string
+alone (<tt class="docutils literal"><span class="pre">s[:-4]</span></tt>).</div></blockquote>
+<p>But you can see that this is not a general approach:</p>
+<blockquote>
+<div>for example, the pattern is dependent on the length of the string you&#8217;re replacing (if you were replacing
+<tt class="docutils literal"><span class="pre">'STREET'</span></tt> with <tt class="docutils literal"><span class="pre">'ST.'</span></tt>, you would need to use <tt class="docutils literal"><span class="pre">s[:-6]</span></tt> and <tt class="docutils literal"><span class="pre">s[-6:].replace(...)</span></tt>).</div></blockquote>
+</div></blockquote>
+</dd>
+<dt>[6]:</dt>
+<dd>It&#8217;s time to move up to regular expressions.
+In Python, all functionality related to regular expressions is contained in the <tt class="docutils literal"><span class="pre">re</span></tt> module.</dd>
+<dt>[7]:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">'ROAD$'</span></tt>:</dt>
+<dd><ul class="first last simple">
+<li>This is a simple regular expression that matches <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> only when it occurs at the end of a string.</li>
+<li>The <tt class="docutils literal"><span class="pre">$</span></tt> means &#8220;end of the string&#8221;. (the corresponding character, <tt class="docutils literal"><span class="pre">^</span></tt>, which means &#8220;beginning of the string&#8221;)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><div class="first highlight-python"><div class="highlight"><pre><span class="c"># you search the string &#39;s&#39; for the regular expression &#39;ROAD$&#39; and replace it with &#39;RD.&#39;</span>
+<span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">repl</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">This matches the <tt class="docutils literal"><span class="pre">ROAD</span></tt> at the end of the string <tt class="docutils literal"><span class="pre">s</span></tt>, but does <em>not</em> match the <tt class="docutils literal"><span class="pre">ROAD</span></tt> that&#8217;s part of the word
+<tt class="docutils literal"><span class="pre">BROAD</span></tt>, because tha&#8217;s in the middle of <tt class="docutils literal"><span class="pre">s</span></tt></p>
+</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-problem admonition">
+<p class="first admonition-title">problem</p>
+<p class="last">Not all addresses included a street designation at all; some just ended with the street name. If the street name was
+<tt class="docutils literal"><span class="pre">'BROAD'</span></tt>, then the regular expression would match <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> at the end of the string as part of the word
+<tt class="docutils literal"><span class="pre">'BROAD'</span></tt>. which is not what I wanted.</p>
+</div>
+</div>
+<div class="section" id="b-and-r">
+<h3>7.1.2 <tt class="docutils literal"><span class="pre">\b</span></tt> and <tt class="docutils literal"><span class="pre">r</span></tt><a class="headerlink" href="#b-and-r" title="Permalink to this headline">¶</a></h3>
+<p>Example 7.2 Matching Whole Words</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<ul class="last simple">
+<li><tt class="docutils literal"><span class="pre">\b</span></tt> matches a word boundary</li>
+<li>raw string: prefix the string with the letter <tt class="docutils literal"><span class="pre">r</span></tt>.</li>
+</ul>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [13]: </span><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;100 BROAD&#39;</span>
+
+<span class="gp">In [14]: </span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;ROAD$&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="gr">Out[14]: </span><span class="s">&#39;100 BRD.&#39;</span>
+
+<span class="gp">In [15]: </span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\\</span><span class="s">bROAD$&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="gr">Out[15]: </span><span class="s">&#39;100 BROAD&#39;</span>
+
+<span class="hll"><span class="gp">In [16]: </span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\bROAD$&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</span><span class="gr">Out[16]: </span><span class="s">&#39;100 BROAD&#39;</span>
+
+<span class="gp">In [17]: </span><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;100 BROAD ROAD APT.3&#39;</span>
+
+<span class="gp">In [18]: </span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\bROAD$&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+<span class="gr">Out[18]: </span><span class="s">&#39;100 BROAD ROAD APT.3&#39;</span>
+
+<span class="hll"><span class="gp">In [19]: </span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&#39;\bROAD\b&#39;</span><span class="p">,</span> <span class="s">&#39;RD.&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+</span><span class="gr">Out[19]: </span><span class="s">&#39;100 BROAD RD. APT.3&#39;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[14]:</dt>
+<dd>problem in the previous approach</dd>
+<dt>[15]:</dt>
+<dd><ul class="first last">
+<li><p class="first">What I really want was to match <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> when it was at the end of the string and
+it was its own whole word, not a part of some larger word.</p>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">\b</span></tt>:</dt>
+<dd><ul class="first last simple">
+<li>means &#8220;a word boundary must occur right here.&#8221;</li>
+<li>In Python, this is complicated by the fact that the <tt class="docutils literal"><span class="pre">'\'</span></tt> character in a string must itself be escaped.
+(this is called <em>backslash plague</em>)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">r</span></tt>:</dt>
+<dd><ul class="first last">
+<li><p class="first">to work around the backslash plague, you can use what is called a raw string,
+by prefixing the string with the letter <tt class="docutils literal"><span class="pre">r</span></tt>.</p>
+</li>
+<li><p class="first">this tells Python that nothing in this string should be escaped.</p>
+</li>
+<li><p class="first">ie. <tt class="docutils literal"><span class="pre">'\t'</span></tt> is a tab character, but <tt class="docutils literal"><span class="pre">r'\t'</span></tt> is really the backslash character <tt class="docutils literal"><span class="pre">\</span></tt> followed by the
+letter <tt class="docutils literal"><span class="pre">t</span></tt>.</p>
+</li>
+<li><div class="admonition-tip first admonition">
+<p class="first admonition-title">Tip</p>
+<p class="last">Always using raw strings when dealing with regular expressions.</p>
+</div>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt>[18]:</dt>
+<dd><div class="admonition-problem first last admonition">
+<p class="first admonition-title">problem</p>
+<p class="last">I soon found more cases that contradicted my logic.
+In this case, the street address contained the word <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> as a whole word by itself, but it
+wasn&#8217;t at the end, because the address had an apartment number after the street designation.
+Because <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> isn&#8217;t at the very end of the string, it doesn&#8217;t match, so the entire call to
+<tt class="docutils literal"><span class="pre">re.sub</span></tt> ends up replacing nothing at all, and you get the original string back, which is
+not what you want.</p>
+</div>
+</dd>
+<dt>[19]:</dt>
+<dd><p class="first">To Solve this problem, I removed the <tt class="docutils literal"><span class="pre">$</span></tt> character and added another <tt class="docutils literal"><span class="pre">\b</span></tt>.</p>
+<p class="last">Now the regular expression reads &#8220;match <tt class="docutils literal"><span class="pre">'ROAD'</span></tt> when it&#8217;s whole word by itself anywhere in the string,&#8221;
+whether at the end, the beginning, or somewhere in the middle.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="case-study-roman-numerals">
+<span id="case-study-roman"></span><h2>7.3. Case Study: Roman Numerals<a class="headerlink" href="#case-study-roman-numerals" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction-to-roman-numerals">
+<h3>7.3.0 Introduction to Roman Numerals<a class="headerlink" href="#introduction-to-roman-numerals" title="Permalink to this headline">¶</a></h3>
+<p>You&#8217;ve most likely seen Roman numerals, even if you didn&#8217;t recognize them. You may have seen them in the copyrights of
+old movies and television shows (&#8220;Copyright <tt class="docutils literal"><span class="pre">MCMXLVI</span></tt>&#8221; instead of &#8220;Copyright <tt class="docutils literal"><span class="pre">1946</span></tt>&#8221;), or on the dedication walls of
+libraries or universities (&#8220;established <tt class="docutils literal"><span class="pre">MDCCCLXXXVIII</span></tt>&#8221; instead of &#8220;established <tt class="docutils literal"><span class="pre">1888</span></tt>&#8221;). You may also have seen them
+in outlines and bibliographical references. It&#8217;s a system of representing numbers that really does date back to the
+ancient Roman empire.</p>
+<div class="section" id="rules-in-roman-numerals">
+<h4>7.3.0.0 Rules in Roman Numerals<a class="headerlink" href="#rules-in-roman-numerals" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><dl class="first docutils">
+<dt>there are seven characters that are repeated and combined in various ways to represent numbers:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">I</span></tt> = 1</li>
+<li><tt class="docutils literal"><span class="pre">V</span></tt> = 5</li>
+<li><tt class="docutils literal"><span class="pre">X</span></tt> = 10</li>
+<li><tt class="docutils literal"><span class="pre">L</span></tt> = 50</li>
+<li><tt class="docutils literal"><span class="pre">C</span></tt> = 100</li>
+<li><tt class="docutils literal"><span class="pre">D</span></tt> = 500</li>
+<li><tt class="docutils literal"><span class="pre">M</span></tt> = 1000</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Characters are additive:</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">I</span></tt> is <tt class="docutils literal"><span class="pre">1</span></tt>, <tt class="docutils literal"><span class="pre">II</span></tt> is 2, and <tt class="docutils literal"><span class="pre">III</span></tt> is 3. <tt class="docutils literal"><span class="pre">VI</span></tt> is <tt class="docutils literal"><span class="pre">6</span></tt> (literally, &#8220;5 and 1&#8221;), <tt class="docutils literal"><span class="pre">VII</span></tt> is <tt class="docutils literal"><span class="pre">7</span></tt>, and
+<tt class="docutils literal"><span class="pre">VIII</span></tt> is <tt class="docutils literal"><span class="pre">8</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Subtraction rule:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>A smaller number in front of a larger number means subtraction, all else means addition:</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">IV</span></tt> means <tt class="docutils literal"><span class="pre">4</span></tt>, <tt class="docutils literal"><span class="pre">VI</span></tt> means <tt class="docutils literal"><span class="pre">6</span></tt></p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>You would not put more than one smaller number in front of a larger number to subtract:</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">IIV</span></tt> would not mean <tt class="docutils literal"><span class="pre">3</span></tt>, and it is not even a valid Roman numeral.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>You must separates ones, tens, hundreds, and thousands as separate items:</dt>
+<dd><ul class="first last simple">
+<li>That means that <tt class="docutils literal"><span class="pre">99</span></tt> is <tt class="docutils literal"><span class="pre">XCIX</span></tt> (&#8220;90 plus 9&#8221;), but never should be written as <tt class="docutils literal"><span class="pre">IC</span></tt>.</li>
+<li>Similarly, <tt class="docutils literal"><span class="pre">999</span></tt> cannot be <tt class="docutils literal"><span class="pre">IM</span></tt> and <tt class="docutils literal"><span class="pre">1999</span></tt> cannot be <tt class="docutils literal"><span class="pre">MIM</span></tt></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>The tens characters (<tt class="docutils literal"><span class="pre">I</span></tt>, <tt class="docutils literal"><span class="pre">X</span></tt>, <tt class="docutils literal"><span class="pre">C</span></tt>, and <tt class="docutils literal"><span class="pre">M</span></tt>) can be repeated up to three times: (except <tt class="docutils literal"><span class="pre">M</span></tt>, which could be repeated up to <em>four</em> times)</dt>
+<dd><ul class="first last simple">
+<li>At <tt class="docutils literal"><span class="pre">4</span></tt>, cannot represent it as <tt class="docutils literal"><span class="pre">IIII</span></tt>; instead, it is represented as <tt class="docutils literal"><span class="pre">IV</span></tt> ( &#8220;1 less than 5&#8221;)</li>
+<li>Number <tt class="docutils literal"><span class="pre">40</span></tt> is written as <tt class="docutils literal"><span class="pre">XL</span></tt> (10 less than 50), <tt class="docutils literal"><span class="pre">41</span></tt> as <tt class="docutils literal"><span class="pre">XLI</span></tt>, <tt class="docutils literal"><span class="pre">42</span></tt> as <tt class="docutils literal"><span class="pre">XLII</span></tt>, <tt class="docutils literal"><span class="pre">43</span></tt> as <tt class="docutils literal"><span class="pre">XLIII</span></tt>,
+and then <tt class="docutils literal"><span class="pre">44</span></tt> as <tt class="docutils literal"><span class="pre">XLIV</span></tt> (10 less than 50, then 1 less than 5).</li>
+<li>Similarly, at <tt class="docutils literal"><span class="pre">9</span></tt>, you need to subtract from the next highest tens character: <tt class="docutils literal"><span class="pre">8</span></tt> is <tt class="docutils literal"><span class="pre">VIII</span></tt>, but <tt class="docutils literal"><span class="pre">9</span></tt> is <tt class="docutils literal"><span class="pre">IX</span></tt>
+(1 less than 10), not <tt class="docutils literal"><span class="pre">VIIII</span></tt>. The number <tt class="docutils literal"><span class="pre">90</span></tt> is <tt class="docutils literal"><span class="pre">XC</span></tt>, <tt class="docutils literal"><span class="pre">900</span></tt> is <tt class="docutils literal"><span class="pre">CM</span></tt>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>The fives characters cannot be repeated:</dt>
+<dd><ul class="first last simple">
+<li>Number <tt class="docutils literal"><span class="pre">10</span></tt> is always represented as <tt class="docutils literal"><span class="pre">X</span></tt>, never as <tt class="docutils literal"><span class="pre">VV</span></tt>.</li>
+<li>Number <tt class="docutils literal"><span class="pre">100</span></tt> is always <tt class="docutils literal"><span class="pre">C</span></tt>, never <tt class="docutils literal"><span class="pre">LL</span></tt>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Roman numerals are always written highest to lowest, and read left to right, so the order of characters matters very much:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">DC</span></tt> is <tt class="docutils literal"><span class="pre">600</span></tt>; <tt class="docutils literal"><span class="pre">CD</span></tt> is a completely different number(<tt class="docutils literal"><span class="pre">400</span></tt>, 100 less than 500).</li>
+<li><tt class="docutils literal"><span class="pre">CI</span></tt> is <tt class="docutils literal"><span class="pre">101</span></tt>; <tt class="docutils literal"><span class="pre">IC</span></tt> is not even a valid Roman numeral (because you cannot subtract 1 directly from 100; you
+would need to write it as <tt class="docutils literal"><span class="pre">XCIX</span></tt>, for 10 less than 100, then 1 less than 10).</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="validating-roman-numeral">
+<h3>7.3.1 Validating Roman Numeral<a class="headerlink" href="#validating-roman-numeral" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Goal:</dt>
+<dd>Validating that an arbitrary string is a valid Roman numeral.</dd>
+<dt>Approach:</dt>
+<dd>One digit at a time</dd>
+</dl>
+<div class="section" id="checing-for-thousands">
+<h4>7.3.1.0 Checing for Thousands <tt class="docutils literal"><span class="pre">?</span></tt><a class="headerlink" href="#checing-for-thousands" title="Permalink to this headline">¶</a></h4>
+<p>Since Roman numerals are always written highest to lowest, let&#8217;s start with the highest: the thousands place.</p>
+<p>For numbers 1000 and higher, the thousands are represented by a series of <tt class="docutils literal"><span class="pre">M</span></tt> characters.</p>
+<p>Example 7.3 Checking for Thousands</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<p class="last"><tt class="docutils literal"><span class="pre">x?</span></tt> matches an <em>optional</em> <tt class="docutils literal"><span class="pre">x</span></tt> character (in other words, it matches an <tt class="docutils literal"><span class="pre">x</span></tt> zero or <em>one</em> times).</p>
+</div>
+<div class="admonition-key-func admonition">
+<p class="first admonition-title">Key Func</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [20]: </span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="hll"><span class="gp">In [21]: </span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;^M?M?M?M?$&#39;</span>
+</span>
+<span class="hll"><span class="gp">In [22]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">)</span>
+</span><span class="gr">Out[22]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92c5b48</span><span class="o">&gt;</span>
+
+<span class="gp">In [23]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MM&#39;</span><span class="p">)</span>
+<span class="gr">Out[23]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92c5bf0</span><span class="o">&gt;</span>
+<span class="gp">In [24]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;MMM&#39;</span><span class="p">)</span>
+<span class="gr">Out[24]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92c5d08</span><span class="o">&gt;</span>
+
+<span class="gp">In [25]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;MMMMM&#39;</span><span class="p">)</span>
+
+<span class="gp">In [26]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="gr">Out[26]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92c5e58</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[21]:</dt>
+<dd><p class="first">This pattern has three parts:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">^</span></tt> to match what following only at the beginning of the string. If this were not specified, the pattern
+would match no matter where the <tt class="docutils literal"><span class="pre">M</span></tt> characters were, which is not what you want. You want to make sure
+that the <tt class="docutils literal"><span class="pre">M</span></tt> characters, if they&#8217;re there, are at the beginning of the string.</li>
+<li><tt class="docutils literal"><span class="pre">M?</span></tt> to optionally match a single <tt class="docutils literal"><span class="pre">M</span></tt> character. Since this is repeated three times, you&#8217;re matching
+anywhere from zero to three <tt class="docutils literal"><span class="pre">M</span></tt> characters in a row.</li>
+<li><tt class="docutils literal"><span class="pre">$</span></tt> to match what precedes only at the end of the string. When combined with the <tt class="docutils literal"><span class="pre">^</span></tt> character at the
+beginning, this means that the pattern must match the entire string, with no other characters before or
+after the <tt class="docutils literal"><span class="pre">M</span></tt> characters.</li>
+</ul>
+</div></blockquote>
+</dd>
+<dt>[22]:</dt>
+<dd><ul class="first last">
+<li><p class="first">re.search:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># takes a regular expression (pattern) and a string (M) to try to match against the regular expression.</span>
+<span class="c"># If a match is found, search returns an object which has various methods to describe the match</span>
+<span class="c"># If no match is found, search returns None, the Python null value.</span>
+<span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">'M'</span></tt> matches, because the first optional <tt class="docutils literal"><span class="pre">M</span></tt> matches and the second and third optional <tt class="docutils literal"><span class="pre">M</span></tt> characters are ignored.</p>
+</li>
+</ul>
+</dd>
+<dt>[25]:</dt>
+<dd><tt class="docutils literal"><span class="pre">'MMMM'</span></tt> does not match. All four <tt class="docutils literal"><span class="pre">M</span></tt> characters match, but then the regular expression insisits on the string
+ending (because of the <tt class="docutils literal"><span class="pre">$</span></tt> character), and the string doesn&#8217;t end yet (because of the fourth <tt class="docutils literal"><span class="pre">M</span></tt>). So <tt class="docutils literal"><span class="pre">search</span></tt>
+returns <tt class="docutils literal"><span class="pre">None</span></tt>.</dd>
+<dt>[26]:</dt>
+<dd>Interestingly, an empty string also matches this regular expression, since all the <tt class="docutils literal"><span class="pre">M</span></tt> characters are optional.</dd>
+</dl>
+</div>
+<div class="section" id="checking-for-hundreds-a-b-c">
+<h4>7.3.1.1 Checking for Hundreds <tt class="docutils literal"><span class="pre">(a|b|c)</span></tt><a class="headerlink" href="#checking-for-hundreds-a-b-c" title="Permalink to this headline">¶</a></h4>
+<p>The hundreds place is more difficult than the thousands, because there are several mutually exclusive ways it would be
+expressed, depending on its value.</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">100</span></tt> = <tt class="docutils literal"><span class="pre">C</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">200</span></tt> = <tt class="docutils literal"><span class="pre">CC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">300</span></tt> = <tt class="docutils literal"><span class="pre">CCC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">400</span></tt> = <tt class="docutils literal"><span class="pre">CD</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">500</span></tt> = <tt class="docutils literal"><span class="pre">D</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">600</span></tt> = <tt class="docutils literal"><span class="pre">DC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">700</span></tt> = <tt class="docutils literal"><span class="pre">DCC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">800</span></tt> = <tt class="docutils literal"><span class="pre">DCCC</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">900</span></tt> = <tt class="docutils literal"><span class="pre">CM</span></tt></li>
+</ul>
+</div></blockquote>
+<p>So there are three possible patterns:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">CM</span></tt></p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">CD</span></tt></p>
+</li>
+<li><p class="first">an optional <tt class="docutils literal"><span class="pre">D</span></tt>, followed by zero to three <tt class="docutils literal"><span class="pre">C</span></tt> characters:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Zero to three <tt class="docutils literal"><span class="pre">C</span></tt> characters (zero if the hundreds place is 0)</li>
+<li><tt class="docutils literal"><span class="pre">D</span></tt>, followed by zero to three <tt class="docutils literal"><span class="pre">C</span></tt> characters.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p>Example 7.4. Checking for Hundreds</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<p class="last"><tt class="docutils literal"><span class="pre">(a|b|c)</span></tt> matches either <tt class="docutils literal"><span class="pre">a</span></tt> or <tt class="docutils literal"><span class="pre">b</span></tt> or <tt class="docutils literal"><span class="pre">c</span></tt>.</p>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [27]: </span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="hll"><span class="gp">In [28]: </span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;^M?M?M?M?(CM|CD|D?C?C?C?)$&#39;</span>
+</span>
+<span class="gp">In [29]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;MCM&#39;</span><span class="p">)</span>
+<span class="gr">Out[29]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x9248820</span><span class="o">&gt;</span>
+
+<span class="gp">In [30]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;MD&#39;</span><span class="p">)</span>
+<span class="gr">Out[30]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92487a0</span><span class="o">&gt;</span>
+
+<span class="gp">In [31]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;MMMCCC&#39;</span><span class="p">)</span>
+<span class="gr">Out[31]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x9248760</span><span class="o">&gt;</span>
+
+<span class="gp">In [32]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;MCMC&#39;</span><span class="p">)</span>
+
+<span class="gp">In [33]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+<span class="gr">Out[33]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92488e0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[28]:</dt>
+<dd>This pattern starts out the same as the previous one, checking for the beginning of the string (<tt class="docutils literal"><span class="pre">^</span></tt>),
+then the thousands place (<tt class="docutils literal"><span class="pre">M?M?M?M?</span></tt>). Then it has the new part, in parentheses, which defines a set of
+three mutually exclusive patterns, separated by vertical bars: <tt class="docutils literal"><span class="pre">CM</span></tt>, <tt class="docutils literal"><span class="pre">CD</span></tt>,and <tt class="docutils literal"><span class="pre">D?C?C?C?</span></tt>. The
+regular expression parser checks for each of these patterns in order( from left to right),
+takes the first one that matches, and ignores the rest.</dd>
+<dt>[29]:</dt>
+<dd><tt class="docutils literal"><span class="pre">'MCM'</span></tt> (<tt class="docutils literal"><span class="pre">1900</span></tt>) matches because the first <tt class="docutils literal"><span class="pre">M</span></tt> matches, the second and third <tt class="docutils literal"><span class="pre">M</span></tt> characters are ignored,
+and the <tt class="docutils literal"><span class="pre">CM</span></tt> matches (so the <tt class="docutils literal"><span class="pre">CD</span></tt> and <tt class="docutils literal"><span class="pre">D?C?C?C?</span></tt> patterns are never considered).</dd>
+<dt>[30]:</dt>
+<dd><tt class="docutils literal"><span class="pre">'MD'</span></tt> (<tt class="docutils literal"><span class="pre">1500</span></tt>) matches because the first <tt class="docutils literal"><span class="pre">M</span></tt> matches, the second and third <tt class="docutils literal"><span class="pre">M</span></tt> characters are ignored, and the
+<tt class="docutils literal"><span class="pre">D?C?C?C?</span></tt> pattern matches <tt class="docutils literal"><span class="pre">D</span></tt> (each of the three <tt class="docutils literal"><span class="pre">C</span></tt> characters are optional and are ignored).</dd>
+<dt>[31]:</dt>
+<dd><tt class="docutils literal"><span class="pre">'MMMCCC'&quot;</span></tt> (<tt class="docutils literal"><span class="pre">3300</span></tt>) matches because all three <tt class="docutils literal"><span class="pre">M</span></tt> characters match, and the <tt class="docutils literal"><span class="pre">D?C?C?C?</span></tt> pattern matches <tt class="docutils literal"><span class="pre">CCC</span></tt>.</dd>
+<dt>[33]:</dt>
+<dd><tt class="docutils literal"><span class="pre">'MCMC'</span></tt> does not match. The first <tt class="docutils literal"><span class="pre">M</span></tt> matches, the second and third <tt class="docutils literal"><span class="pre">M</span></tt> characters are ignored, and the
+<tt class="docutils literal"><span class="pre">'CM'</span></tt> matches, but then the <tt class="docutils literal"><span class="pre">$</span></tt> does not match because you&#8217;re not at the end of the string yet (you still have
+and unmatched <tt class="docutils literal"><span class="pre">C</span></tt> character). The <tt class="docutils literal"><span class="pre">C</span></tt> does <em>not</em> match as part of the <tt class="docutils literal"><span class="pre">D?C?C?C?</span></tt> pattern, because the
+mutually exclusive <tt class="docutils literal"><span class="pre">CM</span></tt> pattern has already matched.</dd>
+</dl>
+</div>
+<div class="section" id="using-the-n-m-syntax">
+<h4>7.3.1.2 Using the <tt class="docutils literal"><span class="pre">{n.m}</span></tt> Syntax<a class="headerlink" href="#using-the-n-m-syntax" title="Permalink to this headline">¶</a></h4>
+<p>In the previous section, you were dealing with a pattern where the same character could be repeated up to three times.
+There is another way to express this in regular expression.</p>
+<p>Example 7.5 The New Way: From <tt class="docutils literal"><span class="pre">n</span></tt> to <tt class="docutils literal"><span class="pre">m</span></tt></p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<p class="last"><tt class="docutils literal"><span class="pre">x{n,m}</span></tt> matches an <tt class="docutils literal"><span class="pre">x</span></tt> character [n,m] times</p>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [34]: </span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="gp">In [35]: </span><span class="n">old_pattern</span> <span class="o">=</span> <span class="s">&#39;^M?M?M?M?$&#39;</span>
+
+<span class="gp">In [36]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">old_pattern</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">)</span>
+<span class="gr">Out[36]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92d4528</span><span class="o">&gt;</span>
+
+<span class="gp">In [37]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">old_pattern</span><span class="p">,</span> <span class="s">&#39;MM&#39;</span><span class="p">)</span>
+<span class="gr">Out[37]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92d4608</span><span class="o">&gt;</span>
+
+<span class="gp">In [38]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">old_pattern</span><span class="p">,</span> <span class="s">&#39;MMM&#39;</span><span class="p">)</span>
+<span class="gr">Out[38]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92d4720</span><span class="o">&gt;</span>
+
+<span class="gp">In [39]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">old_pattern</span><span class="p">,</span> <span class="s">&#39;MMMMM&#39;</span><span class="p">)</span>
+
+<span class="hll"><span class="gp">In [40]: </span><span class="n">new_pattern</span> <span class="o">=</span> <span class="s">&#39;^M{0,4}$&#39;</span>
+</span>
+<span class="gp">In [41]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">new_pattern</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">)</span>
+<span class="gr">Out[41]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92d4988</span><span class="o">&gt;</span>
+
+<span class="gp">In [42]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">new_pattern</span><span class="p">,</span> <span class="s">&#39;MM&#39;</span><span class="p">)</span>
+<span class="gr">Out[42]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92d4aa0</span><span class="o">&gt;</span>
+
+<span class="gp">In [43]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">new_pattern</span><span class="p">,</span> <span class="s">&#39;MMM&#39;</span><span class="p">)</span>
+<span class="gr">Out[43]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92d4bb8</span><span class="o">&gt;</span>
+
+<span class="gp">In [44]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">new_pattern</span><span class="p">,</span> <span class="s">&#39;MMMMM&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[40]:</dt>
+<dd>This patterns says: &#8220;Match the start of the string, then anywhere from zero to three <tt class="docutils literal"><span class="pre">M</span></tt> characters,
+then the end of the string.&#8221; The <tt class="docutils literal"><span class="pre">0</span></tt> and <tt class="docutils literal"><span class="pre">3</span></tt> can be any numbers; if you want to match at least one
+but no more than three <tt class="docutils literal"><span class="pre">M</span></tt> characters, you could say <tt class="docutils literal"><span class="pre">M{1,3}</span></tt>.</dd>
+</dl>
+</div>
+<div class="section" id="checking-for-tens-and-ones">
+<h4>7.3.1.3 Checking for Tens and Ones<a class="headerlink" href="#checking-for-tens-and-ones" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Tens place</th>
+<th class="head">Ones place</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">10</span></tt> = <tt class="docutils literal"><span class="pre">X</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">1</span></tt> = <tt class="docutils literal"><span class="pre">I</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">20</span></tt> = <tt class="docutils literal"><span class="pre">XX</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">2</span></tt> = <tt class="docutils literal"><span class="pre">II</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">30</span></tt> = <tt class="docutils literal"><span class="pre">XXX</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">3</span></tt> = <tt class="docutils literal"><span class="pre">III</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">40</span></tt> = <tt class="docutils literal"><span class="pre">XL</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">4</span></tt> = <tt class="docutils literal"><span class="pre">IV</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">50</span></tt> = <tt class="docutils literal"><span class="pre">L</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">5</span></tt> = <tt class="docutils literal"><span class="pre">V</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">60</span></tt> = <tt class="docutils literal"><span class="pre">LX</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">6</span></tt> = <tt class="docutils literal"><span class="pre">VI</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">70</span></tt> = <tt class="docutils literal"><span class="pre">LXX</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">7</span></tt> = <tt class="docutils literal"><span class="pre">VII</span></tt></td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">80</span></tt> = <tt class="docutils literal"><span class="pre">LXXX</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">8</span></tt> = <tt class="docutils literal"><span class="pre">VIII</span></tt></td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">90</span></tt> = <tt class="docutils literal"><span class="pre">XC</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">9</span></tt> = <tt class="docutils literal"><span class="pre">IX</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Example 7.6 Checking for Tens</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [45]: </span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;^M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)$&#39;</span>
+
+<span class="gp">In [46]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MCMXL&#39;</span><span class="p">)</span>  <span class="c"># 1940</span>
+<span class="gr">Out[46]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92440b0</span><span class="o">&gt;</span>
+
+<span class="gp">In [47]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MCML&#39;</span><span class="p">)</span> <span class="c"># 1950</span>
+<span class="gr">Out[47]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x9244e30</span><span class="o">&gt;</span>
+
+<span class="gp">In [48]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MCMLX&#39;</span><span class="p">)</span> <span class="c"># 1960</span>
+<span class="gr">Out[48]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x9244608</span><span class="o">&gt;</span>
+
+<span class="gp">In [49]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MCMLXXX&#39;</span><span class="p">)</span> <span class="c"># 1980</span>
+<span class="gr">Out[49]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92b1020</span><span class="o">&gt;</span>
+
+<span class="gp">In [50]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MCMLXXXX&#39;</span><span class="p">)</span> <span class="c"># invalid</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="final-pattern-for-roman-numeral">
+<h4>7.3.1.4 Final Pattern for Roman Numeral<a class="headerlink" href="#final-pattern-for-roman-numeral" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;^M?M?M?M?(CM|CD|D?C?C?C?)(XC|XL|L?X?X?X?)(IX|IV|V?I?I?I?)$&#39;</span>
+
+<span class="c"># using the altenate {n,m} syntax</span>
+<span class="n">alt_pattern</span> <span class="o">=</span> <span class="s">&#39;^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verbose-regular-expressions">
+<span id="verbose-re"></span><h2>7.4. Verbose Regular Expressions<a class="headerlink" href="#verbose-regular-expressions" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-usage admonition">
+<p class="first admonition-title">usage</p>
+<p class="last">Writing documentation inside the regular expression.</p>
+</div>
+<p>A <em>verbose regular expression</em> is different from a compact regular expression in two ways:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Whitespace is ignored. Spaces, tabs, and carriage returns are not matched as spaces, tabs, and carriage returns.
+They&#8217;re not matched at all. (If you want to match a space in a verbose regular expression, you&#8217;ll need to escape it by
+putting a backslash in front of it.)</li>
+<li>Comments are ignored.</li>
+</ul>
+</div></blockquote>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [51]: </span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="go">    ...:    ^                 # beginning of string</span>
+<span class="go">    ...:    M{0,4}            # thousands - 0 to 4 M&#39;s</span>
+<span class="go">    ...:    (CM|CD|D?C{0,3})  # hundreds - 900 (CM), 400 (CD), 0-300 (0 to 3 C&#39;s),</span>
+<span class="go">    ...:                      #            or 500-800 (D, followed by 0 to 3 C&#39;s)</span>
+<span class="go">    ...:    (XC|XL|L?X{0,3})  # tens - 90 (XC), 40 (XL), 0-30 (0 to 3 X&#39;s),</span>
+<span class="go">    ...:                      #        or 50-80 (L, followed by 0 to 3 X&#39;s)</span>
+<span class="go">    ...:    (IX|IV|V?I{0,3})  # ones - 9 (IX), 4 (IV), 0-3 (0 to 3 I&#39;s),</span>
+<span class="go">    ...:                      #        or 5-8 (V, followed by 0 to 3 I&#39;s)</span>
+<span class="go">    ...:    $                 # end of string</span>
+<span class="go">    ...:    &quot;&quot;&quot;</span>
+
+<span class="hll"><span class="gp">In [52]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">,</span><span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+</span><span class="gr">Out[52]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x92d71e0</span><span class="o">&gt;</span>
+
+<span class="gp">In [53]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MCMLXXXX&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+
+<span class="gp">In [54]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MCMLXXXIX&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+<span class="gr">Out[54]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x9241bb0</span><span class="o">&gt;</span>
+
+<span class="gp">In [55]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;MMMMDCCCLXXXVIII&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">VERBOSE</span><span class="p">)</span>
+<span class="gr">Out[55]: </span><span class="o">&lt;</span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Match</span> <span class="n">at</span> <span class="mh">0x9241b60</span><span class="o">&gt;</span>
+
+<span class="gp">In [56]: </span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="s">&#39;M&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[52]:</dt>
+<dd>The most important thing to remember when using verbose regular expressions is that
+you need to pass an extra argument when working with them: <tt class="docutils literal"><span class="pre">re.VERBOSE</span></tt> is a
+constant defined in the <tt class="docutils literal"><span class="pre">re</span></tt> module that signals that the pattern should be treated
+as a verbose regular expression.</dd>
+<dt>[56]:</dt>
+<dd><tt class="docutils literal"><span class="pre">re.VERBOSE</span></tt> flag is missing. Python assumes every regular expression is compact unless
+you explicitly state that it is verbose.</dd>
+</dl>
+</div>
+<div class="section" id="case-study-parsing-phone-numbers">
+<span id="case-stuy-phone"></span><h2>7.5. Case Study: Parsing Phone Numbers<a class="headerlink" href="#case-study-parsing-phone-numbers" title="Permalink to this headline">¶</a></h2>
+<p>When a regular expression <em>does</em> match, you can pick out specific pieces of it. You can find out what matched where.</p>
+<p>The problem:</p>
+<blockquote>
+<div>parsing an American phone number. The client wanted to be able to enter the number free-form (in a single field),
+but then wanted to store the area code, trunk, number, and optionally an extension separately in the company&#8217;s database.</div></blockquote>
+<p>Here are the possible forms of phone numbers:</p>
+<blockquote>
+<div><ul class="simple">
+<li>800-555-1212</li>
+<li>800 555 1212</li>
+<li>800.555.1212</li>
+<li><ol class="first arabic" start="800">
+<li>555-1212</li>
+</ol>
+</li>
+<li>1-800-555-1212</li>
+<li>800-555-1212-1234</li>
+<li>800-555-1212x1234</li>
+<li>800-555-1212 ext. 1234</li>
+<li>work 1-(800) 555.1212 #1234</li>
+</ul>
+</div></blockquote>
+<p>In each of these case, I need to know that the area code was <tt class="docutils literal"><span class="pre">800</span></tt>, the trunk was <tt class="docutils literal"><span class="pre">555</span></tt>, and the rest of the phone number was <tt class="docutils literal"><span class="pre">1212</span></tt>.
+For those with an extension, I need to know that the extension was <tt class="docutils literal"><span class="pre">1234</span></tt>.</p>
+<p>Example 7.10 Finding Numbers</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<p class="last"><tt class="docutils literal"><span class="pre">\d</span></tt> means &#8220;any numeric digit&#8221; (0 through 9).</p>
+</div>
+<div class="admonition-key-func admonition">
+<p class="first admonition-title">Key Func</p>
+<p>patternObj = re.compile(pattern)</p>
+<p class="last">patternObj.search(string).groups()</p>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="hll"><span class="gp">In [2]: </span><span class="n">phonePattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^(\d{3})-(\d{3})-(\d{4})$&#39;</span><span class="p">)</span>
+</span>
+<span class="gp">In [3]: </span><span class="nb">type</span><span class="p">(</span><span class="n">phonePattern</span><span class="p">)</span>
+<span class="gr">Out[3]: </span><span class="n">_sre</span><span class="o">.</span><span class="n">SRE_Pattern</span>
+
+<span class="hll"><span class="gp">In [4]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</span><span class="gr">Out[4]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">)</span>
+
+<span class="gp">In [5]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212-1234&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[2]:</dt>
+<dd><ul class="first last">
+<li><p class="first">re.complie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># compile a regular expression pattern into a regular expression object,</span>
+<span class="c"># which can be used for matching using its match() and search() methods</span>
+<span class="n">patternObj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">\d</span></tt>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">{3}</span></tt> means &#8220;match exactly three numeric digits&#8221; (a variation on the <tt class="docutils literal"><span class="pre">{n,m}</span> <span class="pre">syntax</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">\d</span></tt> means &#8220;any numeric digit&#8221; (0 through 9)</li>
+<li><tt class="docutils literal"><span class="pre">(\d{3})</span></tt> means &#8220;match exactly three numeric digits, and <em>then remember them as a group that I can ask for later</em>&#8220;</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+<dt>[4]:</dt>
+<dd><ul class="first last">
+<li><p class="first">groups():</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># to get access to the groups that the regular expression parser remembered along the way</span>
+<span class="c"># it will return a tuple of however many groups were defined in the regular expression.</span>
+<span class="n">patternObj</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">string</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In this case, you defined three groups, one with three digits, one with three digits, and one with four digits.</p>
+</li>
+</ul>
+</dd>
+<dt>[5]:</dt>
+<dd><div class="admonition-problem first last admonition">
+<p class="first admonition-title">problem</p>
+<p class="last">This regular expression doesn&#8217;t handle a phone number with an extension on the end.</p>
+</div>
+</dd>
+</dl>
+<p>Example 7.11 Finding the Extension</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<p class="last"><tt class="docutils literal"><span class="pre">x+</span></tt> matches <tt class="docutils literal"><span class="pre">x</span></tt> one or more times</p>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="n">phonePattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^(\d{3})-(\d{3})-(\d{4})-(\d+)$&#39;</span><span class="p">)</span>
+
+<span class="gp">In [7]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212-1234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[7]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+
+<span class="hll"><span class="gp">In [8]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800 555 1212 1234&#39;</span><span class="p">)</span>
+</span>
+<span class="gp">In [9]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[6]:</dt>
+<dd><ul class="first last">
+<li><p class="first"><tt class="docutils literal"><span class="pre">\d+</span></tt>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">x+</span></tt> matches <tt class="docutils literal"><span class="pre">x</span></tt> one or more times.</li>
+<li><tt class="docutils literal"><span class="pre">\d+</span></tt> means &#8220;match one or more numeric digits&#8221;</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">This regular expression is almost identical to the previous one:
+you match the beginning of the string, then a remembered group of three digits,
+then a hyphen, then a remembered group of three digits, then a hyphen, then
+a remembered group of four digits,then match another hyphen, and
+a remembered group of one or more digits, then the end of the string.</p>
+</li>
+</ul>
+</dd>
+<dt>[8]&amp;[9]:</dt>
+<dd><div class="admonition-problem first last admonition">
+<p class="first admonition-title">problem</p>
+<ul class="last simple">
+<li>it assumes that the different parts of the phone number are separated by hyphens.
+What if they&#8217;re separated by spaces, or commas, or dots?</li>
+<li>You cannot parse phone numbers without and extension.</li>
+</ul>
+</div>
+</dd>
+</dl>
+<p>Example 7.12 Handling Different Separators</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<p class="last"><tt class="docutils literal"><span class="pre">\D</span></tt> matches any non-numeric character.</p>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [10]: </span><span class="n">phonePattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^(\d{3})\D+(\d{3})\D+(\d{4})\D+(\d+)$&#39;</span><span class="p">)</span>
+</span>
+<span class="gp">In [11]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800 555 1212 1234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[11]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+
+<span class="gp">In [12]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212-1234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[12]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+
+<span class="gp">In [13]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;8005551212&#39;</span><span class="p">)</span>
+
+<span class="gp">In [14]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[10]:</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">\D</span></tt>:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">\D</span></tt> matches any character <em>except</em> a numeric digit.</li>
+<li><tt class="docutils literal"><span class="pre">\D+</span></tt> matchs one or more characters that are not digits. (this is how you try to match different separators)</li>
+</ul>
+</div></blockquote>
+</dd>
+<dt>[13]&amp;[14]:</dt>
+<dd><div class="admonition-problem first last admonition">
+<p class="first admonition-title">problem</p>
+<ul class="last simple">
+<li>it assumes that there is a separator at all. What if the phone number is entered without any spaces or hyphens?</li>
+<li>extensions are still required.</li>
+</ul>
+</div>
+</dd>
+</dl>
+<p>Example 7.13 Handling Numbers Without Separators</p>
+<div class="admonition-key-expression admonition">
+<p class="first admonition-title">Key Expression</p>
+<p class="last"><tt class="docutils literal"><span class="pre">x*</span></tt> matches <tt class="docutils literal"><span class="pre">x</span></tt> zero or more times.</p>
+</div>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [15]: </span><span class="n">phonePattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$&#39;</span><span class="p">)</span>
+</span>
+<span class="gp">In [16]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;80055512121234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[16]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+
+<span class="gp">In [18]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800.555.1212 x1234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[18]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+
+<span class="gp">In [21]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[21]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+<span class="gp">In [22]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;(800)5551212 x1234&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[15]:</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">*</span></tt>:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">X*</span></tt> matches <tt class="docutils literal"><span class="pre">x</span></tt> zero or more times.</li>
+<li>The only change you&#8217;ve made since that last step is changing all the <tt class="docutils literal"><span class="pre">+</span></tt> to <tt class="docutils literal"><span class="pre">*</span></tt>.
+Instead of <tt class="docutils literal"><span class="pre">\D+</span></tt> between the parts of the phone number, you now match on <tt class="docutils literal"><span class="pre">\D*</span></tt>.
+It means &#8220;match non-numeric character(s) zero or more times&#8221;.</li>
+</ul>
+</div></blockquote>
+</dd>
+<dt>[22]:</dt>
+<dd><div class="admonition-problem first last admonition">
+<p class="first admonition-title">problem</p>
+<p class="last">There&#8217;s an extra character before the area code, but the regular expression assumes that the
+area code is the first thing at the beginning of the string.</p>
+</div>
+</dd>
+</dl>
+<p>Example 7.14 Handling Leading Characters</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [23]: </span><span class="n">phonePattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;(\d{3})\D*(\d{3})\D*(\d{4})\D*(\d*)$&#39;</span><span class="p">)</span>
+</span>
+<span class="gp">In [24]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;(800)5551212 ext. 1234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[24]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+
+<span class="gp">In [25]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[25]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+
+<span class="gp">In [26]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;work 1-(800) 555.1212 #1234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[26]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[23]:</dt>
+<dd>Note the lack of <tt class="docutils literal"><span class="pre">^</span></tt> in this regular expression.
+You are not matching the beginning of the string anymore.</dd>
+</dl>
+<p>Example 7.15 Parsing Phone Numbers (Final Version)</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [27]: </span><span class="n">phonePattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;&#39;&#39;</span>
+<span class="go">    ...:              # don&#39;t match beginning of string, number can start anywhere</span>
+<span class="go">    ...: (\d{3})      # area code is 3 digits (e.g. &#39;800&#39;)</span>
+<span class="go">    ...: \D*          # optional separator is any number of non-digits</span>
+<span class="go">    ...: (\d{3})      # trunk is 3 digits (e.g. &#39;555&#39;)</span>
+<span class="go">    ...: \D*          # optional separator</span>
+<span class="go">    ...: (\d{4})      # rest of number is 4 digits (e.g. &#39;1212&#39;)</span>
+<span class="go">    ...: \D*          # optional separator</span>
+<span class="go">    ...: (\d*)        # extension is optional and can be any number of digits</span>
+<span class="go">    ...: $            # end of string</span>
+<span class="go">    ...: &#39;&#39;&#39;, re.VERBOSE)</span>
+
+<span class="gp">In [28]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;work 1-(800) 555.1212 #1234&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[28]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;1234&#39;</span><span class="p">)</span>
+
+<span class="gp">In [29]: </span><span class="n">phonePattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">&#39;800-555-1212&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
+<span class="gr">Out[29]: </span><span class="p">(</span><span class="s">&#39;800&#39;</span><span class="p">,</span> <span class="s">&#39;555&#39;</span><span class="p">,</span> <span class="s">&#39;1212&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="further-reading">
+<span id="further-reading7"></span><h2>7.6. Further Reading<a class="headerlink" href="#further-reading" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Regular Expression <a class="reference external" href="http://docs.python.org/2/howto/regex.html">HOWTO</a> teaches about regular expressions and how to use them in Python.</li>
+<li><a class="reference external" href="http://www.python.org/doc/current/lib/module-re.html">re</a> module</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap13.html" title="Unit Testing"
+             >next</a></li>
+        <li class="right" >
+          <a href="chap6.html" title="Exceptions and File Handling"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" >Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Feb 25, 2013.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Objective-C Study Notes &mdash; Zeyuan Hu&#39;s World</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Zeyuan Hu&#39;s World" href="../../../index.html" />
+    <link rel="up" title="Study Notes" href="../notes_index.html" />
+    <link rel="next" title="Mathematical Contest in Modeling (MCM)" href="../../mcm/mcm_index.html" />
+    <link rel="prev" title="Miscellaneous Tips" href="../pythoninpractice/miscellaneous.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../mcm/mcm_index.html" title="Mathematical Contest in Modeling (MCM)"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../pythoninpractice/miscellaneous.html" title="Miscellaneous Tips"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" accesskey="U">Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Objective-C Study Notes</a><ul>
+<li><a class="reference internal" href="#diving-in">0. Diving In</a></li>
+<li><a class="reference internal" href="#properties">1.Properties</a><ul>
+<li><a class="reference internal" href="#setter-getter">1.1 Setter &amp; Getter</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-classes">2.Creating Classes</a><ul>
+<li><a class="reference internal" href="#file-structure">2.1. File Structure</a></li>
+<li><a class="reference internal" href="#interface">2.2. &#64;interface</a></li>
+<li><a class="reference internal" href="#implementation">2.3. &#64;implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    <h3>About this site</h3>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h3>search this site</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="objective-c-study-notes">
+<span id="objective-c"></span><h1>Objective-C Study Notes<a class="headerlink" href="#objective-c-study-notes" title="Permalink to this headline">¶</a></h1>
+<p>This is a study note that I made when I took <a class="reference external" href="http://pages.cs.wisc.edu/~suman/courses/wiki/doku.php?id=407-spring2013">CS 407 - Mobile Systems &amp; Applications</a>
+with <a class="reference external" href="http://pages.cs.wisc.edu/~suman/">Prof. Banerjee</a> . Most part of the note are <em>not</em> coming from daily lectures.</p>
+<div class="section" id="diving-in">
+<h2>0. Diving In<a class="headerlink" href="#diving-in" title="Permalink to this headline">¶</a></h2>
+<p>Card.h</p>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@interface</span> <span class="nc">Card</span>: <span class="nc">NSObject</span>
+
+<span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">contents</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<p>**
+Card.m</p>
+<div class="highlight-objc"><pre>#import "Card.h"
+
+@interface Card()
+
+@end
+
+@implementation Card
+
+
+
+@end</pre>
+</div>
+</div>
+<div class="section" id="properties">
+<h2>1.Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p>Usually we do not access instance variables directly in Objective-C. Instead, we use <strong>properties</strong>.</p>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p>A <strong>property</strong> is just the combination of a getter method and a setter method in a class:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The getter (usually) has the name of the property (e.g. <tt class="docutils literal"><span class="pre">myValue</span></tt>).</li>
+<li>The setter&#8217;s name is &#8220;set&#8221; plus capitalized property name (e.g. <tt class="docutils literal"><span class="pre">setMyValue:</span></tt>)</li>
+</ul>
+</div></blockquote>
+<p class="last">We just call the setter to store the value we want and the getter to get it. Simple.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Usually, we use a lowercase letter as the first letter of a property name.</p>
+</div>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">contents</span><span class="p">;</span>
+</pre></div>
+</td></tr></table></div>
+<p>**
+[1]:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">creating a property called <tt class="docutils literal"><span class="pre">contents</span></tt>, which represent a setter and a getter (it&#8217;s public).</p>
+<blockquote>
+<div><ul>
+<li><p class="first">getter: getting a pointer to <tt class="docutils literal"><span class="pre">NSString</span></tt> object. <tt class="docutils literal"><span class="pre">NSString</span> <span class="pre">*</span></tt> is just a pointer points to <tt class="docutils literal"><span class="pre">NSString</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All objects in Objective-C live in heap and you have pointers point to them.
+There is no way to have an Object on the stack.</p>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">strong</span></tt>:</p>
+<blockquote>
+<div><p>Since there is no garbage collection in Object-C, a variable in the heap is cleaned when there is no pointer points to it.
+In Objective-C, this is done by a system called <strong>Automatic Reference Counting</strong> (ARC). Its basically counters that count
+how many pointer points to each object in the heap. When a specific object&#8217;s count goes to zero, this object will be removed
+from the heap.</p>
+<p>So, for ARC works, the complier needs a little bit help. That&#8217;s what <tt class="docutils literal"><span class="pre">strong</span></tt> is doing. <tt class="docutils literal"><span class="pre">strong</span></tt> means I want this Object
+stays in the heap as long as I point to it. As soon as I stop pointing to it, it will be deleted. A <tt class="docutils literal"><span class="pre">strong</span></tt> reference
+(which you will use in most cases) means that you want to &#8220;own&#8221; the object you are referencing with this property/variable.
+The compiler will take care that any object that you assign to this property will not be destroyed as long as you
+(or any other object) points to it with a strong reference. Only once you set the property to <tt class="docutils literal"><span class="pre">nil</span></tt> will the object get destroyed
+(unless one or more other objects also hold a strong reference to it).</p>
+<p>Another word we could use here called <tt class="docutils literal"><span class="pre">weak</span></tt>. A <tt class="docutils literal"><span class="pre">weak</span></tt> reference you signify that you don&#8217;t want to have control over
+the object&#8217;s lifetime. The object you are referencing weakly only lives on because at least one other object holds a strong reference
+to it. Once that is no longer the case, the object gets destroyed and your weak property will automatically get set to <tt class="docutils literal"><span class="pre">nil</span></tt>.</p>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">nonatomic</span></tt>:</p>
+<blockquote>
+<div><p>This property is not thread-safe. We do not do multi-threading and locking. This is not default, and we need to put it in every property.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<div class="section" id="setter-getter">
+<h3>1.1 Setter &amp; Getter<a class="headerlink" href="#setter-getter" title="Permalink to this headline">¶</a></h3>
+<p>This is the code that complier generates about setter behind the scene. This will not appear in your code.</p>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">@synthesize</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">_contents</span><span class="p">;</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nf">contents</span>
+  <span class="p">{</span>
+     <span class="k">return</span> <span class="n">_contents</span><span class="p">;</span>
+  <span class="p">}</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setContents:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">contents</span>
+  <span class="p">{</span>
+     <span class="n">_contents</span> <span class="o">=</span> <span class="n">contents</span><span class="p">;</span>
+  <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a></p>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd>This means that our property name <tt class="docutils literal"><span class="pre">contents</span></tt> uses instance variable called  <tt class="docutils literal"><span class="pre">_contents</span></tt>
+(this <tt class="docutils literal"><span class="pre">_nameOfProperty</span></tt> is generated automatically).</dd>
+<dt>[3]:</dt>
+<dd>This is the <tt class="docutils literal"><span class="pre">getter</span></tt>.  <tt class="docutils literal"><span class="pre">NSString</span> <span class="pre">*</span></tt> is the return type of the method: return a pointer to <tt class="docutils literal"><span class="pre">NSString</span></tt>.
+Name is the property&#8217;s name.</dd>
+<dt>[5]:</dt>
+<dd>return is an instance variable called <tt class="docutils literal"><span class="pre">_contents</span></tt>, consistent with the instance name in the <tt class="docutils literal"><span class="pre">&#64;synthesize</span></tt> statement.</dd>
+<dt>[8]:</dt>
+<dd><ul class="first last simple">
+<li>always put <tt class="docutils literal"><span class="pre">void</span></tt> inside the <tt class="docutils literal"><span class="pre">()</span></tt> to indicate this method doesn&#8217;t return anything.</li>
+<li><tt class="docutils literal"><span class="pre">setContents</span></tt> is the method name and arguments come after <tt class="docutils literal"><span class="pre">:</span></tt>.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="creating-classes">
+<h2>2.Creating Classes<a class="headerlink" href="#creating-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="file-structure">
+<h3>2.1. File Structure<a class="headerlink" href="#file-structure" title="Permalink to this headline">¶</a></h3>
+<p>In Objective-C, implementation of a class is divided into two files:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a header file (e.g. <tt class="docutils literal"><span class="pre">card.h</span></tt>), which is public information.</li>
+<li>an implementation file (e.g. <tt class="docutils literal"><span class="pre">card.m</span></tt>), which is private implementation.</li>
+</ul>
+</div></blockquote>
+<div class="admonition-difference-between-header-file-and-implementation-file admonition">
+<p class="first admonition-title">Difference between header file and implementation file</p>
+<p class="last">Is all about public and private. If in the header file, the class is public, and
+if in the .m file, it is not public.</p>
+</div>
+</div>
+<div class="section" id="interface">
+<h3>2.2. &#64;interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h3>
+<p>Example 2.2.1 create class in card.h</p>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="hll"><span class="k">@interface</span> <span class="nc">Card</span>: <span class="nc">NSObject</span>
+</span></pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">NSObject</span></tt>:</dt>
+<dd><p class="first last">short for <tt class="docutils literal"><span class="pre">NeXTStep</span> <span class="pre">Object</span></tt>, which is the basic class of all the class. (similar to <tt class="docutils literal"><span class="pre">object</span></tt> in Java)</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">Inheritance is specified as <tt class="docutils literal"><span class="pre">Class:</span> <span class="pre">Parent</span></tt> (e.g. <tt class="docutils literal"><span class="pre">Card:</span> <span class="pre">NSObject</span></tt>)</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p>Example 2.2.2 import class</p>
+<p>If we are going to use a class inside our any file, we are going to import it: import its header file into our file.</p>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd><ul class="first last simple">
+<li>similar to <tt class="docutils literal"><span class="pre">include</span></tt> in C.</li>
+<li><tt class="docutils literal"><span class="pre">Foundation.h</span></tt> works like standard library in Objective-C, which contains various data types and data structures.</li>
+</ul>
+</dd>
+</dl>
+<p>Notice that we do the similar thing in our implementation file.</p>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="cp">#import &quot;Card.h&quot;</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd>In ourr implementation file, we import our class.</dd>
+</dl>
+<p>Example 2.2.3 private interface</p>
+<p>If we want a private interface, we do the following:</p>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">@interface</span> <span class="nc">Card</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+<div class="section" id="implementation">
+<h3>2.3. &#64;implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h3>
+<p>Example 2.3.1 Card.m</p>
+<div class="highlight-objc"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">@implementation</span> <span class="nc">Card</span>
+
+<span class="k">@end</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd><ul class="first last simple">
+<li>This is matching the class name in the <tt class="docutils literal"><span class="pre">card.h</span></tt>. Notice that, in the implementation file, we <em>do not</em> specify the superclass.
+This because we already specify the superclass as public. We cannot specify a <em>private</em> superclass.</li>
+<li><tt class="docutils literal"><span class="pre">&#64;implementation</span> <span class="pre">ClassName</span></tt> starts the implementation <tt class="docutils literal"><span class="pre">&#64;end</span></tt> ends it.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../mcm/mcm_index.html" title="Mathematical Contest in Modeling (MCM)"
+             >next</a></li>
+        <li class="right" >
+          <a href="../pythoninpractice/miscellaneous.html" title="Miscellaneous Tips"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Feb 25, 2013.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,851 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The power of Introspection &mdash; Zeyuan Hu&#39;s World</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Zeyuan Hu&#39;s World" href="../../../index.html" />
+    <link rel="up" title="Dive into Python Study Notes" href="diveintopython.html" />
+    <link rel="next" title="Objects and Object-Orientation" href="chap5.html" />
+    <link rel="prev" title="Native Datatypes" href="chap3.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap5.html" title="Objects and Object-Orientation"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="chap3.html" title="Native Datatypes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" accesskey="U">Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The power of Introspection</a><ul>
+<li><a class="reference internal" href="#diving-in">4.1. Diving In</a></li>
+<li><a class="reference internal" href="#using-optional-and-named-arguments">4.2. Using Optional and Named Arguments</a></li>
+<li><a class="reference internal" href="#built-in-functions">4.3. Built-in Functions</a><ul>
+<li><a class="reference internal" href="#type-function">4.3.1 <strong>type</strong> Function</a></li>
+<li><a class="reference internal" href="#str-function">4.3.2 <strong>str</strong> Function</a></li>
+<li><a class="reference internal" href="#dir-function">4.3.2 <strong>dir</strong> Function</a></li>
+<li><a class="reference internal" href="#callable-function">4.3.3 <strong>callable</strong> Function</a></li>
+<li><a class="reference internal" href="#id2">4.3.4 Built-in Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#getting-object-references-with-getattr">4.4. Getting Object References With getattr</a><ul>
+<li><a class="reference internal" href="#getattr-with-modules">4.4.1 getattr with Modules</a></li>
+<li><a class="reference internal" href="#getattr-as-a-dispatcher">4.4.2. getattr As a Dispatcher</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#filtering-lists">4.5. Filtering Lists</a></li>
+<li><a class="reference internal" href="#the-peculiar-nature-of-and-and-or">4.6. The Peculiar Nature of <strong>and</strong> and <strong>or</strong></a><ul>
+<li><a class="reference internal" href="#using-the-and-or-trick">4.6.1 Using the and-or Trick</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#using-lambda-functions">4.7 Using lambda Functions</a><ul>
+<li><a class="reference internal" href="#real-world-lambda-functions">4.7.1 Real-World lambda Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#putting-it-all-together">4.8 Putting It All Together</a></li>
+</ul>
+</li>
+</ul>
+
+    <h3>About this site</h3>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h3>search this site</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-power-of-introspection">
+<span id="chap4-rst"></span><h1>The power of Introspection<a class="headerlink" href="#the-power-of-introspection" title="Permalink to this headline">¶</a></h1>
+<p>Introspection:</p>
+<blockquote>
+<div>code looking at other modules and functions in memory as objects,
+getting information about them, and manipulating them.</div></blockquote>
+<div class="section" id="diving-in">
+<span id="id1"></span><h2>4.1. Diving In<a class="headerlink" href="#diving-in" title="Permalink to this headline">¶</a></h2>
+<p>Example 4.1. apihelper.py (download <a class="reference external" href="../../../_static/projects/notes/diveintopython/py/apihelper.py">here</a>)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># info takes any object that has functions or methods (like a module, which has</span>
+<span class="c"># functions, or a list,which has methods) and prints out the functions and their doc</span>
+<span class="c"># strings.</span>
+
+<span class="c"># collapse: multi-line doc strings are collapsed into a single long line ( if collapse == 1)</span>
+<span class="c"># spacing: adjust the display of function names to make it easy to read</span>
+
+<span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="sd">&quot;&quot;&quot;Print methods and doc strings.</span>
+
+<span class="sd">Takes module, class, list, dictionary, or string.&quot;&quot;&quot;</span>
+        <span class="n">methodList</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">e</span><span class="p">))]</span>
+        <span class="n">processFunc</span> <span class="o">=</span> <span class="n">collapse</span> <span class="ow">and</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span> <span class="ow">or</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">method</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">spacing</span><span class="p">),</span><span class="n">processFunc</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">method</span><span class="p">)</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)))</span>
+                        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methodList</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">help</span><span class="o">.</span><span class="n">__doc__</span>
+</pre></div>
+</div>
+<p>Example 4.2 Sample Usage of apihelper.py</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [18]: </span><span class="kn">from</span> <span class="nn">apihelper</span> <span class="kn">import</span> <span class="n">info</span>
+
+<span class="gp">In [20]: </span><span class="n">li</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="gp">In [21]: </span><span class="n">info</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="go">append     L.append(object) -- append object to end</span>
+<span class="go">count      L.count(value) -&gt; integer -- return number of occurrences of value</span>
+<span class="go">extend     L.extend(iterable) -- extend list by appending elements from the iterable</span>
+<span class="go">index      L.index(value, [start, [stop]]) -&gt; integer -- return first index of value. Raises ValueError if the value is not present.</span>
+<span class="go">insert     L.insert(index, object) -- insert object before index</span>
+<span class="go">pop        L.pop([index]) -&gt; item -- remove and return item at index (default last). Raises IndexError if list is empty or index is out of range.</span>
+<span class="go">remove     L.remove(value) -- remove first occurrence of value. Raises ValueError if the value is not present.</span>
+<span class="go">reverse    L.reverse() -- reverse *IN PLACE*</span>
+<span class="go">sort       L.sort(cmp=None, key=None, reverse=False) -- stable sort *IN PLACE*; cmp(x, y) -&gt; -1, 0, 1</span>
+</pre></div>
+</div>
+<p>Example 4.3 Advanced Usage of apihelper.py</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [25]: </span><span class="kn">import</span> <span class="nn">odbchelper</span>
+
+<span class="gp">In [26]: </span><span class="n">info</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">)</span>
+<span class="go">buildConnectionString Build a connection string from a dictionary Returns string.</span>
+
+<span class="gp">In [28]: </span><span class="n">info</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="go">buildConnectionString          Build a connection string from a dictionary Returns string.</span>
+
+<span class="gp">In [29]: </span><span class="n">info</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">buildConnectionString          Build a connection string from a dictionary</span>
+
+<span class="go">        Returns string.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-optional-and-named-arguments">
+<span id="arguments"></span><h2>4.2. Using Optional and Named Arguments<a class="headerlink" href="#using-optional-and-named-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Python allows function arguments to have default values</p>
+<ul class="simple">
+<li>if the function is called without the argument, the argument gets its default value.</li>
+<li>arguments can be specified in any order by using named arguments.</li>
+</ul>
+<p>Example 4.4.a  example of info</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># spacing and collapse are optional (they have default values defined)</span>
+<span class="c"># object is required (it has no default value)</span>
+<span class="k">def</span> <span class="nf">info</span> <span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Example 4.4.b Valid Calls of info</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># With only one argument (object), spacing defaults to 10 and collapse defaults to 1.</span>
+<span class="n">info</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">)</span>
+
+<span class="c"># With two arguments, collapse gets its default value of 1.</span>
+<span class="n">info</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+<span class="c"># here you are naming the collapse argument explicitly and specifying its value.</span>
+<span class="c"># spacing still gets its default value of 10</span>
+<span class="n">info</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c"># Required arguments (i.e., object) can be named, and named arguments can appear in any order</span>
+<span class="n">info</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="nb">object</span><span class="o">=</span><span class="n">odbchelper</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Arguments are simply a dictionary. The &#8220;normal&#8221; method of calling functions without argument names is
+actually just a shorthand where Python matches up the values with the argument names in the order
+they are specified in the function of declaration.</li>
+</ul>
+</div>
+<div class="section" id="built-in-functions">
+<h2>4.3. Built-in Functions<a class="headerlink" href="#built-in-functions" title="Permalink to this headline">¶</a></h2>
+<p>key funcs</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">type</span><span class="p">(</span><span class="nb">object</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="p">),</span> <span class="nb">dir</span><span class="p">(</span><span class="nb">object</span><span class="p">),</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="type-function">
+<h3>4.3.1 <strong>type</strong> Function<a class="headerlink" href="#type-function" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>the <strong>type</strong> function returns the datatype of any arbitrary object.</li>
+<li>the possible types are listed in the types module.</li>
+</ul>
+<p>Example 4.5 Introducing type</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [31]: </span><span class="nb">type</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gr">Out[31]: </span><span class="nb">int</span>
+
+<span class="gp">In [32]: </span><span class="n">li</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="gp">In [33]: </span><span class="nb">type</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="gr">Out[33]: </span><span class="nb">list</span>
+
+<span class="gp">In [34]: </span><span class="kn">import</span> <span class="nn">odbchelper</span>
+
+<span class="gp">In [35]: </span><span class="nb">type</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">)</span>
+<span class="gr">Out[35]: </span><span class="n">module</span>
+
+<span class="gp">In [36]: </span><span class="kn">import</span> <span class="nn">types</span>
+
+<span class="gp">In [37]: </span><span class="nb">type</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">)</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span>
+<span class="gr">Out[37]: </span><span class="bp">True</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>type takes anything and returns its datatype. Integers, strings, lists, dictionaries, tuples, functions, classes, modules, even types are acceptable.</li>
+<li>You can use the constants in the types module to compare types of objects.</li>
+</ul>
+</div>
+<div class="section" id="str-function">
+<h3>4.3.2 <strong>str</strong> Function<a class="headerlink" href="#str-function" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The <strong>str</strong> coerces data into a string.</li>
+<li>Every datatype can be coerced into a string.</li>
+</ul>
+<p>Example 4.6 Introducing str</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [40]: </span><span class="n">horsemen</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;war&#39;</span><span class="p">,</span><span class="s">&#39;pestilence&#39;</span><span class="p">,</span><span class="s">&#39;famine&#39;</span><span class="p">]</span>
+
+<span class="gp">In [41]: </span><span class="n">horsemen</span>
+<span class="gr">Out[41]: </span><span class="p">[</span><span class="s">&#39;war&#39;</span><span class="p">,</span> <span class="s">&#39;pestilence&#39;</span><span class="p">,</span> <span class="s">&#39;famine&#39;</span><span class="p">]</span>
+
+<span class="gp">In [42]: </span><span class="n">horsemen</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;Powerbuilder&#39;</span><span class="p">)</span>
+
+<span class="gp">In [43]: </span><span class="nb">str</span><span class="p">(</span><span class="n">horsemen</span><span class="p">)</span>
+<span class="gr">Out[43]: </span><span class="s">&quot;[&#39;war&#39;, &#39;pestilence&#39;, &#39;famine&#39;, &#39;Powerbuilder&#39;]&quot;</span>   <span class="c"># str works on list</span>
+
+<span class="gp">In [44]: </span><span class="nb">str</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">)</span>
+<span class="gr">Out[44]: </span><span class="s">&quot;&lt;module &#39;odbchelper&#39; from &#39;odbchelper.py&#39;&gt;&quot;</span>   <span class="c"># str works on modules</span>
+
+<span class="gp">In [45]: </span><span class="nb">str</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>   <span class="c"># str works on None</span>
+<span class="gr">Out[45]: </span><span class="s">&#39;None&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dir-function">
+<h3>4.3.2 <strong>dir</strong> Function<a class="headerlink" href="#dir-function" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>The <strong>dir</strong> returns a list of the attributes and methods of any object: modules, functions, strings, lists, dictionaries, ...</li>
+</ul>
+<p>Example 4.7 Introducing dir</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [47]: </span><span class="n">li</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="gp">In [48]: </span><span class="nb">dir</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="gr">Out[48]: </span><span class="p">[</span><span class="s">&#39;__add__&#39;</span><span class="p">,</span>
+<span class="go">          &#39;__class__&#39;,</span>
+<span class="go">          &#39;__contains__&#39;,</span>
+<span class="go">          &#39;__delattr__&#39;,</span>
+<span class="go">          &#39;__delitem__&#39;,</span>
+<span class="go">          &#39;__delslice__&#39;,</span>
+<span class="go">          &#39;__doc__&#39;,</span>
+<span class="go">          &#39;__eq__&#39;,</span>
+<span class="go">          &#39;__format__&#39;,</span>
+<span class="go">          &#39;__ge__&#39;,</span>
+<span class="go">          &#39;__getattribute__&#39;,</span>
+<span class="go">          &#39;__getitem__&#39;,</span>
+<span class="go">          &#39;__getslice__&#39;,</span>
+<span class="go">          &#39;__gt__&#39;,</span>
+<span class="go">          &#39;__hash__&#39;,</span>
+<span class="go">          &#39;__iadd__&#39;,</span>
+<span class="go">          &#39;__imul__&#39;,</span>
+<span class="go">          &#39;__init__&#39;,</span>
+<span class="go">          &#39;__iter__&#39;,</span>
+<span class="go">          &#39;__le__&#39;,</span>
+<span class="go">          &#39;__len__&#39;,</span>
+<span class="go">          &#39;__lt__&#39;,</span>
+<span class="go">          &#39;__mul__&#39;,</span>
+<span class="go">          &#39;__ne__&#39;,</span>
+<span class="go">          &#39;__new__&#39;,</span>
+<span class="go">          &#39;__reduce__&#39;,</span>
+<span class="go">          &#39;__reduce_ex__&#39;,</span>
+<span class="go">          &#39;__repr__&#39;,</span>
+<span class="go">          &#39;__reversed__&#39;,</span>
+<span class="go">          &#39;__rmul__&#39;,</span>
+<span class="go">          &#39;__setattr__&#39;,</span>
+<span class="go">          &#39;__setitem__&#39;,</span>
+<span class="go">          &#39;__setslice__&#39;,</span>
+<span class="go">          &#39;__sizeof__&#39;,</span>
+<span class="go">          &#39;__str__&#39;,</span>
+<span class="go">          &#39;__subclasshook__&#39;,</span>
+<span class="go">          &#39;append&#39;,</span>
+<span class="go">          &#39;count&#39;,</span>
+<span class="go">          &#39;extend&#39;,</span>
+<span class="go">          &#39;index&#39;,</span>
+<span class="go">          &#39;insert&#39;,</span>
+<span class="go">          &#39;pop&#39;,</span>
+<span class="go">          &#39;remove&#39;,</span>
+<span class="go">          &#39;reverse&#39;,</span>
+<span class="go">          &#39;sort&#39;]</span>
+
+<span class="gp">In [51]: </span><span class="kn">import</span> <span class="nn">odbchelper</span>
+
+<span class="gp">In [52]: </span><span class="nb">dir</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">)</span>
+<span class="gr">Out[52]: </span><span class="p">[</span><span class="s">&#39;__author__&#39;</span><span class="p">,</span>
+<span class="go">          &#39;__builtins__&#39;,</span>
+<span class="go">          &#39;__copyright__&#39;,</span>
+<span class="go">          &#39;__date__&#39;,</span>
+<span class="go">          &#39;__doc__&#39;,</span>
+<span class="go">          &#39;__file__&#39;,</span>
+<span class="go">          &#39;__license__&#39;,</span>
+<span class="go">          &#39;__name__&#39;,</span>
+<span class="go">          &#39;__package__&#39;,</span>
+<span class="go">          &#39;__version__&#39;,</span>
+<span class="go">          &#39;buildConnectionString&#39;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="callable-function">
+<h3>4.3.3 <strong>callable</strong> Function<a class="headerlink" href="#callable-function" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>the <strong>callable</strong> function takes any object and returns True if the object can be called, or False otherwise.</li>
+<li>Callable objects include functions, class methods, even classes themselves.</li>
+</ul>
+<p>Example 4.8 Introducing callable</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [54]: </span><span class="kn">import</span> <span class="nn">string</span>
+
+<span class="gp">In [55]: </span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span>
+<span class="gr">Out[55]: </span><span class="s">&#39;!&quot;#$%&amp;</span><span class="se">\&#39;</span><span class="s">()*+,-./:;&lt;=&gt;?@[</span><span class="se">\\</span><span class="s">]^_`{|}~&#39;</span>
+
+<span class="gp">In [56]: </span><span class="n">string</span><span class="o">.</span><span class="n">join</span>
+<span class="gr">Out[56]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="o">&gt;</span>
+
+<span class="gp">In [57]: </span><span class="nb">callable</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span>
+<span class="gr">Out[57]: </span><span class="bp">False</span>
+
+<span class="gp">In [58]: </span><span class="nb">callable</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="p">)</span>
+<span class="gr">Out[58]: </span><span class="bp">True</span>
+
+<span class="gp">In [59]: </span><span class="k">print</span> <span class="n">string</span><span class="o">.</span><span class="n">join</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">join(list [,sep]) -&gt; string</span>
+
+<span class="go">    Return a string composed of the words in list, with</span>
+<span class="go">    intervening occurrences of sep.  The default separator is a</span>
+<span class="go">    single space.</span>
+
+<span class="go">    (joinfields and join are synonymous)</span>
+</pre></div>
+</div>
+<div class="admonition-usage-of-callable admonition">
+<p class="first admonition-title">usage of callable</p>
+<p class="last">By using the callable function on each of an object&#8217;s attributes, you can determine which attributes you care about (methods, functions, classes)
+and which you want to ignore (constants and so on) without knowing anything about the object ahead of time.</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>4.3.4 Built-in Functions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>type, str, dir, and all the rest of Python&#8217;s built-in functions are grouped into a special module called __builtin__</li>
+</ul>
+<p>Example 4.9 Built-in Attributes and Functions</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [60]: </span><span class="kn">from</span> <span class="nn">apihelper</span> <span class="kn">import</span> <span class="n">info</span>
+
+<span class="gp">In [61]: </span><span class="kn">import</span> <span class="nn">__builtin__</span>
+
+<span class="gp">In [62]: </span><span class="n">info</span><span class="p">(</span><span class="n">__builtin__</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="go">ArithmeticError      Base class for arithmetic errors.</span>
+<span class="go">AssertionError       Assertion failed.</span>
+<span class="go">AttributeError       Attribute not found.</span>
+<span class="go">BaseException        Common base class for all exceptions</span>
+<span class="go">BufferError          Buffer error.</span>
+
+<span class="go">[...skip...]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getting-object-references-with-getattr">
+<span id="getattr"></span><h2>4.4. Getting Object References With getattr<a class="headerlink" href="#getting-object-references-with-getattr" title="Permalink to this headline">¶</a></h2>
+<p>key func</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>getattr</strong> allows you to get a reference to a function</p>
+<p>Example 4.10 Introducing getattr</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [63]: </span><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Larry&quot;</span><span class="p">,</span><span class="s">&quot;Curly&quot;</span><span class="p">]</span>
+
+<span class="gp">In [64]: </span><span class="n">li</span><span class="o">.</span><span class="n">pop</span>
+<span class="gr">Out[64]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">pop</span><span class="o">&gt;</span>
+
+<span class="gp">In [65]: </span><span class="nb">getattr</span><span class="p">(</span><span class="n">li</span><span class="p">,</span><span class="s">&quot;pop&quot;</span><span class="p">)</span>
+<span class="gr">Out[65]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">pop</span><span class="o">&gt;</span>
+
+<span class="gp">In [66]: </span><span class="nb">getattr</span><span class="p">(</span><span class="n">li</span><span class="p">,</span><span class="s">&quot;append&quot;</span><span class="p">)(</span><span class="s">&quot;Moe&quot;</span><span class="p">)</span>
+
+<span class="gp">In [67]: </span><span class="n">li</span>
+<span class="gr">Out[67]: </span><span class="p">[</span><span class="s">&#39;Larry&#39;</span><span class="p">,</span> <span class="s">&#39;Curly&#39;</span><span class="p">,</span> <span class="s">&#39;Moe&#39;</span><span class="p">]</span>
+
+<span class="gp">In [68]: </span><span class="nb">getattr</span><span class="p">({},</span><span class="s">&quot;clear&quot;</span><span class="p">)</span>
+<span class="gr">Out[68]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">clear</span><span class="o">&gt;</span>
+
+<span class="gp">In [69]: </span><span class="nb">getattr</span><span class="p">((),</span><span class="s">&quot;pop&quot;</span><span class="p">)</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">AttributeError                            Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-69-e1701c6ecc00&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 getattr((),&quot;pop&quot;)</span>
+
+<span class="go">AttributeError: &#39;tuple&#39; object has no attribute &#39;pop&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>[64]: this gets a reference to the pop method of the list. Note that this is not calling the pop method; that would be li.pop().</li>
+<li>[65]: This also returns a reference to the pop method, but this time, the method name is specified as a string argument to the getattr function.</li>
+<li>[65]: getattr returns any attribute of any object. In this case, the object is a list, and the attribute is the pop method.</li>
+<li>[66]: getattr(x,y) == x.y . In this case, getattr(li,&#8221;append&#8221;)(&#8220;Moe&#8221;) == li.append(&#8220;Moe&#8221;)</li>
+</ul>
+<div class="section" id="getattr-with-modules">
+<h3>4.4.1 getattr with Modules<a class="headerlink" href="#getattr-with-modules" title="Permalink to this headline">¶</a></h3>
+<p>Example 4.11 The getattr Function in apihiper.py</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [71]: </span><span class="kn">import</span> <span class="nn">odbchelper</span>
+
+<span class="gp">In [72]: </span><span class="n">odbchelper</span><span class="o">.</span><span class="n">buildConnectionString</span>
+<span class="gr">Out[72]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">odbchelper</span><span class="o">.</span><span class="n">buildConnectionString</span><span class="o">&gt;</span>
+
+<span class="gp">In [73]: </span><span class="nb">getattr</span><span class="p">(</span><span class="n">odbchelper</span><span class="p">,</span><span class="s">&quot;buildConnectionString&quot;</span><span class="p">)</span>
+<span class="gr">Out[73]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">odbchelper</span><span class="o">.</span><span class="n">buildConnectionString</span><span class="o">&gt;</span>
+
+<span class="gp">In [74]: </span><span class="nb">object</span> <span class="o">=</span> <span class="n">odbchelper</span>
+
+<span class="gp">In [75]: </span><span class="n">method</span> <span class="o">=</span> <span class="s">&quot;buildConnectionString&quot;</span>
+
+<span class="gp">In [76]: </span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span><span class="n">method</span><span class="p">)</span>
+<span class="gr">Out[76]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">odbchelper</span><span class="o">.</span><span class="n">buildConnectionString</span><span class="o">&gt;</span>
+
+<span class="gp">In [77]: </span><span class="nb">type</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span><span class="n">method</span><span class="p">))</span>
+<span class="gr">Out[77]: </span><span class="n">function</span>
+
+<span class="gp">In [78]: </span><span class="kn">import</span> <span class="nn">types</span>
+
+<span class="gp">In [80]: </span><span class="nb">type</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">method</span><span class="p">))</span> <span class="o">==</span> <span class="n">types</span><span class="o">.</span><span class="n">FunctionType</span>
+<span class="gr">Out[80]: </span><span class="bp">True</span>
+
+<span class="gp">In [81]: </span><span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span><span class="n">method</span><span class="p">))</span>
+<span class="gr">Out[81]: </span><span class="bp">True</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Using getattr, you can get the same reference to the same function.
+In general, getattr(object,&#8221;attribute&#8221;) is equivalent to object.attribute.
+If object is a module, then attribute can be anything defined in the module: a function, class, or global variable.</li>
+</ul>
+</div>
+<div class="section" id="getattr-as-a-dispatcher">
+<h3>4.4.2. getattr As a Dispatcher<a class="headerlink" href="#getattr-as-a-dispatcher" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-idea admonition">
+<p class="first admonition-title">idea</p>
+<p class="last">For example, if you had a program that could output data in a variety of different formats, you could define separate
+functions for each output format and use a single dispatch function to call the right one.</p>
+</div>
+<p>Let&#8217;s imagine a program that prints site statisticss in HTML, XML, and plain text formats. The choice of output format
+could be specified on the command line, or stored in a configuration file. A <em>statsout</em> module defines three functions,
+<em>output_html</em>, <em>output_xml</em>, and <em>output_text</em>. Then the main program defines a single output function:</p>
+<p>Example 4.12 Creating a Dispatcher with getattr</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">statsout</span>
+
+<span class="c"># output function takes one required argument, data, and one optional argument, format.</span>
+<span class="c"># if format is not specified, it defaults to text</span>
+<span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">):</span>
+    <span class="n">output_function</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">statsout</span><span class="p">,</span> <span class="s">&quot;output_</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">format</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition-advantage admonition">
+<p class="first admonition-title">advantage</p>
+<p class="last">This allows you to easily extend the program later to support other output formats, without changing this dispatch
+function. Just add another function to <em>statsout</em> named, for instance, <em>output_pdf</em>, and pass &#8220;pdf&#8221; as the format into
+the output function.</p>
+</div>
+<div class="admonition-bug admonition">
+<p class="first admonition-title">bug</p>
+<p class="last">There is no error checking.
+What happends if the user passes in a format that doesn&#8217;t have a corresponding function defined in <em>statsout</em>?
+Well, <em>getattr</em> will return None, which will be assigned to output_function instead of a valid function, and
+next line that attempts to call that function will crash and raise an exception. That&#8217;s bad.</p>
+</div>
+<div class="admonition-solution admonition">
+<p class="first admonition-title">solution</p>
+<p class="last"><em>getattr</em> takes an optional third argument, a default value.</p>
+</div>
+<p>Example 4.13 getattr Default Values</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">statsout</span>
+
+<span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&quot;text&quot;</span><span class="p">):</span>
+
+    <span class="c"># The third argument (i.e., statsout.output_text) is a default value</span>
+    <span class="c"># that is returned if the attribute or method specified by the second argument wasn&#39;t found.</span>
+    <span class="n">output_function</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">statsout</span><span class="p">,</span> <span class="s">&quot;output_</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">format</span><span class="p">,</span> <span class="n">statsout</span><span class="o">.</span><span class="n">output_text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">output_function</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="filtering-lists">
+<span id="filter-list"></span><h2>4.5. Filtering Lists<a class="headerlink" href="#filtering-lists" title="Permalink to this headline">¶</a></h2>
+<p>a filtering mechanism, where some elements in the list are mapped while others are skipped entirely.</p>
+<div class="admonition-list-filtering-syntax admonition">
+<p class="first admonition-title">list filtering syntax</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="c"># any element for which the filter expression evaluates true will be included in the mapping.</span>
+<span class="c"># All other elements are ignored,</span>
+<span class="c"># so they are never put through the mapping expression and are not included in the output list.</span>
+<span class="p">[</span><span class="n">mapping</span><span class="o">-</span><span class="n">expression</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">source</span><span class="o">-</span><span class="nb">list</span> <span class="k">if</span> <span class="nb">filter</span><span class="o">-</span><span class="n">expression</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Example 4.14 Introducing List Filtering</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;a&quot;</span><span class="p">,</span><span class="s">&quot;mpilgrim&quot;</span><span class="p">,</span><span class="s">&quot;foo&quot;</span><span class="p">,</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="s">&quot;c&quot;</span><span class="p">,</span><span class="s">&quot;b&quot;</span><span class="p">,</span><span class="s">&quot;d&quot;</span><span class="p">,</span><span class="s">&quot;d&quot;</span><span class="p">]</span>
+
+<span class="gp">In [2]: </span><span class="p">[</span><span class="n">elem</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">li</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gr">Out[2]: </span><span class="p">[</span><span class="s">&#39;mpilgrim&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">]</span>
+
+<span class="gp">In [3]: </span><span class="p">[</span><span class="n">elem</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">li</span> <span class="k">if</span> <span class="n">elem</span> <span class="o">!=</span> <span class="s">&quot;b&quot;</span><span class="p">]</span>
+<span class="gr">Out[3]: </span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;mpilgrim&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
+
+<span class="gp">In [4]: </span><span class="p">[</span><span class="n">elem</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">li</span> <span class="k">if</span> <span class="n">li</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gr">Out[4]: </span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;mpilgrim&#39;</span><span class="p">,</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>[4]: filter would not eliminate duplicates from a list.</li>
+</ul>
+<div class="admonition-mechanism admonition">
+<p class="first admonition-title">mechanism</p>
+<p class="last">The mapping expression in the previous example is simple (it just returns the value of each element).
+As Python loops through the list, it runs each element through the filter expression. If the filter
+expression is true, the element is mapped and the result of the mapping expression is included in the
+returned list.</p>
+</div>
+</div>
+<div class="section" id="the-peculiar-nature-of-and-and-or">
+<h2>4.6. The Peculiar Nature of <strong>and</strong> and <strong>or</strong><a class="headerlink" href="#the-peculiar-nature-of-and-and-or" title="Permalink to this headline">¶</a></h2>
+<p><strong>and</strong> and <strong>or</strong> perform boolean logic, but they do not return boolean values; instead, they return one of the actual values they are comparing.</p>
+<p>Example 4.15 Introducing and</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="s">&#39;a&#39;</span> <span class="ow">and</span> <span class="s">&#39;b&#39;</span>
+<span class="gr">Out[1]: </span><span class="s">&#39;b&#39;</span>
+
+<span class="gp">In [2]: </span><span class="s">&#39;&#39;</span> <span class="ow">and</span> <span class="s">&#39;b&#39;</span>
+<span class="gr">Out[2]: </span><span class="s">&#39;&#39;</span>
+
+<span class="gp">In [3]: </span><span class="s">&#39;a&#39;</span> <span class="ow">and</span> <span class="s">&#39;b&#39;</span> <span class="ow">and</span> <span class="s">&#39;c&#39;</span>
+<span class="gr">Out[3]: </span><span class="s">&#39;c&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>If all values are true in a boolean context, <strong>and</strong> returns the last value.</li>
+<li>If any value is false in a boolean context, <strong>and</strong> returns the first false value.</li>
+</ul>
+<p>Example 4.16 Introducing or</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="s">&#39;a&#39;</span> <span class="ow">or</span> <span class="s">&#39;b&#39;</span>
+<span class="gr">Out[5]: </span><span class="s">&#39;a&#39;</span>
+
+<span class="gp">In [6]: </span><span class="s">&#39;&#39;</span> <span class="ow">or</span> <span class="s">&#39;b&#39;</span>
+<span class="gr">Out[6]: </span><span class="s">&#39;b&#39;</span>
+
+<span class="gp">In [7]: </span><span class="s">&#39;&#39;</span> <span class="ow">or</span> <span class="p">[]</span> <span class="ow">or</span> <span class="p">{}</span>
+<span class="gr">Out[7]: </span><span class="p">{}</span>
+
+<span class="gp">In [8]: </span><span class="k">def</span> <span class="nf">sidefx</span><span class="p">():</span>
+<span class="gp">   ...:</span>     <span class="k">print</span> <span class="s">&quot;in sidefx()&quot;</span>
+<span class="gp">   ...:</span>     <span class="k">return</span> <span class="mi">1</span>
+
+<span class="gp">In [9]: </span><span class="s">&#39;a&#39;</span> <span class="ow">or</span> <span class="n">sidefx</span><span class="p">()</span>
+<span class="gr">Out[9]: </span><span class="s">&#39;a&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>If any value is true, <strong>or</strong> returns that value immediately.
+( <strong>or</strong> evaluates values only until it finds one that is true in a boolean context, and then it ignores the rest.)</li>
+<li>If all values are false, <strong>or</strong> returns the last value.</li>
+</ul>
+<div class="section" id="using-the-and-or-trick">
+<h3>4.6.1 Using the and-or Trick<a class="headerlink" href="#using-the-and-or-trick" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-usage admonition">
+<p class="first admonition-title">usage</p>
+<ul class="last simple">
+<li>simplify the syntax</li>
+<li>some cases in Python where if statements are not allowed (i.e., lambda functions)</li>
+</ul>
+</div>
+<div class="admonition-analogy-with-c admonition">
+<p class="first admonition-title">Analogy with C</p>
+<p>C:</p>
+<div class="highlight-c"><div class="highlight"><pre><span class="cm">/* expression evaluates to a if bool is true, and b otherwise*/</span>
+<span class="n">bool</span> <span class="o">?</span> <span class="n">a</span> <span class="o">:</span> <span class="n">b</span>
+</pre></div>
+</div>
+<p>Python:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="c"># expression evaluates to a if (bool and a) is true, and b otherwise</span>
+<span class="c"># requires a to be True</span>
+<span class="nb">bool</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">b</span>
+</pre></div>
+</div>
+</div>
+<p>Example 4.17 Introducing the and-or Trick</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [11]: </span><span class="n">a</span> <span class="o">=</span> <span class="s">&quot;first&quot;</span>
+
+<span class="gp">In [12]: </span><span class="n">b</span> <span class="o">=</span> <span class="s">&quot;second&quot;</span>
+
+<span class="gp">In [13]: </span><span class="mi">1</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">b</span>
+<span class="gr">Out[13]: </span><span class="s">&#39;first&#39;</span>
+
+<span class="gp">In [14]: </span><span class="mi">0</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">b</span>
+<span class="gr">Out[14]: </span><span class="s">&#39;second&#39;</span>
+</pre></div>
+</div>
+<div class="admonition-bug admonition">
+<p class="first admonition-title">bug</p>
+<p class="last">If the value of a is false, the expression will not works as you would expect it to. In other words,
+The and-or trick, bool and a or b, will not work like the C expression bool ? a : b when a is false in boolean context</p>
+</div>
+<p>Example 4.18 When the and-or Trick Fails</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [15]: </span><span class="n">a</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="gp">In [16]: </span><span class="n">b</span> <span class="o">=</span> <span class="s">&quot;second&quot;</span>
+
+<span class="gp">In [17]: </span><span class="mi">1</span> <span class="ow">and</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">b</span>
+<span class="gr">Out[17]: </span><span class="s">&#39;second&#39;</span>
+</pre></div>
+</div>
+<div class="admonition-solution admonition">
+<p class="first admonition-title">solution</p>
+<p class="last">The real trick behind the and-or trick, then, is to make sure that the value of a is never false.
+One common way of doing this is to turn a into [a] and b into [b], then taking the first element of the returned list, which will be either a or b.</p>
+</div>
+<p>Example 4.19 Using the and-or Trick safely</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [18]: </span><span class="n">a</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="gp">In [19]: </span><span class="n">b</span> <span class="o">=</span> <span class="s">&quot;second&quot;</span>
+
+<span class="gp">In [20]: </span><span class="p">(</span><span class="mi">1</span> <span class="ow">and</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="ow">or</span> <span class="p">[</span><span class="n">b</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gr">Out[20]: </span><span class="s">&#39;&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>since [a] is a non-empty list, it is never false. Even if a is 0 or &#8216;&#8217; or some other false value, the list [a] is true because it has one element.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="using-lambda-functions">
+<span id="lambda"></span><h2>4.7 Using lambda Functions<a class="headerlink" href="#using-lambda-functions" title="Permalink to this headline">¶</a></h2>
+<p>Python supports an interesting syntax that lets you define one-line mini-functions on the fly.
+Borrowed from Lisp, these so-called lambda functions can be used anywhere a function is required.</p>
+<p>Example 4.20 Introducing lambda Functions</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">   ...:</span>     <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+
+<span class="gp">In [2]: </span><span class="n">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gr">Out[2]: </span><span class="mi">6</span>
+
+<span class="gp">In [3]: </span><span class="n">g</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+
+<span class="gp">In [4]: </span><span class="n">g</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gr">Out[4]: </span><span class="mi">6</span>
+
+<span class="gp">In [5]: </span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="p">)(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gr">Out[5]: </span><span class="mi">6</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">[3]: This is a lambda function that accomplishes the same thing as the normal function above it.</p>
+</li>
+<li><p class="first">[3]: lambda function:</p>
+<blockquote>
+<div><ul class="simple">
+<li>function that takes any number of arguments (including optional arguments) and returns the value of a single expression</li>
+<li>lambda functions cannot contain commands</li>
+<li>cannot contain more than one expression</li>
+<li>no parentheses around the argument list</li>
+<li>return keyword is missing (it is implied, since the entire function can only be one expression)</li>
+<li>function has no name, but it can be called through the variable it is assigned to</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="section" id="real-world-lambda-functions">
+<h3>4.7.1 Real-World lambda Functions<a class="headerlink" href="#real-world-lambda-functions" title="Permalink to this headline">¶</a></h3>
+<p>Here are the lambda functions in apihelper.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># processFunc is now a function, but which function it is depends on the value of the collapse variable.</span>
+<span class="c"># If collapse is true, processFunc(string) will collapse whitespace;</span>
+<span class="c"># otherwise, processFunc(string) will return its argument unchanged</span>
+
+<span class="n">processFunc</span> <span class="o">=</span> <span class="n">collapse</span> <span class="ow">and</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span> <span class="ow">or</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example 4.21 split With No Arguments</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">s</span> <span class="o">=</span> <span class="s">&quot;this   is</span><span class="se">\n</span><span class="s">a</span><span class="se">\t</span><span class="s">test&quot;</span>
+
+<span class="gp">In [2]: </span><span class="k">print</span> <span class="n">s</span>
+<span class="go">this   is</span>
+<span class="go">a       test</span>
+
+<span class="gp">In [3]: </span><span class="k">print</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="go">[&#39;this&#39;, &#39;is&#39;, &#39;a&#39;, &#39;test&#39;]</span>
+
+<span class="gp">In [5]: </span><span class="k">print</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="go">this is a test</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>[2]: This is a multiline string, defined by escape characters instead of triple quotes. n is a carriage return, and t is a tab character</li>
+<li>[3]: split without any arguments splits on whitespace. So three spaces, a carriage return, and a tab character are all the same.</li>
+<li>[5]: You can normalize whitespace by splitting a string with split and then rejoining it with join, using a single space as a delimiter.</li>
+<li>[5]: This is what the info function does to collapse multi-line doc strings into a single line.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="putting-it-all-together">
+<span id="alltogether"></span><h2>4.8 Putting It All Together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">method</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">spacing</span><span class="p">),</span> <span class="n">processFunc</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span><span class="n">method</span><span class="p">)</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)))</span>
+                <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methodList</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Example 4.22 Getting a doc string Dynamically</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [29]: </span><span class="kn">import</span> <span class="nn">odbchelper</span>
+
+<span class="gp">In [30]: </span><span class="nb">object</span> <span class="o">=</span> <span class="n">odbchelper</span>
+
+<span class="gp">In [31]: </span><span class="n">method</span> <span class="o">=</span> <span class="s">&#39;buildConnectionString&#39;</span>
+
+<span class="gp">In [32]: </span><span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span><span class="n">method</span><span class="p">)</span>
+<span class="gr">Out[32]: </span><span class="o">&lt;</span><span class="n">function</span> <span class="n">odbchelper</span><span class="o">.</span><span class="n">buildConnectionString</span><span class="o">&gt;</span>
+
+<span class="gp">In [33]: </span><span class="k">print</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span><span class="n">method</span><span class="p">)</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="go">Build a connection string from a dictionary</span>
+
+<span class="go">        Returns string.</span>
+</pre></div>
+</div>
+<p>Example 4.23 Why Use str on a doc string?</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [35]: </span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span> <span class="k">print</span> <span class="mi">2</span>
+
+<span class="gp">In [36]: </span><span class="n">foo</span><span class="p">()</span>
+<span class="go">2</span>
+
+<span class="gp">In [37]: </span><span class="n">foo</span><span class="o">.</span><span class="n">__doc__</span>
+
+<span class="gp">In [38]: </span><span class="n">foo</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">==</span> <span class="bp">None</span>
+<span class="gr">Out[38]: </span><span class="bp">True</span>
+
+<span class="gp">In [39]: </span><span class="nb">str</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)</span>
+<span class="gr">Out[39]: </span><span class="s">&#39;None&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>reason: processFunc is assuming a string argument and calling its split method, which would crash if you passed it None
+because None doesn&#8217;t have a split method.</li>
+</ul>
+<p>Example 4.24 Introducing ljust</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [41]: </span><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;buildConnectionString&#39;</span>
+
+<span class="gp">In [42]: </span><span class="n">s</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+<span class="gr">Out[42]: </span><span class="s">&#39;buildConnectionString         &#39;</span>
+
+<span class="gp">In [43]: </span><span class="n">s</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="gr">Out[43]: </span><span class="s">&#39;buildConnectionString&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># pads the string with spaces to the given length.</span>
+<span class="c"># if the given length is smaller than the length of the string, ljust will simply return the string unchanged.</span>
+<span class="c"># it never truncates string,</span>
+<span class="n">string</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>This is what the info function uses to make two columns of output and line up all the doc strings in the second column.</li>
+</ul>
+<p>Example 4.25 Printing a List</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [44]: </span><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;c&#39;</span><span class="p">]</span>
+
+<span class="gp">In [45]: </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+<span class="go">a</span>
+<span class="go">b</span>
+<span class="go">c</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap5.html" title="Objects and Object-Orientation"
+             >next</a></li>
+        <li class="right" >
+          <a href="chap3.html" title="Native Datatypes"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" >Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Feb 25, 2013.
+    </div>
+  </body>
+</html>

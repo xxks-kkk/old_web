@@ -1,0 +1,15 @@
+{#
+    todo.html
+    ~~~~~~~~~~~~~~~~~~~~~
+
+    Sphinx sidebar template: "About" link.
+
+    :copyright: Copyright 2013 by Zeyuan Hu.
+#}
+{%- if pagename != "search" %}
+    <h3>{{ _('About this site') }}</h3>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="{{pathto('todo')}}" >About</a></li>
+        </ul>
+{%- endif %}

@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>First Python Program &mdash; Math Club&#39;s Home</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Math Club&#39;s Home" href="../../../index.html" />
+    <link rel="up" title="Dive into Python Study Notes" href="diveintopython.html" />
+    <link rel="next" title="Native Datatypes" href="chap3.html" />
+    <link rel="prev" title="Installing Python" href="chap1.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap3.html" title="Native Datatypes"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="chap1.html" title="Installing Python"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" accesskey="U">Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">First Python Program</a><ul>
+<li><a class="reference internal" href="#diving-in">2.1 Diving in</a></li>
+<li><a class="reference internal" href="#documenting-functions">2.2 Documenting Functions</a></li>
+<li><a class="reference internal" href="#everything-is-an-object">2.3 Everything is an object</a></li>
+<li><a class="reference internal" href="#the-import-search-path">2.4 The import Search Path</a></li>
+<li><a class="reference internal" href="#indenting-code">2.5 Indenting Code</a></li>
+<li><a class="reference internal" href="#testing-modules">2.6 Testing Modules</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chap1.html"
+                        title="previous chapter">Installing Python</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="chap3.html"
+                        title="next chapter">Native Datatypes</a></p>
+    <h4>About this site</h4>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h4>search this site</h4>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="first-python-program">
+<span id="chap2-rst"></span><h1>First Python Program<a class="headerlink" href="#first-python-program" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="diving-in">
+<span id="id1"></span><h2>2.1 Diving in<a class="headerlink" href="#diving-in" title="Permalink to this headline">¶</a></h2>
+<p>Example 2.1. odbchelper.py</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">buildConnectionString</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build a connection string from a dictionary of parameters.</span>
+
+<span class="sd">    Returns string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s">&quot;;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">=</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">myParams</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;server&quot;</span><span class="p">:</span><span class="s">&quot;mpilgrim&quot;</span><span class="p">,</span>\
+                <span class="s">&quot;database&quot;</span><span class="p">:</span><span class="s">&quot;master&quot;</span><span class="p">,</span>\
+                <span class="s">&quot;uid&quot;</span><span class="p">:</span><span class="s">&quot;sa&quot;</span><span class="p">,</span>\
+                <span class="s">&quot;pwd&quot;</span><span class="p">:</span><span class="s">&quot;secret&quot;</span>
+    <span class="p">}</span>
+    <span class="k">print</span> <span class="n">buildConnectionString</span><span class="p">(</span><span class="n">myParams</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">server</span><span class="o">=</span><span class="n">mpilgrim</span><span class="p">;</span><span class="n">uid</span><span class="o">=</span><span class="n">sa</span><span class="p">;</span><span class="n">database</span><span class="o">=</span><span class="n">master</span><span class="p">;</span><span class="n">pwd</span><span class="o">=</span><span class="n">secret</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="documenting-functions">
+<span id="id2"></span><h2>2.2 Documenting Functions<a class="headerlink" href="#documenting-functions" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">You can document a Python function by giving it a doc string.</p>
+</li>
+<li><p class="first">Triple quotes  <em>&#8220;&#8221;&#8220;</em> used when defining a doc string.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Triple quotes are useful to define a string with both single and double quotes.</li>
+<li>Doc string, if it exists, must be the first thing defined in a function (that is, the first
+thing after the colon).</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="everything-is-an-object">
+<span id="id3"></span><h2>2.3 Everything is an object<a class="headerlink" href="#everything-is-an-object" title="Permalink to this headline">¶</a></h2>
+<p>Example 2.3. Accessing the buildConnectionString Function&#8217;s <strong>doc</strong> string</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">odbhelper</span>
+
+<span class="gp">In [2]: </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;server&quot;</span><span class="p">:</span><span class="s">&quot;mpilgrim&quot;</span><span class="p">,</span><span class="s">&quot;database&quot;</span><span class="p">:</span><span class="s">&quot;master&quot;</span><span class="p">,</span><span class="s">&quot;uid&quot;</span><span class="p">:</span><span class="s">&quot;sa&quot;</span><span class="p">,</span><span class="s">&quot;pwd&quot;</span><span class="p">:</span><span class="s">&quot;secret&quot;</span><span class="p">}</span>
+
+<span class="gp">In [3]: </span><span class="k">print</span> <span class="n">odbhelper</span><span class="o">.</span><span class="n">buildConnectionString</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+<span class="gr">Out[3]: </span><span class="n">server</span><span class="o">=</span><span class="n">mpilgrrim</span><span class="p">;</span><span class="n">uid</span><span class="o">=</span><span class="n">sa</span><span class="p">;</span><span class="n">database</span><span class="o">=</span><span class="n">master</span><span class="p">;</span><span class="n">pwd</span><span class="o">=</span><span class="n">secret</span>
+
+<span class="gp">In [4]: </span><span class="k">print</span> <span class="n">odbhelper</span><span class="o">.</span><span class="n">buildConnectionString</span><span class="o">.</span><span class="n">__doc__</span>
+<span class="gr">Out[4]: </span><span class="n">Build</span> <span class="n">a</span> <span class="n">connection</span> <span class="n">string</span> <span class="kn">from</span> <span class="nn">a</span> <span class="nn">dictionary</span>
+
+<span class="go">        Returns string.</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>when you want to use functions defined in imported modules, you need to include the module name.</li>
+</ul>
+</div>
+<div class="section" id="the-import-search-path">
+<span id="import-search-path"></span><h2>2.4 The import Search Path<a class="headerlink" href="#the-import-search-path" title="Permalink to this headline">¶</a></h2>
+<p>Example 2.4. Import Search Path</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="gp">In [2]: </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+<span class="gr">Out[2]: </span><span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+<span class="go"> &#39;/usr/local/lib/python2.7/dist-packages/pymc-2.2-py2.7-linux-i686.egg&#39;,</span>
+<span class="go"> &#39;/usr/local/lib/python2.7/dist-packages/Jinja2-2.6-py2.7.egg&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/plat-linux2&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/lib-tk&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/lib-old&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/lib-dynload&#39;,</span>
+<span class="go"> &#39;/usr/local/lib/python2.7/dist-packages&#39;,</span>
+<span class="go"> &#39;/usr/local/lib/python2.7/dist-packages/PIL&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/PIL&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/gst-0.10&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/gtk-2.0&#39;,</span>
+<span class="go"> &#39;/usr/lib/pymodules/python2.7&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/ubuntu-sso-client&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/ubuntuone-client&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/ubuntuone-control-panel&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/ubuntuone-couch&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/ubuntuone-storage-protocol&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/wx-2.8-gtk2-unicode&#39;,</span>
+<span class="go"> &#39;/usr/lib/python2.7/dist-packages/IPython/extensions&#39;]</span>
+
+<span class="gp">In [3]: </span><span class="n">sys</span>
+<span class="gr">Out[3]: </span><span class="o">&lt;</span><span class="n">module</span> <span class="s">&#39;sys&#39;</span> <span class="p">(</span><span class="n">built</span><span class="o">-</span><span class="ow">in</span><span class="p">)</span><span class="o">&gt;</span>
+<span class="gp">In [4]: </span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;sphinxext&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>sys.path is a list of directory names that constitute the current search path.
+Python will look through these directories (in this order) for a .py file matching the module name you&#8217;re trying
+to import.</li>
+<li>You can add a new directory to Python&#8217;s search path at runtime by appending the directory name to sys.path,
+and then Python will look in that directory as well, whenever you try to import a module.
+(i.e., here I try to add the sphinx extension directory to the search path)</li>
+<li><em>everything in Python is an object</em>. Strings are objects. Lists are objects. Functions are objects. Even modules
+are objects.</li>
+</ul>
+</div>
+<div class="section" id="indenting-code">
+<span id="id4"></span><h2>2.5 Indenting Code<a class="headerlink" href="#indenting-code" title="Permalink to this headline">¶</a></h2>
+<p>Example 2.5. Indenting the <strong>fib</strong> Function</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c"># you can mix and match to print several thing on one line</span>
+    <span class="c"># by using a comma-separated list of values.</span>
+    <span class="c"># Each value is printed on the same line, separated by spaces (i.e., &quot;n = 5&quot;)</span>
+    <span class="k">print</span> <span class="s">&#39;n = &#39;</span><span class="p">,</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+         <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+         <span class="k">print</span> <span class="s">&#39;end of the line&#39;</span>
+         <span class="k">return</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-modules">
+<span id="id5"></span><h2>2.6 Testing Modules<a class="headerlink" href="#testing-modules" title="Permalink to this headline">¶</a></h2>
+<p>Python modules are objects and have several useful attributes. You can use this to easily
+test your modules as you write them.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">=</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">parentheses are not required around the <strong>if</strong> expression</p>
+</li>
+<li><p class="first">all modules have a built-in attribute <em>__name__</em>,
+A module&#8217;s <em>__name__</em> depends on how you&#8217;re using the module.</p>
+<blockquote>
+<div><ul class="simple">
+<li>If you <em>import</em> the module, then <em>__name__</em> is the module&#8217;s filename, whithout a directory path or file extension</li>
+<li>You can also run the module directly as a standalone program,
+in which case <em>__name__</em> will be a special default value, <em>__main__</em></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="kn">import</span> <span class="nn">odbhelper</span>
+<span class="gp">In [2]: </span><span class="n">odbhelper</span><span class="o">.</span><span class="n">__name__</span>
+<span class="gr">Out[2]: </span><span class="s">&#39;odbhelper&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>knowning this, you can design a test suite for your module within the module itself by putting it in this <strong>if</strong>
+statement. When you run the module directly, <em>__name__</em> is <em>__main__</em>, so the test suite executes. When you import
+the module, <em>__name__</em> is something else, so the test suite is ignored. This makes it easier to develop and debug new
+modules before integrating them into a larger program.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap3.html" title="Native Datatypes"
+             >next</a></li>
+        <li class="right" >
+          <a href="chap1.html" title="Installing Python"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" >Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Jan 19, 2013.
+    </div>
+  </body>
+</html>

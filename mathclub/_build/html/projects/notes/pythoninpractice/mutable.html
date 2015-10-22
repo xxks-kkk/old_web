@@ -1,0 +1,222 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mutable Objects in Function Calls &mdash; Math Club&#39;s Home</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Math Club&#39;s Home" href="../../../index.html" />
+    <link rel="up" title="Python in Practice" href="python_in_practice.html" />
+    <link rel="next" title="Investigating Adding and Appending to Lists" href="listproperties.html" />
+    <link rel="prev" title="Understanding Indices and Slicing" href="indice.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="listproperties.html" title="Investigating Adding and Appending to Lists"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="indice.html" title="Understanding Indices and Slicing"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="python_in_practice.html" accesskey="U">Python in Practice</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mutable Objects in Function Calls</a><ul>
+<li><a class="reference internal" href="#example-setup">0. Example Setup</a></li>
+<li><a class="reference internal" href="#comparison">1. Comparison</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="indice.html"
+                        title="previous chapter">Understanding Indices and Slicing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="listproperties.html"
+                        title="next chapter">Investigating Adding and Appending to Lists</a></p>
+    <h4>About this site</h4>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h4>search this site</h4>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mutable-objects-in-function-calls">
+<span id="mutable"></span><h1>Mutable Objects in Function Calls<a class="headerlink" href="#mutable-objects-in-function-calls" title="Permalink to this headline">¶</a></h1>
+<p>Here, I showed the differences between mutable objects and immutable objects in terms of function call.</p>
+<div class="section" id="example-setup">
+<span id="setup"></span><h2>0. Example Setup<a class="headerlink" href="#example-setup" title="Permalink to this headline">¶</a></h2>
+<p>Example 0 Mutable Objects in function Call</p>
+<p>Here, the mutable object is list.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Define a procedure, replace_spy, that takes as its input a list of three numbers,</span>
+<span class="c"># and modifies the value of the third element in the input list to be one more than its previous value</span>
+
+
+<span class="k">def</span> <span class="nf">replace_spy</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># test</span>
+<span class="n">spy</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="n">replace_spy</span> <span class="p">(</span><span class="n">spy</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">spy</span>
+</pre></div>
+</td></tr></table></div>
+<p>output:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Example 1 Immutable Objects in function Call</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># Define a procedure, inc, that takes a number as input and increase that number by 1</span>
+
+<span class="k">def</span> <span class="nf">inc</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+     <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</td></tr></table></div>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># test</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">inc</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">a</span>
+</pre></div>
+</td></tr></table></div>
+<p>output:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparison">
+<h2>1. Comparison<a class="headerlink" href="#comparison" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># here is what happened in replace_spy (mutable object in function call)</span>
+
+     <span class="n">before</span> <span class="s">&#39;p[2] = p[2] + 1&#39;</span> <span class="n">statement</span>     <span class="n">after</span> <span class="s">&#39;p[2] = p[2] + 1&#39;</span> <span class="n">statement</span>
+
+     <span class="o">+---+---+---+</span>  <span class="o">&lt;----</span> <span class="n">spy</span>               <span class="o">+---+---+---+</span>  <span class="o">&lt;----</span> <span class="n">spy</span>
+     <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">7</span> <span class="o">|</span>  <span class="o">&lt;----</span> <span class="n">p</span>                 <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">0</span> <span class="o">|</span> <span class="mi">8</span> <span class="o">|</span>  <span class="o">&lt;----</span> <span class="n">p</span>
+     <span class="o">+---+---+---+</span>                          <span class="o">+---+---+---+</span>
+</pre></div>
+</div>
+<p>When we call a function, the name of the variable in the function now refers to the object that&#8217;s passed in.
+So, now the value of <tt class="docutils literal"><span class="pre">P</span></tt> of the parameter here refers to that object. Then after <tt class="docutils literal"><span class="pre">p[2]</span> <span class="pre">=</span> <span class="pre">p[2]</span> <span class="pre">+</span> <span class="pre">1</span></tt> statement,
+since both <tt class="docutils literal"><span class="pre">p</span></tt> and <tt class="docutils literal"><span class="pre">spy</span></tt> refers to the same object, then modification in <tt class="docutils literal"><span class="pre">p</span></tt> also modifies the value in <tt class="docutils literal"><span class="pre">spy</span></tt>.
+This only works when the object is <em>mutable</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># here is what happended in inc (immutable object in function call)</span>
+
+   <span class="n">before</span> <span class="s">&#39;n = n + 1&#39;</span> <span class="n">statement</span>          <span class="n">after</span> <span class="s">&#39;n = n + 1&#39;</span> <span class="n">statement</span>
+
+   <span class="o">+---+</span>   <span class="o">&lt;----</span> <span class="n">a</span>                      <span class="o">+---+</span>  <span class="o">&lt;---</span> <span class="n">a</span>   <span class="o">+---+</span>  <span class="o">&lt;----</span> <span class="n">n</span>
+   <span class="o">|</span> <span class="mi">3</span> <span class="o">|</span>   <span class="o">&lt;----</span> <span class="n">n</span>                      <span class="o">|</span> <span class="mi">3</span> <span class="o">|</span>           <span class="o">|</span> <span class="mi">4</span> <span class="o">|</span>
+   <span class="o">+---+</span>                                <span class="o">+---+</span>           <span class="o">+---+</span>
+</pre></div>
+</div>
+<p>Same as the mutable object, when we call a function, the name of the variable in the function now refers to the object
+tha&#8217;s passed in. Son now the value of <tt class="docutils literal"><span class="pre">n</span></tt> of the para here refers to that object. Since the number is immutable object,
+now <tt class="docutils literal"><span class="pre">n</span></tt> actually refers to a new object <tt class="docutils literal"><span class="pre">4</span></tt>. Essentially, this function does nothing, <tt class="docutils literal"><span class="pre">a</span></tt> still be <tt class="docutils literal"><span class="pre">3</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="listproperties.html" title="Investigating Adding and Appending to Lists"
+             >next</a></li>
+        <li class="right" >
+          <a href="indice.html" title="Understanding Indices and Slicing"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="python_in_practice.html" >Python in Practice</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Jan 19, 2013.
+    </div>
+  </body>
+</html>

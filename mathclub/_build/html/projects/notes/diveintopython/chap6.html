@@ -1,0 +1,1057 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Exceptions and File Handling &mdash; Math Club&#39;s Home</title>
+    
+    <link rel="stylesheet" href="../../../_static/zeyuan.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
+    <link rel="top" title="Math Club&#39;s Home" href="../../../index.html" />
+    <link rel="up" title="Dive into Python Study Notes" href="diveintopython.html" />
+    <link rel="next" title="Regular Expression" href="chap7.html" />
+    <link rel="prev" title="Objects and Object-Orientation" href="chap5.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/logo2.png" border="0" alt="Logo of Zeyuan's personal website"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap7.html" title="Regular Expression"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="chap5.html" title="Objects and Object-Orientation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" accesskey="U">Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Exceptions and File Handling</a><ul>
+<li><a class="reference internal" href="#handling-exceptions">6.1. Handling Exceptions</a><ul>
+<li><a class="reference internal" href="#using-exceptions-for-other-purposes">6.1.1 Using Exceptions For other Purposes</a><ul>
+<li><a class="reference internal" href="#a-check-whether-the-imported-module-work">a. Check whether the imported module work</a></li>
+<li><a class="reference internal" href="#b-define-own-exceptions">b. define own exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#working-with-file-object">6.2. Working with File Object</a><ul>
+<li><a class="reference internal" href="#opening-files">6.2.1 Opening files</a></li>
+<li><a class="reference internal" href="#reading-files">6.2.2 Reading Files</a></li>
+<li><a class="reference internal" href="#closing-files">6.2.3 Closing Files</a></li>
+<li><a class="reference internal" href="#handling-i-o-errors">6.2.4 Handling I/O Errors</a></li>
+<li><a class="reference internal" href="#writing-to-files">6.2.5 Writing to Files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#iterating-with-for-loops">6.3.  Iterating with for Loops</a></li>
+<li><a class="reference internal" href="#using-sys-modules">6.4. Using <em>sys.modules</em></a></li>
+<li><a class="reference internal" href="#working-with-directories">6.5. Working with Directories</a><ul>
+<li><a class="reference internal" href="#constructing-pathnames">6.5.1 Constructing Pathnames</a></li>
+<li><a class="reference internal" href="#splitting-pathnames">6.5.2 Splitting Pathnames</a></li>
+<li><a class="reference internal" href="#listing-directories">6.5.3 Listing Directories</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#putting-it-all-together">6.6. Putting it All Together</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="chap5.html"
+                        title="previous chapter">Objects and Object-Orientation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="chap7.html"
+                        title="next chapter">Regular Expression</a></p>
+    <h4>About this site</h4>
+        <ul class="this-page-menu">
+            <li><a class="reference external" 
+                   href="../../../todo.html" >About</a></li>
+        </ul>
+<div id="searchbox" style="display: none">
+  <h4>search this site</h4>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="exceptions-and-file-handling">
+<span id="chap6-rst"></span><h1>Exceptions and File Handling<a class="headerlink" href="#exceptions-and-file-handling" title="Permalink to this headline">¶</a></h1>
+<p><strong>Goal</strong>:</p>
+<ul class="simple">
+<li>Catching exceptions with <tt class="docutils literal"><span class="pre">try...except</span></tt></li>
+<li>Protecting external resources with <tt class="docutils literal"><span class="pre">try...finally</span></tt></li>
+<li>Reading from files</li>
+<li>Assigning multiple values at once in a <tt class="docutils literal"><span class="pre">for</span></tt> loop</li>
+<li>Using the <tt class="docutils literal"><span class="pre">os</span></tt> module for all your cross-patform file manipulation needs</li>
+<li>Dynamically instantiating classes of unknown type by treating classes as objects and passing them around</li>
+</ul>
+<div class="section" id="handling-exceptions">
+<span id="id1"></span><h2>6.1. Handling Exceptions<a class="headerlink" href="#handling-exceptions" title="Permalink to this headline">¶</a></h2>
+<p>Python uses <tt class="docutils literal"><span class="pre">try...except</span></tt> to handle exceptions and <tt class="docutils literal"><span class="pre">raise</span></tt> to generate them.</p>
+<p>Java uses <tt class="docutils literal"><span class="pre">try...catch</span></tt> to handle exceptions, and <tt class="docutils literal"><span class="pre">throw</span></tt> to generate them.</p>
+<p>Example 6.1. Opening a Non-Existent File</p>
+<div class="highlight-ipython"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">fsock</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;/notthere&quot;</span><span class="p">,</span><span class="s">&quot;r&quot;</span><span class="p">)</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">IOError                                   Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-1-12d3ba34a1ce&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 fsock = open(&quot;/notthere&quot;,&quot;r&quot;)</span>
+
+<span class="go">IOError: [Errno 2] No such file or directory: &#39;/notthere&#39;</span>
+
+<span class="gp">In [2]: </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">   ...:</span>     <span class="n">fsock</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;/notthere&quot;</span><span class="p">)</span>
+<span class="gp">   ...:</span> <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+<span class="gp">   ...:</span>     <span class="k">print</span> <span class="s">&quot;The file does not exist, exiting gracefully&quot;</span>
+<span class="gp">   ...:</span> <span class="k">print</span> <span class="s">&quot;This line will always print&quot;</span>
+<span class="gp">   ...:</span>
+<span class="go">The file does not exist, exiting gracefully</span>
+<span class="go">This line will always print</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[2]:</dt>
+<dd><ol class="first arabic simple" start="11">
+<li>When the <tt class="docutils literal"><span class="pre">open</span></tt> method raises an <tt class="docutils literal"><span class="pre">IOError</span></tt> exception, you&#8217;re ready for it. The <tt class="docutils literal"><span class="pre">except</span> <span class="pre">IOError:</span></tt> line catches the exception
+and executes your own block of code, which in this case just prints a more pleasant error message.</li>
+</ol>
+<ol class="last arabic simple" start="13">
+<li>Once an exception has been handled, processing continues normally on the first line after the <tt class="docutils literal"><span class="pre">try...except</span></tt> block.
+Note that this line will always print, whether or not an exception occurs. If you really did have a file called <tt class="docutils literal"><span class="pre">notthere</span></tt> in your
+root directiory, the call to <tt class="docutils literal"><span class="pre">open</span></tt> would succeed, the <tt class="docutils literal"><span class="pre">except</span></tt> clause would be ignored, and this line would still be executed.</li>
+</ol>
+</dd>
+</dl>
+<div class="section" id="using-exceptions-for-other-purposes">
+<h3>6.1.1 Using Exceptions For other Purposes<a class="headerlink" href="#using-exceptions-for-other-purposes" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="a-check-whether-the-imported-module-work">
+<h4>a. Check whether the imported module work<a class="headerlink" href="#a-check-whether-the-imported-module-work" title="Permalink to this headline">¶</a></h4>
+<p>A common use in the standard Python library is to try to import a module, and then check whether it worked.
+(You can use this to define multiple levels of functionality based on which modules are available at run-time, or to support multiple platforms)</p>
+<p>Example 6.2 Supporting Platform-Specific Functionality</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    this example shows how to use an exception to support platform-specific functionality</span>
+<span class="sd">    this code comes from the getpass module, a wrapper module for getting a password from user</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c"># Bind the name getpass to the appropriate function</span>
+<span class="k">try</span><span class="p">:</span>
+<span class="hll">     <span class="kn">import</span> <span class="nn">termios</span><span class="o">,</span> <span class="nn">TERMIOS</span>
+</span><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+     <span class="k">try</span><span class="p">:</span>
+<span class="hll">         <span class="kn">import</span> <span class="nn">msvcrt</span>
+</span>     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+         <span class="k">try</span><span class="p">:</span>
+<span class="hll">             <span class="kn">from</span> <span class="nn">EasyDialogs</span> <span class="kn">import</span> <span class="n">AskPassword</span>
+</span>         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<span class="hll">             <span class="n">getpass</span> <span class="o">=</span> <span class="n">default_getpass</span>
+</span><span class="hll">         <span class="k">else</span><span class="p">:</span>
+</span>             <span class="n">getpass</span> <span class="o">=</span> <span class="n">AskPassword</span>
+     <span class="k">else</span><span class="p">:</span>
+         <span class="n">getpass</span> <span class="o">=</span> <span class="n">win_getpass</span>
+<span class="k">else</span><span class="p">:</span>
+     <span class="n">getpass</span> <span class="o">=</span> <span class="n">unix_getpass</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[8]:</dt>
+<dd><tt class="docutils literal"><span class="pre">termios</span></tt> is a UNIX-specific module that provides low-level control over the input terminal.
+If this module is not available (because it&#8217;s not on your system, or your system doesn&#8217;t support it),
+the import fails and Python raises an <tt class="docutils literal"><span class="pre">ImportError</span></tt>, which you catch.</dd>
+<dt>[11]:</dt>
+<dd><tt class="docutils literal"><span class="pre">msvcrt</span></tt> is a Windows-specific module that provides an API to many useful functions in the Microsoft
+Visual C++ runtime services.</dd>
+<dt>[14]:</dt>
+<dd>if the first two didn&#8217;t work, you try to import a function from <tt class="docutils literal"><span class="pre">EasyDialogs</span></tt>, which is a Mac OS-specific
+module that provides functions to pop up dialog boxes of various types.</dd>
+<dt>[16]:</dt>
+<dd>None of these platform-specific modules is available, so you need to fall back on a default password input
+function (which is defined elsewhere in the <tt class="docutils literal"><span class="pre">getpass</span></tt> module). Notice what you&#8217;re doing here: assigning the
+function <tt class="docutils literal"><span class="pre">default_getpass</span></tt> to the variable <tt class="docutils literal"><span class="pre">getpass</span></tt>. If you read the official <tt class="docutils literal"><span class="pre">getpass</span></tt> documentation, it
+tells you that the <tt class="docutils literal"><span class="pre">getpass</span></tt> module defines a <tt class="docutils literal"><span class="pre">getpass</span></tt> function. It does this by binding <tt class="docutils literal"><span class="pre">getpass</span></tt> to the
+correct function for your platform. Then when you call the <tt class="docutils literal"><span class="pre">getpass</span></tt> function, you&#8217;re really calling a
+platform-specific function that this code has set up for you. You don&#8217;t need to know which platform your code is
+running on &#8211; just call <tt class="docutils literal"><span class="pre">getpass</span></tt>, and it will always do the right thing.</dd>
+<dt>[17]:</dt>
+<dd>A <tt class="docutils literal"><span class="pre">try...except</span></tt> block can have an <tt class="docutils literal"><span class="pre">else</span></tt> clause. If no exception is raised during the <tt class="docutils literal"><span class="pre">try</span></tt> block, the
+<tt class="docutils literal"><span class="pre">else</span></tt> clause is executed afterwards. In this case, that means that the <tt class="docutils literal"><span class="pre">from</span> <span class="pre">EasyDialogs</span> <span class="pre">import</span> <span class="pre">AskPassword</span></tt>
+import worked, so you should bind <tt class="docutils literal"><span class="pre">getpass</span></tt> to the <tt class="docutils literal"><span class="pre">AskPassword</span></tt> function.</dd>
+</dl>
+</div>
+<div class="section" id="b-define-own-exceptions">
+<h4>b. define own exceptions<a class="headerlink" href="#b-define-own-exceptions" title="Permalink to this headline">¶</a></h4>
+<p>You can also define your own exceptions by creating a class that inherits from the built-in <tt class="docutils literal"><span class="pre">Exception</span></tt> class, and
+then raise your exceptions with the <tt class="docutils literal"><span class="pre">raise</span></tt> command.</p>
+<p>You can find how to do it <a class="reference external" href="http://www.python.org/doc/current/tut/tut.html">here</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="working-with-file-object">
+<span id="working-with-file-obj"></span><h2>6.2. Working with File Object<a class="headerlink" href="#working-with-file-object" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="opening-files">
+<h3>6.2.1 Opening files<a class="headerlink" href="#opening-files" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-key-func admonition">
+<p class="first admonition-title">Key Func</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Example 6.3 Opening a File</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [1]: </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;./Music/Taylor Swift - State of Grace.mp3&quot;</span><span class="p">,</span><span class="s">&quot;rb&quot;</span><span class="p">)</span>
+</span>
+<span class="hll"><span class="gp">In [2]: </span><span class="n">f</span>
+</span><span class="gr">Out[2]: </span><span class="o">&lt;</span><span class="nb">open</span> <span class="nb">file</span> <span class="s">&#39;./Music/Taylor Swift - State of Grace.mp3&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="s">&#39;rb&#39;</span> <span class="n">at</span> <span class="mh">0x9132808</span><span class="o">&gt;</span>
+
+<span class="hll"><span class="gp">In [3]: </span><span class="n">f</span><span class="o">.</span><span class="n">mode</span>
+</span><span class="gr">Out[3]: </span><span class="s">&#39;rb&#39;</span>
+
+<span class="hll"><span class="gp">In [4]: </span><span class="n">f</span><span class="o">.</span><span class="n">name</span>
+</span><span class="gr">Out[4]: </span><span class="s">&#39;./Music/Taylor Swift - State of Grace.mp3&#39;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd><ul class="first last">
+<li><p class="first">Python has a built-in function, <tt class="docutils literal"><span class="pre">open</span></tt>, for opening a file on disk.</p>
+</li>
+<li><p class="first">The <tt class="docutils literal"><span class="pre">open</span></tt> method take up to three parameters: a filename, a mode, and a buffering parameter.
+Only the first one, filename, is required; the other two are optional. If not specific,
+the file is opened for reading in text mode.</p>
+<p>Here you are opening the file for reading in <em>binary</em> mode.</p>
+</li>
+</ul>
+</dd>
+<dt>[2]:</dt>
+<dd><tt class="docutils literal"><span class="pre">open</span></tt> returns a file object, which has methods and attributes for getting infomation
+about and manipulating the opened file.</dd>
+<dt>[3]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">mode</span></tt> attribute of a file object tells you in which mode the file was opened.</dd>
+<dt>[4]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">name</span></tt> attribute of a file object tells you the name of the file that the file object has open.</dd>
+</dl>
+</div>
+<div class="section" id="reading-files">
+<h3>6.2.2 Reading Files<a class="headerlink" href="#reading-files" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-key-func admonition">
+<p class="first admonition-title">Key Func</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">(),</span> <span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Example 6.4. Reading a File</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [5]: </span><span class="n">f</span>
+<span class="gr">Out[5]: </span><span class="o">&lt;</span><span class="nb">open</span> <span class="nb">file</span> <span class="s">&#39;./Music/Taylor Swift - State of Grace.mp3&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="s">&#39;rb&#39;</span> <span class="n">at</span> <span class="mh">0x9132808</span><span class="o">&gt;</span>
+
+<span class="hll"><span class="gp">In [6]: </span><span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span><span class="gr">Out[6]: </span><span class="il">0L</span>
+
+<span class="hll"><span class="gp">In [7]: </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</span>
+<span class="gp">In [8]: </span><span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+<span class="gr">Out[8]: </span><span class="il">11934864L</span>
+
+<span class="hll"><span class="gp">In [9]: </span><span class="n">tagData</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+</span>
+<span class="gp">In [10]: </span><span class="n">tagData</span>
+<span class="gr">Out[10]: </span><span class="s">&#39;TAGState of Grace</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s">Taylor Swift</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00</span><span class="s">State of Grace - Single</span><span class="se">\x00\x00\x00\x00\x00\x00\x00</span><span class="s">2012</span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x02</span><span class="s">&#39;</span>
+
+<span class="hll"><span class="gp">In [11]: </span><span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+</span><span class="gr">Out[11]: </span><span class="il">11934992L</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[6]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">tell</span></tt> method of a file object tells you your current position in the open file.
+Since you haven&#8217;t done anything with this file yet, the current position is 0, which is the beginning of the file.</dd>
+<dt>[7]:</dt>
+<dd><ul class="first last">
+<li><p class="first">The <tt class="docutils literal"><span class="pre">seek</span></tt> method of a file object moves to another position in the open file.</p>
+</li>
+<li><p class="first">The second parameter specifies what the first one means:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">0</span></tt> means move to an absolute position (counting from the start of the file)</li>
+<li><tt class="docutils literal"><span class="pre">1</span></tt> means move to a relative position (counting from the current position)</li>
+<li><tt class="docutils literal"><span class="pre">2</span></tt> means move to a position relative to the end of the file.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Since the MP3 tags you&#8217;re looking for are stored at the end of the file, you use <tt class="docutils literal"><span class="pre">2</span></tt>
+and tell the file object to move to a position <tt class="docutils literal"><span class="pre">128</span></tt> bytes from the end of the file.</p>
+</li>
+</ul>
+</dd>
+<dt>[9]:</dt>
+<dd><ul class="first last simple">
+<li>The <tt class="docutils literal"><span class="pre">read</span></tt> method reads a specified number of bytes from the open file
+and returns a string with the data that was read.</li>
+<li>The optional parameter specifies the maximum number of bytes to read.
+If no parameter is specified, <tt class="docutils literal"><span class="pre">read</span></tt> will read until the end of the file.</li>
+<li>The read data is assigned to the <tt class="docutils literal"><span class="pre">tagData</span></tt> variable, and the current position
+is updated based on how many bytes were read.</li>
+</ul>
+</dd>
+<dt>[11]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">tell</span></tt> method confirms that the current position has moved. If you do the math,
+you&#8217;ll see that after reading 128 bytes, the position has been incremented by 128.</dd>
+</dl>
+</div>
+<div class="section" id="closing-files">
+<h3>6.2.3 Closing Files<a class="headerlink" href="#closing-files" title="Permalink to this headline">¶</a></h3>
+<p>Open files consume system resourcesm and depending on the file mode, other programs may not
+be able to access them. It&#8217;s important to close files as soon as you&#8217;re finished with them.</p>
+<p>Example 6.5 Closing a File</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [12]: </span><span class="n">f</span>
+<span class="gr">Out[12]: </span><span class="o">&lt;</span><span class="nb">open</span> <span class="nb">file</span> <span class="s">&#39;./Music/Taylor Swift - State of Grace.mp3&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="s">&#39;rb&#39;</span> <span class="n">at</span> <span class="mh">0x9132808</span><span class="o">&gt;</span>
+
+<span class="hll"><span class="gp">In [13]: </span><span class="n">f</span><span class="o">.</span><span class="n">closed</span>
+</span><span class="gr">Out[13]: </span><span class="bp">False</span>
+
+<span class="hll"><span class="gp">In [15]: </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span>
+<span class="gp">In [16]: </span><span class="n">f</span>
+<span class="gr">Out[16]: </span><span class="o">&lt;</span><span class="n">closed</span> <span class="nb">file</span> <span class="s">&#39;./Music/Taylor Swift - State of Grace.mp3&#39;</span><span class="p">,</span> <span class="n">mode</span> <span class="s">&#39;rb&#39;</span> <span class="n">at</span> <span class="mh">0x9132808</span><span class="o">&gt;</span>
+
+<span class="gp">In [17]: </span><span class="n">f</span><span class="o">.</span><span class="n">closed</span>
+<span class="gr">Out[17]: </span><span class="bp">True</span>
+
+<span class="hll"><span class="gp">In [18]: </span><span class="n">f</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ValueError                                Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-18-d0cb2b3c0dfb&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 f.seek(0)</span>
+
+<span class="go">ValueError: I/O operation on closed file</span>
+
+<span class="gp">In [19]: </span><span class="n">f</span><span class="o">.</span><span class="n">tell</span><span class="p">()</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ValueError                                Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-19-322ae27c0b94&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 f.tell()</span>
+
+<span class="go">ValueError: I/O operation on closed file</span>
+
+<span class="gp">In [20]: </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ValueError                                Traceback (most recent call last)</span>
+<span class="go">&lt;ipython-input-20-bacd0e0f09a3&gt; in &lt;module&gt;()</span>
+<span class="go">----&gt; 1 f.read()</span>
+
+<span class="go">ValueError: I/O operation on closed file</span>
+
+<span class="hll"><span class="gp">In [21]: </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<dl class="docutils">
+<dt>[13]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">closed</span></tt> attribute of a file object indicates whether the object has a file open or not.
+In this case, the file is still open (<tt class="docutils literal"><span class="pre">closed</span></tt> is <tt class="docutils literal"><span class="pre">False</span></tt>)</dd>
+<dt>[15]:</dt>
+<dd>To close a file, call the <tt class="docutils literal"><span class="pre">close</span></tt> method of the file object. This frees the lock (if any) that
+you were holding on the file, flushes buffered writes (if any) that the system hadn&#8217;t gotten
+around to actually wiriting yet, and releases the system resources.</dd>
+<dt>[18]:</dt>
+<dd>Just because a file is closed doesn&#8217;t mean that the file object ceases to exist. The variable <tt class="docutils literal"><span class="pre">f</span></tt>
+will continue to exist until it goes out of scope or gets manually deleted. However, none of the
+methods that manipulate an open file will work once the file has been closed;
+they will raise an exception.</dd>
+<dt>[21]:</dt>
+<dd>Calling <tt class="docutils literal"><span class="pre">close</span></tt> on a file object whose file is already closed does <em>not</em> raise an exception.</dd>
+</dl>
+</div>
+<div class="section" id="handling-i-o-errors">
+<h3>6.2.4 Handling I/O Errors<a class="headerlink" href="#handling-i-o-errors" title="Permalink to this headline">¶</a></h3>
+<p>Example 6.6 File Objects in MP3FileInfo</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># this example shows how to safely open and read from a file and gracefully handle errors.</span>
+
+<span class="hll"><span class="k">try</span><span class="p">:</span>
+</span><span class="hll">     <span class="n">fsock</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span>     <span class="k">try</span><span class="p">:</span>
+<span class="hll">         <span class="n">fsock</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</span><span class="hll">         <span class="n">tagdata</span> <span class="o">=</span> <span class="n">fsock</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span>
+</span><span class="hll">     <span class="k">finally</span><span class="p">:</span>
+</span>         <span class="n">fsock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+     <span class="o">.</span>
+     <span class="o">.</span>
+     <span class="o">.</span>
+<span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+     <span class="k">pass</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[3]:</dt>
+<dd>Because opening and reading files is risky and may raise an exception,
+all of this code is wrapped in a <tt class="docutils literal"><span class="pre">try...except</span></tt> block.</dd>
+<dt>[4]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">open</span></tt> function may raise an <tt class="docutils literal"><span class="pre">IOError</span></tt>. (Maybe the file doesn&#8217;t exist)</dd>
+<dt>[6]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">seek</span></tt> method may raise an <tt class="docutils literal"><span class="pre">IOError</span></tt>. (Maybe the file is smaller than 128 bytes)</dd>
+<dt>[7]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">read</span></tt> method may raise an <tt class="docutils literal"><span class="pre">IOError</span></tt>. (Maybe the disk has a bad sector, or it&#8217;s on a network drive and the network just went down)</dd>
+<dt>[8]:</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">try...finally</span></tt> block:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>code in the <tt class="docutils literal"><span class="pre">finally</span></tt> block will <em>always</em> be executed, even if something in the <tt class="docutils literal"><span class="pre">try</span></tt> block raises an exception.</li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+</div>
+<div class="section" id="writing-to-files">
+<h3>6.2.5 Writing to Files<a class="headerlink" href="#writing-to-files" title="Permalink to this headline">¶</a></h3>
+<p>There are two basic file modes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;Append&#8221; (<tt class="docutils literal"><span class="pre">a</span></tt>) mode will add data to the end of the file.</li>
+<li>&#8220;write&#8221; (<tt class="docutils literal"><span class="pre">w</span></tt>) mode will overwrite the file.</li>
+</ul>
+</div></blockquote>
+<p>Either mode will create the file automatically if it doesn&#8217;t already exist.</p>
+<p>Example 6.7. Writing to Files</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [22]: </span><span class="n">logfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.log&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+</span>
+<span class="hll"><span class="gp">In [23]: </span><span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;test succeeded&#39;</span><span class="p">)</span>
+</span>
+<span class="gp">In [24]: </span><span class="n">logfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="hll"><span class="gp">In [25]: </span><span class="k">print</span> <span class="nb">file</span><span class="p">(</span><span class="s">&#39;test.log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class="go">test succeeded</span>
+
+<span class="hll"><span class="gp">In [26]: </span><span class="n">logfile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;test.log&#39;</span><span class="p">,</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+</span>
+<span class="gp">In [27]: </span><span class="n">logfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;line 2&#39;</span><span class="p">)</span>
+
+<span class="gp">In [28]: </span><span class="n">logfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="hll"><span class="gp">In [29]: </span><span class="k">print</span> <span class="nb">file</span><span class="p">(</span><span class="s">&#39;test.log&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span class="go">test succeededline 2</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[21]:</dt>
+<dd>opening the file for writing. (The second parameter <tt class="docutils literal"><span class="pre">w</span></tt> means open the file for writing).
+The previous contents of that file has gone now.</dd>
+<dt>[23]:</dt>
+<dd>You can add data to the newly opened file with the <tt class="docutils literal"><span class="pre">write</span></tt> method of the file object returned by <tt class="docutils literal"><span class="pre">open</span></tt>.</dd>
+<dt>[25]:</dt>
+<dd><tt class="docutils literal"><span class="pre">file</span></tt> is a synonym for <tt class="docutils literal"><span class="pre">open</span></tt>. This one-liner opens the file, reads its contents, and prints them.</dd>
+<dt>[26]:</dt>
+<dd>open the file and append to it. (The <tt class="docutils literal"><span class="pre">a</span></tt> parameter means open the file for appending.)
+Appending will <em>never</em> harm the existing contents of the file.</dd>
+<dt>[29]:</dt>
+<dd>Note that carriage returns are not included. Since you didn&#8217;t write them explicitly to the file either time,
+the file doesn&#8217;t include them. You can write a carriage return with the <tt class="docutils literal"><span class="pre">\n</span></tt> character.
+Since you didn&#8217;t do this, everything you wrote to the file ended up smooshed together on the same line.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="iterating-with-for-loops">
+<span id="iterating-loops"></span><h2>6.3.  Iterating with for Loops<a class="headerlink" href="#iterating-with-for-loops" title="Permalink to this headline">¶</a></h2>
+<p>Most other languages don&#8217;t have a powerful list datatype like Python,
+so you end up doing a lot of manual work, specifying a start, end, and step to define a range of integers or character or other iteratable entities.
+But in Python, a <tt class="docutils literal"><span class="pre">for</span></tt> loop simply iterates over a lis, the same way list comprehensions work.</p>
+<p>Example 6.8 Introducing the <tt class="docutils literal"><span class="pre">for</span></tt> loop</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="s">&#39;e&#39;</span><span class="p">]</span>
+
+<span class="hll"><span class="gp">In [2]: </span><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">li</span><span class="p">:</span>
+</span><span class="gp">   ...:</span>     <span class="k">print</span> <span class="n">s</span>
+<span class="gp">   ...:</span>
+<span class="go">a</span>
+<span class="go">b</span>
+<span class="go">e</span>
+
+<span class="hll"><span class="gp">In [3]: </span><span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+</span><span class="go">a</span>
+<span class="go">b</span>
+<span class="go">e</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[2]:</dt>
+<dd>The syntax for a <tt class="docutils literal"><span class="pre">for</span></tt> loop is similar to list comprehensions. <tt class="docutils literal"><span class="pre">li</span></tt> is a list,
+and <tt class="docutils literal"><span class="pre">s</span></tt> will take the value of each element in turn, starting from the first element.</dd>
+</dl>
+<p>Example 6.9 Simple counters</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [5]: </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span><span class="gp">   ...:</span>     <span class="k">print</span> <span class="n">i</span>
+<span class="gp">   ...:</span>
+<span class="go">0</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">3</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">for</span></tt> loops are not just for simple counters. They can iterate through all kinds of things.</p>
+<p>Example 6.10 Iterating Through a Dictionary</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [8]: </span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="hll"><span class="gp">In [9]: </span><span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span class="gp">   ...:</span>     <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="gp">   ...:</span>
+<span class="go">XAUTHORITY=/home/zeyuan_hu/.Xauthority</span>
+<span class="go">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</span>
+<span class="go">LESSOPEN=| /usr/bin/lesspipe %s</span>
+<span class="go">LOGNAME=zeyuan_hu</span>
+<span class="go">USER=zeyuan_hu</span>
+
+<span class="go">[...snip...]</span>
+
+<span class="hll"><span class="gp">In [10]: </span><span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+</span><span class="go">XAUTHORITY=/home/zeyuan_hu/.Xauthority</span>
+<span class="go">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</span>
+<span class="go">LESSOPEN=| /usr/bin/lesspipe %s</span>
+<span class="go">LOGNAME=zeyuan_hu</span>
+<span class="go">USER=zeyuan_hu</span>
+
+<span class="go">[...snip...]</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[9]:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">os.environ</span></tt> is a dictionary of the environment variables defined on your system.</li>
+<li><tt class="docutils literal"><span class="pre">os.environ.items()</span></tt> returns a list of tuples: <tt class="docutils literal"><span class="pre">[(key1,</span> <span class="pre">value1),</span> <span class="pre">(key2,</span> <span class="pre">value2),</span> <span class="pre">...]</span></tt></li>
+</ul>
+</dd>
+<dt>[10]:</dt>
+<dd>this version is slightly faster, because there is only one <tt class="docutils literal"><span class="pre">print</span></tt> statement instead of many.</dd>
+</dl>
+<p>Example 6.11 for loop in MP3FileInfo</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">tagDataMap</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;title&quot;</span>   <span class="p">:</span> <span class="p">(</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">33</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+              <span class="s">&quot;artist&quot;</span>  <span class="p">:</span> <span class="p">(</span> <span class="mi">33</span><span class="p">,</span>  <span class="mi">63</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+              <span class="s">&quot;album&quot;</span>   <span class="p">:</span> <span class="p">(</span> <span class="mi">63</span><span class="p">,</span>  <span class="mi">93</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+              <span class="s">&quot;year&quot;</span>    <span class="p">:</span> <span class="p">(</span> <span class="mi">93</span><span class="p">,</span>  <span class="mi">97</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+              <span class="s">&quot;comment&quot;</span> <span class="p">:</span> <span class="p">(</span> <span class="mi">97</span><span class="p">,</span> <span class="mi">126</span><span class="p">,</span> <span class="n">stripnulls</span><span class="p">),</span>
+<span class="hll">              <span class="s">&quot;genre&quot;</span>   <span class="p">:</span> <span class="p">(</span><span class="mi">127</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="nb">ord</span><span class="p">)}</span>
+</span><span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+         <span class="k">if</span> <span class="n">tagdata</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;TAG&quot;</span><span class="p">:</span>
+<span class="hll">             <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">parseFunc</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tagDataMap</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span>                 <span class="bp">self</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">parseFunc</span><span class="p">(</span><span class="n">tagdata</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span>
+</pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[6]:</dt>
+<dd><p class="first"><tt class="docutils literal"><span class="pre">tagDataMap</span></tt> is a class attribute that defines the tags you&#8217;re looking for in an MP3 file.</p>
+<div class="admonition-fact-about-tags-in-mp3-file last admonition">
+<p class="first admonition-title">fact about tags in MP3 file</p>
+<p>Tags are stored in fixed-length fields.</p>
+<p class="last">Once you read the last 128 bytes of the file, bytes 3 through 32 of those are always the
+song title, 33 through 62 are always the artist name, 63 through 92 are the album name, and so forth.</p>
+</div>
+</dd>
+<dt>[11]:</dt>
+<dd>The structure of the <tt class="docutils literal"><span class="pre">for</span></tt> variables matches the structure of the elements of the list returned by <tt class="docutils literal"><span class="pre">items</span></tt>.
+Remember that <tt class="docutils literal"><span class="pre">items</span></tt> returns a list of tuples of the form <tt class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></tt>. The first element of the list
+is <tt class="docutils literal"><span class="pre">(&quot;title&quot;,</span> <span class="pre">(3,</span> <span class="pre">33,</span> <span class="pre">&lt;function</span> <span class="pre">stripnulls&gt;))</span></tt>, so the first time around the loop, tag gets <tt class="docutils literal"><span class="pre">title</span></tt>, <tt class="docutils literal"><span class="pre">start</span></tt>
+gets <tt class="docutils literal"><span class="pre">3</span></tt>, <tt class="docutils literal"><span class="pre">end</span></tt> gets <tt class="docutils literal"><span class="pre">33</span></tt>, and <tt class="docutils literal"><span class="pre">parseFunc</span></tt> gets the function <tt class="docutils literal"><span class="pre">stripnulls</span></tt>.</dd>
+</dl>
+</div>
+<div class="section" id="using-sys-modules">
+<span id="sys-modules"></span><h2>6.4. Using <em>sys.modules</em><a class="headerlink" href="#using-sys-modules" title="Permalink to this headline">¶</a></h2>
+<p>Modules, like everything else in Python, are objects.
+Once imported, you can always get a reference to a module through the global dictionary <tt class="docutils literal"><span class="pre">sys.modules</span></tt>.</p>
+<p>Example 6.12 Introducing <tt class="docutils literal"><span class="pre">sys.modules</span></tt></p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [3]: </span><span class="kn">import</span> <span class="nn">sys</span>
+</span>
+<span class="hll"><span class="gp">In [4]: </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</span><span class="go">copy_reg</span>
+<span class="go">sre_compile</span>
+<span class="go">_sre</span>
+<span class="go">encodings</span>
+<span class="go">site</span>
+<span class="go">__builtin__</span>
+<span class="go">sys</span>
+<span class="go">__main__</span>
+<span class="go">encodings.encodings</span>
+<span class="go">abc</span>
+<span class="go">posixpath</span>
+<span class="go">_weakrefset</span>
+<span class="go">errno</span>
+<span class="go">re</span>
+<span class="go">os</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[3]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">sys</span></tt> module contains system-level information, such as the version of Python you&#8217;re running
+(<tt class="docutils literal"><span class="pre">sys.version</span></tt> or <tt class="docutils literal"><span class="pre">sys.version_info</span></tt>)</dd>
+<dt>[4]:</dt>
+<dd><tt class="docutils literal"><span class="pre">sys.modules</span></tt> is a dictionary containing all the modules that have ever been imported since Python
+was started; the key is the module name, the value is the module object.</dd>
+</dl>
+<p>Example 6.13 Using sys.modules</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [13]: </span><span class="kn">import</span> <span class="nn">fileinfo</span>
+</span>
+<span class="gp">In [14]: </span><span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="go">copy_reg</span>
+<span class="go">fileinfo</span>
+<span class="go">sre_compile</span>
+<span class="go">_sre</span>
+<span class="go">encodings</span>
+<span class="go">site</span>
+<span class="go">__builtin__</span>
+<span class="go">sys</span>
+<span class="go">__main__</span>
+<span class="go">encodings.encodings</span>
+<span class="go">abc</span>
+<span class="go">posixpath</span>
+<span class="go">_weakrefset</span>
+<span class="go">errno</span>
+<span class="go">re</span>
+<span class="go">os</span>
+
+<span class="gp">In [15]: </span><span class="n">fileinfo</span>
+<span class="gr">Out[15]: </span><span class="o">&lt;</span><span class="n">module</span> <span class="s">&#39;fileinfo&#39;</span> <span class="kn">from</span> <span class="err">&#39;</span><span class="nn">fileinfo.pyc</span><span class="err">&#39;&gt;</span>
+
+<span class="hll"><span class="gp">In [16]: </span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s">&quot;fileinfo&quot;</span><span class="p">]</span>
+</span><span class="gr">Out[16]: </span><span class="o">&lt;</span><span class="n">module</span> <span class="s">&#39;fileinfo&#39;</span> <span class="kn">from</span> <span class="err">&#39;</span><span class="nn">fileinfo.pyc</span><span class="err">&#39;&gt;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[13]:</dt>
+<dd>As new modules are imported, they are added to <tt class="docutils literal"><span class="pre">sys.modules</span></tt>.</dd>
+<dt>[16]:</dt>
+<dd>Given the name (as a string) of any previously-imported module,
+you can get a reference to the module itself through the <tt class="docutils literal"><span class="pre">sys.modules</span></tt> dictionary.</dd>
+</dl>
+<p>Example 6.14 The __module__ Class Attribute</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [17]: </span><span class="kn">from</span> <span class="nn">fileinfo</span> <span class="kn">import</span> <span class="n">MP3FileInfo</span>
+
+<span class="hll"><span class="gp">In [18]: </span><span class="n">MP3FileInfo</span><span class="o">.</span><span class="n">__module__</span>
+</span><span class="gr">Out[18]: </span><span class="s">&#39;fileinfo&#39;</span>
+
+<span class="hll"><span class="gp">In [19]: </span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">MP3FileInfo</span><span class="o">.</span><span class="n">__module__</span><span class="p">]</span>
+</span><span class="gr">Out[19]: </span><span class="o">&lt;</span><span class="n">module</span> <span class="s">&#39;fileinfo&#39;</span> <span class="kn">from</span> <span class="err">&#39;</span><span class="nn">fileinfo.pyc</span><span class="err">&#39;&gt;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[18]:</dt>
+<dd>Every Python class has a built-in class attribute __module__, which is the name of the module in which the class is defined.</dd>
+<dt>[19]:</dt>
+<dd>Combining this with the <tt class="docutils literal"><span class="pre">sys.modules</span></tt> dictionary, you can get a reference to the module in which a class is defined.</dd>
+</dl>
+</div>
+<div class="section" id="working-with-directories">
+<span id="id3"></span><h2>6.5. Working with Directories<a class="headerlink" href="#working-with-directories" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-key-func admonition">
+<p class="first admonition-title">Key Func</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">pathname</span> <span class="n">including</span> <span class="s">&quot;~&quot;</span><span class="p">)</span>
+
+<span class="n">path</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+<span class="n">filename</span><span class="p">,</span> <span class="n">fileext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="nb">file</span> <span class="ow">or</span> <span class="n">folder</span><span class="p">)</span>
+
+<span class="n">glob</span> <span class="n">module</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="constructing-pathnames">
+<h3>6.5.1 Constructing Pathnames<a class="headerlink" href="#constructing-pathnames" title="Permalink to this headline">¶</a></h3>
+<p>Example 6.16 Constructing Pathnames</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [21]: </span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="hll"><span class="gp">In [22]: </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot;../Music/&quot;</span><span class="p">,</span><span class="s">&quot;Taylor Swift - State of Grace.mp3&quot;</span><span class="p">)</span>
+</span><span class="gr">Out[22]: </span><span class="s">&#39;../Music/Taylor Swift - State of Grace.mp3&#39;</span>
+
+<span class="hll"><span class="gp">In [23]: </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot;../Music&quot;</span><span class="p">,</span><span class="s">&quot;Taylor Swift - State of Grace.mp3&quot;</span><span class="p">)</span>
+</span><span class="gr">Out[23]: </span><span class="s">&#39;../Music/Taylor Swift - State of Grace.mp3&#39;</span>
+
+<span class="hll"><span class="gp">In [24]: </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">)</span>
+</span><span class="gr">Out[24]: </span><span class="s">&#39;/home/zeyuan_hu&#39;</span>
+
+<span class="hll"><span class="gp">In [25]: </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">),</span><span class="s">&quot;Python&quot;</span><span class="p">)</span>
+</span><span class="gr">Out[25]: </span><span class="s">&#39;/home/zeyuan_hu/Python&#39;</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>[22]:</dt>
+<dd><tt class="docutils literal"><span class="pre">os.path</span></tt> is a reference to a module &#8211; which module depends on your platform.
+Just as <tt class="docutils literal"><span class="pre">getpass</span></tt> encapsulates differences between platforms by setting <tt class="docutils literal"><span class="pre">getpass</span></tt> to a platform-specific function,
+<tt class="docutils literal"><span class="pre">os</span></tt> encapsulates differences between platforms by setting <tt class="docutils literal"><span class="pre">path</span></tt> to a platform-specific module.</dd>
+<dt>[23]:</dt>
+<dd><tt class="docutils literal"><span class="pre">join</span></tt> will add an extra backslash to the pathname before joining it to the filename.</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># constructs a pathname out of one or more partial pathnames.</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+<span class="c"># expand a pathname that uses ~ to represent the current user&#39;s home directory</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span> <span class="n">including</span> <span class="s">&quot;~&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="splitting-pathnames">
+<h3>6.5.2 Splitting Pathnames<a class="headerlink" href="#splitting-pathnames" title="Permalink to this headline">¶</a></h3>
+<p>Example 6.17 Splitting Pathnames</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="hll"><span class="gp">In [26]: </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;../Music/Taylor Swift - State of Grace.mp3&#39;</span><span class="p">)</span>
+</span><span class="gr">Out[26]: </span><span class="p">(</span><span class="s">&#39;../Music&#39;</span><span class="p">,</span> <span class="s">&#39;Taylor Swift - State of Grace.mp3&#39;</span><span class="p">)</span>
+
+<span class="hll"><span class="gp">In [27]: </span><span class="n">filepath</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;../Music/Taylor Swift - State of Grace.mp3&#39;</span><span class="p">)</span>
+</span>
+<span class="hll"><span class="gp">In [28]: </span><span class="n">filepath</span>
+</span><span class="gr">Out[28]: </span><span class="s">&#39;../Music&#39;</span>
+
+<span class="hll"><span class="gp">In [29]: </span><span class="n">filename</span>
+</span><span class="gr">Out[29]: </span><span class="s">&#39;Taylor Swift - State of Grace.mp3&#39;</span>
+
+<span class="hll"><span class="gp">In [30]: </span><span class="n">shortname</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span>
+<span class="gp">In [31]: </span><span class="n">shortname</span>
+<span class="gr">Out[31]: </span><span class="s">&#39;Taylor Swift - State of Grace&#39;</span>
+
+<span class="gp">In [32]: </span><span class="n">extension</span>
+<span class="gr">Out[32]: </span><span class="s">&#39;.mp3&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># splits a full pathname and returns a tuple containing the path and filename.</span>
+<span class="c"># you can assign the return value of split function into a tuple of two variables.</span>
+<span class="n">path</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+
+<span class="c"># splits a filename and returns a tuple containing the filename and the file extension</span>
+<span class="n">filename</span><span class="p">,</span> <span class="n">fileext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listing-directories">
+<h3>6.5.3 Listing Directories<a class="headerlink" href="#listing-directories" title="Permalink to this headline">¶</a></h3>
+<p>Example 6.18 Listing Directories</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [35]: </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">)</span>
+<span class="gr">Out[35]: </span><span class="s">&#39;/home/zeyuan_hu&#39;</span>
+
+<span class="gp">In [36]: </span><span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~&quot;</span><span class="p">)</span>
+
+<span class="hll"><span class="gp">In [37]: </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
+</span><span class="go">Out[37]:</span>
+<span class="go">[&#39;.pip&#39;,&#39;.adobe&#39;,&#39;.gconf&#39;,&#39;.gnome2&#39;,&#39;.xscreensaver&#39;,&#39;Dropbox&#39;,</span>
+<span class="go"> &#39;Music&#39;,&#39;.profile&#39;,&#39;py&#39;,&#39;Videos&#39;,&#39;.pki&#39;,&#39;.dropbox&#39;,&#39;.swp&#39;,</span>
+<span class="go"> &#39;.cache&#39;.&#39;.Xauthority&#39;,&#39;Documents&#39;,&#39;.vim&#39;, ... ]</span>
+
+<span class="hll"><span class="gp">In [38]: </span><span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span><span class="n">f</span><span class="p">))]</span>
+</span><span class="go">Out[38]:</span>
+<span class="go">[&#39;.dmrc&#39;, &#39;.swp&#39;,&#39;.Xauthority&#39;,&#39;.pam_environment&#39;,&#39;.bash_history&#39;,</span>
+<span class="go"> &#39;.gksu.lock&#39;,&#39;.install4j&#39;,&#39;.viminfo&#39;,&#39;.pulse-cookie&#39;,&#39;examples.desktop&#39;,</span>
+<span class="go"> &#39;.vimrc~&#39;,&#39;.bashrc&#39;,&#39;.vimrc&#39;, ...]</span>
+
+<span class="hll"><span class="gp">In [39]: </span><span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span><span class="n">f</span><span class="p">))]</span>
+</span><span class="go">Out[39]:</span>
+<span class="go">[&#39;Downloads&#39;,&#39;.matplotlib&#39;,&#39;.pip&#39;,&#39;.gnome2&#39;,&#39;.java&#39;,&#39;Dropbox&#39;,&#39;Music&#39;,</span>
+<span class="go"> &#39;py&#39;,&#39;Videos&#39;,&#39;.dropbox&#39;,&#39;.cache&#39;,&#39;Documents&#39;,&#39;.vim&#39;,&#39;Desktop&#39;,</span>
+<span class="go"> &#39;Public&#39;,&#39;Ubuntu One&#39;,&#39;Templates&#39;,&#39;Pictures&#39;,&#39;.ssh&#39;, ... ]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># takes a pathname and returns a list of the contents of the directory</span>
+<span class="c"># note that listdir returns both files and folders, with no indication of which is which.</span>
+<span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+
+<span class="c"># used to separate the files from the folders</span>
+<span class="c"># takes a pathname and returns 1 if the path represents a file, and 0 otherwise.</span>
+<span class="c"># also works with a partial path, relative to the current working directory.</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+
+<span class="c"># get the current working directory</span>
+<span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<span class="c"># used to get a list of the subdirectories within a directory</span>
+<span class="c"># takes a pathname and returns 1 if the path represents a directory, and 0 otherwise.</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">pathname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example 6.19 Listing Directories in fileinfo.py</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">listDirectory</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fileExtList</span><span class="p">):</span>
+    <span class="s">&quot;get list of file info objects for files of particular extensions&quot;</span>
+<span class="hll">     <span class="n">fileList</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)]</span>
+</span>
+<span class="hll">     <span class="n">fileList</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileList</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">fileExtList</span><span class="p">]</span>
+</span></pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[3]:</dt>
+<dd><tt class="docutils literal"><span class="pre">normcase</span></tt> is a useful little function that compensates for case-insensitive operation systems that
+think that <tt class="docutils literal"><span class="pre">mahadeva.mp3</span></tt> and <tt class="docutils literal"><span class="pre">mahadeva.MP3</span></tt> are the same file. For instance, on Windows and Mac OS,
+<tt class="docutils literal"><span class="pre">normcase</span></tt> will convert the entire filename to lowercase; on UNIX-compatible systems, it will return the
+filename unchanged.</dd>
+<dt>[5]:</dt>
+<dd><ul class="first last simple">
+<li>Iterating through the normalized list with <tt class="docutils literal"><span class="pre">f</span></tt> again, you use <tt class="docutils literal"><span class="pre">os.path.splitext(f)</span></tt> to split each filename
+into name and extension.</li>
+<li>For each file, you see if the extension is in the list of file extensions you care about (<tt class="docutils literal"><span class="pre">fileExtList</span></tt>, which
+was passed to the <tt class="docutils literal"><span class="pre">listDirectory</span></tt> function).</li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># normalize the case according to operating system defaults</span>
+<span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="nb">file</span> <span class="ow">or</span> <span class="n">folder</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Whenever possible, you should use the functions in <tt class="docutils literal"><span class="pre">os</span></tt> and <tt class="docutils literal"><span class="pre">os.path</span></tt> for file, directory, and path manipulations.
+Those modules are wrappers for platform-specific modules, so function like <tt class="docutils literal"><span class="pre">os.path.split</span></tt> work on UNIX, Windows, Mac OS,
+and any other platform supported by Python.</p>
+</div>
+<p>Example 6.20 Listing Directories with glob</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [42]: </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">&quot;/home/zeyuan_hu/Music&quot;</span><span class="p">)</span>
+<span class="gr">Out[42]: </span><span class="p">[</span><span class="s">&#39;a_time_long_forgotten_con.mp3&#39;</span><span class="p">,</span> <span class="s">&#39;hellraiser.mp3&#39;</span><span class="p">,</span><span class="s">&#39;kairo.mp3&#39;</span><span class="p">,</span>
+<span class="go">          &#39;long_way_home1.mp3&#39;, &#39;sidewinder.mp3&#39;,&#39;spinning.mp3&#39;]</span>
+
+<span class="gp">In [43]: </span><span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="hll"><span class="gp">In [44]: </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;/home/zeyuan_hu/Music/*.mp3&quot;</span><span class="p">)</span>
+</span><span class="gr">Out[44]: </span><span class="p">[</span><span class="s">&quot;/home/zeyuan_hu/Music/a_time_long_forgotten_con.mp3&quot;</span><span class="p">,</span>
+<span class="go">          &quot;/home/zeyuan_hu/Music/hellraiser.mp3&quot;,</span>
+<span class="go">          &quot;/home/zeyuan_hu/Music/kairo.mp3&quot;,</span>
+<span class="go">          &quot;/home/zeyuan_hu/Music/long_way_home1.mp3&quot;,</span>
+<span class="go">          &quot;/home/zeyuan_hu/Music/sidewinder.mp3&quot;,</span>
+<span class="go">          &quot;/home/zeyuan_hu/Music/spinning.mp3&quot;]</span>
+
+<span class="hll"><span class="gp">In [45]: </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;/home/zeyuan_hu/Music/s*.mp3&quot;</span><span class="p">)</span>
+</span><span class="gr">Out[45]: </span><span class="p">[</span><span class="s">&quot;/home/zeyuan_hu/Music/sidewinder.mp3&quot;</span><span class="p">,</span>
+<span class="go">          &quot;/home/zeyuan_hu/Music/spinning.mp3&quot;]</span>
+
+<span class="hll"><span class="gp">In [46]: </span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s">&quot;/home/zeyuan_hu/*/*.mp3&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<dl class="docutils">
+<dt>[44]:</dt>
+<dd>The <tt class="docutils literal"><span class="pre">glob</span></tt> module, takes a wildcard and returns the full path of all files and
+directories matching the wildcard. Here the wildcard is a directory path plus &#8220;*.mp3&#8221;,
+which will match all <tt class="docutils literal"><span class="pre">.mp3</span></tt> files. Note that each element of the returned list already
+includes the full path of the file.</dd>
+<dt>[45]:</dt>
+<dd>If you want to find all the files in a specific directory that start with &#8220;s&#8221; and end with
+&#8221;.mp3&#8221;, you can do that too.</dd>
+<dt>[46]:</dt>
+<dd>Now consider this scenario: you have a music directory, with several subdirectories within it,
+with <tt class="docutils literal"><span class="pre">.mp3</span></tt> files within each subdirectory. You can get a list of all of those with a single call
+to <tt class="docutils literal"><span class="pre">glob</span></tt>, by using two wildcards at once. One wildcard is the &#8220;*.mp3&#8221; (to match <tt class="docutils literal"><span class="pre">.mp3</span></tt> files),
+and one wildcard is <em>within the directory path itself</em>, to match any subdirectory within <tt class="docutils literal"><span class="pre">/home/zeyuan_hu/</span></tt>.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="putting-it-all-together">
+<span id="all-together"></span><h2>6.6. Putting it All Together<a class="headerlink" href="#putting-it-all-together" title="Permalink to this headline">¶</a></h2>
+<p>Example 6.21. listDirectory</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="highlight"><pre><span class="hll"><span class="k">def</span> <span class="nf">listDirectory</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">fileExtList</span><span class="p">):</span>
+</span>    <span class="s">&quot;get list of file info objects for files of particular extensions&quot;</span>
+     <span class="n">fileList</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)]</span>
+
+<span class="hll">     <span class="n">fileList</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileList</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">f</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">fileExtList</span><span class="p">]</span>
+</span>
+<span class="hll">     <span class="k">def</span> <span class="nf">getFileInfoClass</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">FileInfo</span><span class="o">.</span><span class="n">__module__</span><span class="p">]):</span>
+</span>         <span class="s">&quot;get file info class from filename extension&quot;</span>
+<span class="hll">         <span class="n">subclass</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">FileInfo&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
+</span><span class="hll">         <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">subclass</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">subclass</span><span class="p">)</span> <span class="ow">or</span> <span class="n">FileInfo</span>
+</span>
+<span class="hll">     <span class="k">return</span> <span class="p">[</span><span class="n">getFileInfoClass</span><span class="p">(</span><span class="n">f</span><span class="p">)(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fileList</span><span class="p">]</span>
+</span></pre></div>
+</td></tr></table></div>
+<dl class="docutils">
+<dt>[1]:</dt>
+<dd><tt class="docutils literal"><span class="pre">listDirectory</span></tt> is the main attraction of this entire module. It takes a directory(i.e. /home/zeyuan_hu/Music/)
+and a list of interesting file extensions (i.e. <tt class="docutils literal"><span class="pre">['.mp3']</span></tt>), and it returns a list of class instances that act
+like dictionaries that contain metadata about each interesting file in that directory.</dd>
+<dt>[5]:</dt>
+<dd>This line of code gets a list of the full pathnames of all the files in <tt class="docutils literal"><span class="pre">directory</span></tt> that have an interesting file
+extension (as specified by <tt class="docutils literal"><span class="pre">fileExtList</span></tt>).</dd>
+<dt>[7]:</dt>
+<dd><p class="first">Python supports <em>nest functions</em>:</p>
+<blockquote class="last">
+<div>The nested function <tt class="docutils literal"><span class="pre">getFileInfoClass</span></tt> can be called only from the function in which it is defined, <tt class="docutils literal"><span class="pre">listDirectory</span></tt>.</div></blockquote>
+</dd>
+<dt>[7]:</dt>
+<dd>This is a function with two arguments; <tt class="docutils literal"><span class="pre">filename</span></tt> is required, but <tt class="docutils literal"><span class="pre">module</span></tt> is optional and defaults to the module
+that contains the <tt class="docutils literal"><span class="pre">FileInfo</span></tt> class.</dd>
+<dt>[9]:</dt>
+<dd>This line of code gets the extension of the file (<tt class="docutils literal"><span class="pre">os.path.splitext(filename)[1]</span></tt>), forces it to uppercase(<tt class="docutils literal"><span class="pre">.upper()</span></tt>),
+slice off the dot (<tt class="docutils literal"><span class="pre">[1:]</span></tt>), and constructs a class name out of it with string formatting. So <tt class="docutils literal"><span class="pre">/home/zeyuan_hu/Music/mahadeva.mp3</span></tt>
+becomes <tt class="docutils literal"><span class="pre">.mp3</span></tt> becomes <tt class="docutils literal"><span class="pre">.MP3</span></tt> becomes <tt class="docutils literal"><span class="pre">MP3</span></tt> becomes <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>.</dd>
+<dt>[10]:</dt>
+<dd><p class="first">Having constructed the name of the handler class that would handle this file, you check to see if that handler class actually
+exists in this module. If it does, you return the class, otherwise you return the base class <tt class="docutils literal"><span class="pre">FileInfo</span></tt>.</p>
+<p class="last">This is s a very important point: <em>this function returns a class.</em> Not an instance of a class, but the class itself.</p>
+</dd>
+<dt>[12]:</dt>
+<dd>For each file in the &#8220;interesting files&#8221; list (<tt class="docutils literal"><span class="pre">fileList</span></tt>), you call <tt class="docutils literal"><span class="pre">getFileInfoClass</span></tt> with the filename(<tt class="docutils literal"><span class="pre">f</span></tt>).
+Calling <tt class="docutils literal"><span class="pre">getFileInfoClass(f)</span></tt> returns a class;
+You then create an instance of this class and pass the filename(<tt class="docutils literal"><span class="pre">f</span></tt> again), to the <tt class="docutils literal"><span class="pre">__init__</span></tt> method.
+As you saw earlier in this chapter, the <tt class="docutils literal"><span class="pre">__init__</span></tt> method of <tt class="docutils literal"><span class="pre">FileInfo</span></tt> sets <tt class="docutils literal"><span class="pre">self[&quot;name&quot;]</span></tt>, which triggers
+<tt class="docutils literal"><span class="pre">__setitem__</span></tt>, which is overridden in the descendant (<tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>) to parse the file appropriately to pull out
+the file&#8217;s metadata. You do all that fo each interesting file and return a list of the resulting instances.</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Note that <tt class="docutils literal"><span class="pre">listDirectory</span></tt> is completely generic. It doesn&#8217;t know ahead of time which types of files it will be getting,
+or which classes are defined that could potentially handle those files. It inspects the directory for the files to
+process, and then introspects its own module to see what special handler classes (like <tt class="docutils literal"><span class="pre">MP3FileInfo</span></tt>) are defined.</p>
+<p>You can extend this program to handle other types of files simply by defining an appropriately-named class:
+<tt class="docutils literal"><span class="pre">HTMLFileInfo</span></tt> for HTML files, <tt class="docutils literal"><span class="pre">DOCFileInfo</span></tt> for Word <tt class="docutils literal"><span class="pre">.doc</span></tt> files., and so forth.</p>
+<p class="last"><tt class="docutils literal"><span class="pre">listDirectory</span></tt> will handle them all, without modification, by handing off the real work to the appropriate classes and collating the results.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="chap7.html" title="Regular Expression"
+             >next</a></li>
+        <li class="right" >
+          <a href="chap5.html" title="Objects and Object-Orientation"
+             >previous</a> |</li>
+        <li><a href="../../../index.html">home</a>|&nbsp;</li>
+        <li><a href="../../index.html">projects</a>|&nbsp;</li>
+        <li><a href="../../../resume.html">cv/resume</a>|&nbsp;</li>
+        <li><a href="../../../exlinks.html">external links</a>|&nbsp;</li>
+        <li><a href="../../../personal.html">personal</a>|&nbsp;</li>
+        <li><a href="../../../search.html">search</a>|&nbsp;</li>
+
+          <li><a href="../../index.html" >Projects</a> &raquo;</li>
+          <li><a href="../notes_index.html" >Study Notes</a> &raquo;</li>
+          <li><a href="diveintopython.html" >Dive into Python Study Notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012-2013, Zeyuan Hu.
+      Last updated on Jan 19, 2013.
+    </div>
+  </body>
+</html>

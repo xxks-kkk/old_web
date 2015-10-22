@@ -1,0 +1,25 @@
+{#
+    searchbox.html
+    ~~~~~~~~~~~~~~~~~~~~
+
+    Sphinx sidebar template: quick search box. 
+    
+    customized by Zeyuan Hu:
+        * get rid of the search tip
+
+    :copyright: Copyright 2007-2011 by the Sphinx team, see AUTHORS.
+                Copyright 2013 by Zeyuan Hu
+    :license: BSD, see LICENSE for details.
+#}
+{%- if pagename != "search" %}
+<div id="searchbox" style="display: none">
+  <h3>{{ _('search this site') }}</h3>
+    <form class="search" action="{{ pathto('search') }}" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="{{ _('Go') }}" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+{%- endif %}
